@@ -13,11 +13,11 @@ const Home: NextPage = () => {
   const { data: sessionData } = useSession();
   const Router = useRouter();
 
+  console.log(sessionData);
+
   useEffect(() => {
-    if (Router.isReady) {
-      sessionData ? Router.push("/admin/dashboard") : null;
-    }
-  }, [Router.isReady]);
+    sessionData?.user && Router.push("/admin/dashboard");
+  }, [sessionData]);
 
   return (
     <>

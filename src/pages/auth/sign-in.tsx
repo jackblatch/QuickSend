@@ -9,6 +9,7 @@ import type {
 import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
 import AlertBlock from "~/components/AlertBlock";
+import { toast, Toaster } from "react-hot-toast";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
@@ -42,6 +43,7 @@ export default function SignIn({
 
   return (
     <>
+      <Toaster />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="text-center">
@@ -77,10 +79,20 @@ export default function SignIn({
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault();
-                signIn("credentials", {
-                  ...formValues,
-                  callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
-                });
+                toast.promise(
+                  signIn("credentials", {
+                    ...formValues,
+                    callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
+                  }),
+                  {
+                    loading: "Loading",
+                    success: "Logged in!",
+                    error: "Error logging in.",
+                  },
+                  {
+                    position: "bottom-center",
+                  }
+                );
               }}
             >
               <input name="csrfToken" type="hidden" defaultValue={csrfToken} />

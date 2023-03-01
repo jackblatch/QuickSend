@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 
@@ -30,7 +31,7 @@ export const authRouter = createTRPCRouter({
           },
         })
         .then(() => true)
-        .catch(() => false);
+        .catch(() => new TRPCError({ code: "INTERNAL_SERVER_ERROR" }));
     }),
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
