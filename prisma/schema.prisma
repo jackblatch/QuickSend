@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -27,12 +27,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
+    refresh_token     String? 
+    access_token      String? 
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? // @db.Text
+    id_token          String? 
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -49,12 +49,17 @@ model Session {
 
 model User {
     id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
+    first_name          String
+    last_name          String
+    email         String   @unique
+    password        String
+    send_from_name          String
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    lists           List[]
+    campaign        Campaign[]
 }
 
 model VerificationToken {
@@ -63,4 +68,33 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model List {
+    id          String      @id @default(cuid())
+    name        String
+    userId      String
+    campaign    Campaign[]
+    user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    contacts    Contact[]
+}
+
+model Contact {
+    id          String      @id @default(cuid())
+    email       String      @unique
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    lists       List[]
+}
+
+model Campaign {
+    id        String   @id @default(cuid())
+    name      String
+    subject   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    userId    String
+    listId    String?
+    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    list      List?    @relation(fields: [listId], references: [id], onDelete: Cascade)
 }

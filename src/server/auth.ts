@@ -1,13 +1,13 @@
 import { type GetServerSidePropsContext } from "next";
+import CredentialsProvider from "next-auth/providers/credentials";
 import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
+import bcrypt from "bcrypt";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -37,20 +37,57 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
       }
-      return session;
+      return Promise.resolve(token);
     },
   },
   adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 30,
+  },
+  pages: {
+    signIn: "/auth/sign-in",
+    signOut: "/auth/sign-out",
+    error: "/auth/error", // Error code passed in query string as ?error=
+    verifyRequest: "/auth/verify-request", // (used for check email message)
+  },
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    CredentialsProvider({
+      name: "password",
+      credentials: {
+        email: {},
+        password: {},
+      },
+      authorize: async (credentials, req) => {
+        console.log({ credentials });
+        if (!credentials?.email || !credentials.password) return null;
+
+        const user: any = await prisma.user.findFirst({
+          where: {
+            email: {
+              equals: credentials?.email,
+              mode: "insensitive",
+            },
+          },
+        });
+        if (user) {
+          const passwordMatch = await bcrypt.compare(
+            credentials?.password,
+            user.password
+          );
+          if (!passwordMatch) {
+            return null;
+          }
+          return user;
+        }
+        return null;
+      },
     }),
+
     /**
      * ...add more providers here.
      *
