@@ -45,7 +45,7 @@ const Home: NextPage = () => {
                 Sign up
               </Link>
               <Link
-                href="/auth/login"
+                href="/auth/sign-in"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
                 Login <span aria-hidden="true">→</span>

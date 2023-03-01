@@ -1,37 +1,21 @@
-import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputWithLabel from "~/components/InputWithLabel";
 import Logo from "~/components/Logo";
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from "next";
-import { getCsrfToken } from "next-auth/react";
+import ErrorBlock from "~/components/AlertBlock";
+import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import ErrorBlock from "~/components/ErrorBlock";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
-}
-
-export default function SignUp({
-  csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function SignUp() {
+  const createAccount = api.auth.createAccount.useMutation();
   const [formValues, setFormValues] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
 
-  const Router = useRouter();
   const [error, setError] = useState<boolean>(false);
-
-  useEffect(() => {
-    Router.isReady && Router.query.error ? setError(true) : null;
-  }, [Router.isReady]);
+  const Router = useRouter();
 
   return (
     <>
@@ -49,7 +33,7 @@ export default function SignUp({
               href="/auth/sign-in"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
-              Sign in
+              Sign in with your account
             </a>
           </p>
         </div>
@@ -57,7 +41,7 @@ export default function SignUp({
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             {error && (
-              <ErrorBlock heading="Oops! An error occured.">
+              <ErrorBlock type="error" heading="Oops! An error occured.">
                 Please try again later.
               </ErrorBlock>
             )}
@@ -65,10 +49,36 @@ export default function SignUp({
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault();
-                signIn("credentials", formValues);
+                createAccount
+                  .mutateAsync(formValues)
+                  .then((res) => {
+                    if (res) {
+                      Router.push("/auth/sign-in?registered=true");
+                    } else {
+                      setError(true);
+                    }
+                  })
+                  .catch((err) => setError(true));
               }}
             >
-              <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+              <InputWithLabel
+                id="firstName"
+                label="First Name"
+                type="text"
+                state={formValues}
+                setState={setFormValues}
+                placeholder=""
+                required
+              />
+              <InputWithLabel
+                id="lastName"
+                label="Last Name"
+                type="text"
+                state={formValues}
+                setState={setFormValues}
+                placeholder=""
+                required
+              />
               <InputWithLabel
                 id="email"
                 label="Email address"
@@ -81,46 +91,21 @@ export default function SignUp({
               />
               <InputWithLabel
                 id="password"
-                label="Password"
+                label="Password (Minimum 8 characters)"
                 type="password"
                 state={formValues}
                 setState={setFormValues}
                 placeholder=""
-                autoComplete="current-password"
+                autoComplete="new-password"
                 required
+                minLength={8}
               />
-              {/* <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-blue-600 hover:text-blue-500"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-              </div> */}
-
               <div>
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
-                  Sign in
+                  Create account
                 </button>
               </div>
             </form>

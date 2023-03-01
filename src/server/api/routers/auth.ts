@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { z } from "zod";
 
 import {
@@ -7,18 +8,30 @@ import {
 } from "~/server/api/trpc";
 
 export const authRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  createAccount: publicProcedure
+    .input(
+      z.object({
+        firstName: z.string(),
+        lastName: z.string(),
+        email: z.string(),
+        password: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      const hashedPassword = bcrypt.hashSync(input.password, 10);
+      return ctx.prisma.user
+        .create({
+          data: {
+            first_name: input.firstName,
+            last_name: input.lastName,
+            email: input.email,
+            password: hashedPassword,
+            send_from_name: input.firstName + " " + input.lastName,
+          },
+        })
+        .then(() => true)
+        .catch(() => false);
     }),
-
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
-
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

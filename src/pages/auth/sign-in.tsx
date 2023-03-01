@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import InputWithLabel from "~/components/InputWithLabel";
 import Logo from "~/components/Logo";
@@ -8,7 +8,7 @@ import type {
 } from "next";
 import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
-import ErrorBlock from "~/components/ErrorBlock";
+import AlertBlock from "~/components/AlertBlock";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
@@ -28,9 +28,16 @@ export default function SignIn({
 
   const Router = useRouter();
   const [error, setError] = useState<boolean>(false);
+  const [registerRedirect, setRegisterRedirect] = useState<boolean>(false);
 
   useEffect(() => {
-    Router.isReady && Router.query.error ? setError(true) : null;
+    if (Router.isReady) {
+      Router.query.error
+        ? setError(true)
+        : Router.query.registered === "true"
+        ? setRegisterRedirect(true)
+        : null;
+    }
   }, [Router.isReady]);
 
   return (
@@ -46,7 +53,7 @@ export default function SignIn({
           <p className="mt-2 text-center text-sm text-gray-600">
             Or{" "}
             <a
-              href="#"
+              href="/auth/sign-up"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
               create an account
@@ -57,15 +64,23 @@ export default function SignIn({
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             {error && (
-              <ErrorBlock heading="Oops! An error occured.">
+              <AlertBlock type="error" heading="Oops! An error occured.">
                 Please check your details and try again.
-              </ErrorBlock>
+              </AlertBlock>
+            )}
+            {registerRedirect && (
+              <AlertBlock type="success" heading="Account created!">
+                Please sign in below.
+              </AlertBlock>
             )}
             <form
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault();
-                signIn("credentials", formValues);
+                signIn("credentials", {
+                  ...formValues,
+                  callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
+                });
               }}
             >
               <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
