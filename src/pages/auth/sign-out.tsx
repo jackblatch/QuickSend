@@ -1,8 +1,11 @@
 import Logo from "~/components/Logo";
 import { toast, Toaster } from "react-hot-toast";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function SignOut() {
+  const router = useRouter();
+
   return (
     <>
       <Toaster />
@@ -20,43 +23,40 @@ export default function SignOut() {
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form
-              className="space-y-6"
-              onSubmit={(e) => {
-                e.preventDefault();
-                toast.promise(
-                  signOut({ callbackUrl: "/" }),
-                  {
-                    loading: "Signing out...",
-                    success: () => {
-                      return "Signed out!";
+          <div className="space-y-6 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div className="justufy-center align-items flex flex-row-reverse gap-4">
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toast.promise(
+                    signOut({ callbackUrl: "/" }),
+                    {
+                      loading: "Signing out...",
+                      success: () => {
+                        return "Signed out!";
+                      },
+                      error: () => {
+                        return "Error signing out.";
+                      },
                     },
-                    error: () => {
-                      return "Error signing out.";
-                    },
-                  },
-                  {
-                    position: "bottom-center",
-                  }
-                );
-              }}
-            >
-              <div className="justufy-center align-items flex flex-row-reverse gap-4">
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Yes
-                </button>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md border border-transparent bg-gray-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+                    {
+                      position: "bottom-center",
+                    }
+                  );
+                }}
+              >
+                Yes
+              </button>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md border border-transparent bg-gray-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                onClick={() => router.back()}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>

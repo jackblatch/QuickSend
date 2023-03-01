@@ -85,7 +85,7 @@ export default function SignIn({
                     callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
                   }),
                   {
-                    loading: "Loading",
+                    loading: "Logging in...",
                     success: "Logged in!",
                     error: "Error logging in.",
                   },
