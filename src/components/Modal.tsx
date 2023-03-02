@@ -1,5 +1,6 @@
 import { Dispatch, Fragment, PropsWithChildren, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
 export default function Modal({
   children,
@@ -59,10 +60,10 @@ export default function Modal({
                         aria-hidden="true"
                       />
                     </div> */}
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <Dialog.Title
                         as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                        className="text-xl font-semibold leading-6 text-gray-900"
                       >
                         {heading}
                       </Dialog.Title>
@@ -70,14 +71,14 @@ export default function Modal({
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <div className="bg-gray-50 px-4 py-4 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
                     className={`${
                       actionType === "danger"
                         ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
                         : "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-                    } inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm  focus:outline-none focus:ring-2  focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
+                    } mr-5 inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white  shadow-sm focus:outline-none  focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
                     onClick={() => setOpen(false)}
                   >
                     {buttonActionText}

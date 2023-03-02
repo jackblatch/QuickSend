@@ -29,4 +29,18 @@ export const listsRouter = createTRPCRouter({
       throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
     }
   }),
+  createList: protectedProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(({ ctx, input }) => {
+      try {
+        return ctx.prisma.list.create({
+          data: {
+            name: input.name,
+            userId: ctx.session.user.id,
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
 });

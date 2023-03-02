@@ -2,7 +2,7 @@ type Props = {
   label: string;
   id: string;
   type: string;
-  placeholder: string;
+  placeholder?: string;
   state: any; // change to record
   setState: React.Dispatch<React.SetStateAction<any>>; // change to record
   [x: string]: any;

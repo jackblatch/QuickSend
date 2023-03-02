@@ -7,6 +7,8 @@ import { PlusIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
 import formatDateTime from "~/utils/formatDateTime";
 import Modal from "~/components/Modal";
+import InputWithLabel from "~/components/InputWithLabel";
+import NewListModal from "~/components/NewListModal";
 
 export default function List() {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -40,16 +42,7 @@ export default function List() {
   return (
     <div>
       {showNewListModal && (
-        <Modal
-          heading="Create a new list"
-          buttonCancelText="Cancel"
-          buttonActionText="Create"
-          open={showNewListModal}
-          setOpen={setShowNewListModal}
-          actionType="success"
-        >
-          <p>Body!</p>
-        </Modal>
+        <NewListModal open={showNewListModal} setOpen={setShowNewListModal} />
       )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
