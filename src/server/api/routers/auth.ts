@@ -33,7 +33,4 @@ export const authRouter = createTRPCRouter({
         .then(() => true)
         .catch(() => new TRPCError({ code: "INTERNAL_SERVER_ERROR" }));
     }),
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });

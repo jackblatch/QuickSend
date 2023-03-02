@@ -18,16 +18,21 @@ import bcrypt from "bcrypt";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
+      id: any;
+      firstName: any;
+      lastName: any;
+      email?: string | null;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    first_name: string;
+    last_name: string;
+    id: string;
+    email: string;
+  }
 }
 
 /**
@@ -39,9 +44,19 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.user = user;
+        token.firstName = user.first_name;
+        token.lastName = user.last_name;
+        token.email = user.email;
+        token.id = user.id;
       }
       return Promise.resolve(token);
+    },
+    async session({ session, token }) {
+      session.user.firstName = token.firstName;
+      session.user.lastName = token.lastName;
+      session.user.email = token.email;
+      session.user.id = token.id;
+      return session;
     },
   },
   adapter: PrismaAdapter(prisma),
