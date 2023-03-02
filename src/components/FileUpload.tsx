@@ -84,11 +84,11 @@ export default function FileUpload({ listId }: { listId: string }) {
         >
           {formValues.file ? (
             <div className="min-w-full">
-              <p className="mb-2 font-semibold">Added file:</p>
-              <div className="flex items-center justify-between border-y-2 border-gray-200 py-4">
+              <p className="mb-2 mt-6 font-semibold">Added file:</p>
+              <div className="flex items-center justify-between border-y-2 border-gray-200 py-3">
                 <p>{formValues.file.name}</p>
                 <button
-                  className="p rounded-md bg-gray-100 py-1 px-4"
+                  className="rounded-md bg-gray-100 py-1 px-4 text-sm"
                   onClick={() => setFormValues({ ...formValues, file: "" })}
                 >
                   Remove

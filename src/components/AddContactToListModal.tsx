@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import AlertBlock from "./AlertBlock";
 import FileUpload from "./FileUpload";
 import InputWithLabel from "./InputWithLabel";
+import LineTabs from "./LineTabs";
 import Modal from "./Modal";
 
 export default function AddContactToListModal({
@@ -20,10 +21,13 @@ export default function AddContactToListModal({
   const addContactToList = api.contacts.addContactToList.useMutation({
     onSuccess: () => utils.lists.invalidate(),
   });
+  const [tabs, setTabs] = useState([
+    { name: "Single Contact", current: true },
+    { name: "CSV Import", current: false },
+  ]);
 
   return (
     <Modal
-      heading="Add contact to list"
       buttonCancelText="Cancel"
       buttonActionText="Add"
       actionOnClick={() => {
@@ -46,24 +50,32 @@ export default function AddContactToListModal({
       setOpen={setOpen}
       actionType="success"
     >
-      <div className="mt-6 pr-5">
-        <>
-          {addContactToList.error && (
-            <div className="mb-4">
-              <AlertBlock type="error" heading="Sorry, an error occured">
-                Please try again later.
-              </AlertBlock>
-            </div>
-          )}
-          <InputWithLabel
-            type="email"
-            label="Email Address"
-            id="email"
-            state={inputValues}
-            setState={setInputValues}
-          />
-        </>
-        <FileUpload listId={listId} />
+      <div className="mb-6 pr-5">
+        <LineTabs tabs={tabs} setTabs={setTabs} />
+        {tabs[0]?.current ? (
+          <>
+            <h2 className="mb-6 flex flex-col items-center pt-8 text-2xl font-semibold text-gray-800">
+              Add new contact
+            </h2>
+
+            {addContactToList.error && (
+              <div className="mb-4">
+                <AlertBlock type="error" heading="Sorry, an error occured">
+                  Please check or input or try again later.
+                </AlertBlock>
+              </div>
+            )}
+            <InputWithLabel
+              type="email"
+              label="Email Address"
+              id="email"
+              state={inputValues}
+              setState={setInputValues}
+            />
+          </>
+        ) : (
+          <FileUpload listId={listId} />
+        )}
       </div>
     </Modal>
   );

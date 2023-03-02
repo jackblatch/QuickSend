@@ -20,7 +20,7 @@ export default function Modal({
 }: PropsWithChildren<{
   buttonCancelText: string;
   buttonActionText: string;
-  heading: string;
+  heading?: string;
   actionType: "success" | "danger";
   actionOnClick: any;
   open: boolean;
@@ -69,12 +69,14 @@ export default function Modal({
                       />
                     </div> */}
                     <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-xl font-semibold leading-6 text-gray-900"
-                      >
-                        {heading}
-                      </Dialog.Title>
+                      {heading && (
+                        <Dialog.Title
+                          as="h3"
+                          className="text-xl font-semibold leading-6 text-gray-900"
+                        >
+                          {heading}
+                        </Dialog.Title>
+                      )}
                       <div className="mt-2">{children}</div>
                     </div>
                   </div>
