@@ -8,7 +8,7 @@ import {
 } from "~/server/api/trpc";
 
 export const contactsRouter = createTRPCRouter({
-  removeContactsFromList: protectedProcedure
+  removeContactFromList: protectedProcedure
     .input(z.object({ listId: z.string(), contactId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       try {
@@ -24,6 +24,45 @@ export const contactsRouter = createTRPCRouter({
             },
           },
         });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
+  addContactToList: protectedProcedure
+    .input(z.object({ listId: z.string(), email: z.string().email() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const contact = await ctx.prisma.contact.findFirst({
+          where: {
+            email: input.email,
+          },
+        });
+        console.log("CONTACT", contact);
+        if (contact) {
+          return ctx.prisma.contact.update({
+            where: {
+              id: contact.id,
+            },
+            data: {
+              lists: {
+                connect: {
+                  id: input.listId,
+                },
+              },
+            },
+          });
+        } else {
+          return ctx.prisma.contact.create({
+            data: {
+              email: input.email,
+              lists: {
+                connect: {
+                  id: input.listId,
+                },
+              },
+            },
+          });
+        }
       } catch (err) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }

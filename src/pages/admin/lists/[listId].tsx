@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import AddContactToListModal from "~/components/AddContactToListModal";
 import Breadcrumbs from "~/components/Breadcrumbs";
 import Button from "~/components/Button";
 import NewListModal from "~/components/NewListModal";
@@ -18,7 +19,8 @@ export default function ListDetails() {
   const [selectedlists, setSelectedlists] = useState<
     { id: string; email: string }[]
   >([]);
-  const [showNewListModal, setShowNewListModal] = useState(false);
+  const [showAddContactToListModal, setShowAddContactToListModal] =
+    useState(false);
   const [showRemoveContactModal, setShowRemoveContactModal] = useState(false);
   const [currentEditContact, setCurrentEditContact] = useState<{
     id: string;
@@ -91,6 +93,13 @@ export default function ListDetails() {
                 contact={currentEditContact}
               />
             )}
+            {showAddContactToListModal && (
+              <AddContactToListModal
+                open={showAddContactToListModal}
+                setOpen={setShowAddContactToListModal}
+                listId={listId as string}
+              />
+            )}
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
                 <p className="mt-2 text-sm text-gray-700">
@@ -102,7 +111,10 @@ export default function ListDetails() {
                 <Button
                   type="primary"
                   size="md"
-                  onClick={() => setShowNewListModal(true)}
+                  onClick={() => {
+                    setShowAddContactToListModal(true);
+                    console.log("clcoc");
+                  }}
                 >
                   <p>Add New</p>
                 </Button>

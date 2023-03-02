@@ -17,12 +17,11 @@ export default function RemoveContactModal({
   contact: { id: string; createdAt: Date; email: string };
 }) {
   const utils = api.useContext();
-  const removeContactsFromList =
-    api.contacts.removeContactsFromList.useMutation({
-      onSuccess: () => {
-        utils.lists.invalidate();
-      },
-    });
+  const removeContactFromList = api.contacts.removeContactFromList.useMutation({
+    onSuccess: () => {
+      utils.lists.invalidate();
+    },
+  });
 
   return (
     <Modal
@@ -31,7 +30,7 @@ export default function RemoveContactModal({
       buttonActionText="Delete"
       actionOnClick={() => {
         toast.promise(
-          removeContactsFromList.mutateAsync({ listId, contactId: contact.id }),
+          removeContactFromList.mutateAsync({ listId, contactId: contact.id }),
           {
             loading: "Removing contact...",
             success: () => {
