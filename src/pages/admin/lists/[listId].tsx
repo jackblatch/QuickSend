@@ -5,6 +5,7 @@ import { toast, Toaster } from "react-hot-toast";
 import Breadcrumbs from "~/components/Breadcrumbs";
 import Button from "~/components/Button";
 import NewListModal from "~/components/NewListModal";
+import RemoveContactModal from "~/components/RemoveContactModal";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
 import formatClasses from "~/utils/formatClasses";
@@ -18,7 +19,12 @@ export default function ListDetails() {
     { id: string; email: string }[]
   >([]);
   const [showNewListModal, setShowNewListModal] = useState(false);
-  const [showUpdateContactModal, setShowUpdateContactModal] = useState(false);
+  const [showRemoveContactModal, setShowRemoveContactModal] = useState(false);
+  const [currentEditContact, setCurrentEditContact] = useState<{
+    id: string;
+    createdAt: Date;
+    email: string;
+  }>({ id: "", createdAt: new Date(), email: "" });
 
   const utils = api.useContext();
   const deleteLists = api.lists.deleteLists.useMutation({
@@ -77,17 +83,19 @@ export default function ListDetails() {
             <Breadcrumbs pages={pages} />
           </div>
           <div>
-            {showNewListModal && (
-              <NewListModal
-                open={showNewListModal}
-                setOpen={setShowNewListModal}
+            {showRemoveContactModal && (
+              <RemoveContactModal
+                open={showRemoveContactModal}
+                setOpen={setShowRemoveContactModal}
+                listId={listId as string}
+                contact={currentEditContact}
               />
             )}
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
                 <p className="mt-2 text-sm text-gray-700">
-                  Here are the lists you have created. You can create a new list
-                  or edit an existing list below.
+                  Here are the contacts in your list. Add or remove contacts
+                  below.
                 </p>
               </div>
               <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -171,7 +179,7 @@ export default function ListDetails() {
                             scope="col"
                             className="relative py-3.5 pl-3 pr-4 sm:pr-3"
                           >
-                            <span className="sr-only">Edit</span>
+                            <span className="sr-only">Delete</span>
                           </th>
                         </tr>
                       </thead>
@@ -222,12 +230,13 @@ export default function ListDetails() {
                             </td>
                             <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                               <button
-                                className="text-blue-600 hover:text-blue-900"
+                                className="text-gray-600 hover:text-gray-900"
                                 onClick={() => {
-                                  setShowUpdateContactModal(true);
+                                  setShowRemoveContactModal(true);
+                                  setCurrentEditContact(contact);
                                 }}
                               >
-                                Edit
+                                Delete
                                 <span className="sr-only">{contact.email}</span>
                               </button>
                             </td>

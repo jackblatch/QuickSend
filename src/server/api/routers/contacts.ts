@@ -9,12 +9,12 @@ import {
 
 export const contactsRouter = createTRPCRouter({
   removeContactsFromList: protectedProcedure
-    .input(z.object({ listId: z.string(), removeId: z.string() }))
+    .input(z.object({ listId: z.string(), contactId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       try {
         return await ctx.prisma.contact.update({
           where: {
-            id: input.removeId,
+            id: input.contactId,
           },
           data: {
             lists: {

@@ -8,31 +8,37 @@ import Modal from "./Modal";
 export default function RemoveContactModal({
   open,
   setOpen,
+  listId,
+  contact,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<any>>;
+  listId: string;
+  contact: { id: string; createdAt: Date; email: string };
 }) {
   const utils = api.useContext();
-  const [listName, setListName] = useState({ name: "" });
-  const removeContact = api.lists.createList.useMutation({
-    onSuccess: () => utils.lists.invalidate(),
-  });
+  const removeContactsFromList =
+    api.contacts.removeContactsFromList.useMutation({
+      onSuccess: () => {
+        utils.lists.invalidate();
+      },
+    });
 
   return (
     <Modal
-      heading="Create a New List"
+      heading="Remove contact from list"
       buttonCancelText="Cancel"
-      buttonActionText="Create"
+      buttonActionText="Delete"
       actionOnClick={() => {
         toast.promise(
-          removeContact.mutateAsync(listName),
+          removeContactsFromList.mutateAsync({ listId, contactId: contact.id }),
           {
-            loading: "Updating contact...",
+            loading: "Removing contact...",
             success: () => {
               setOpen(false);
-              return "Contact updated successfully!";
+              return "Contact removed from list!";
             },
-            error: "Failed to update contact",
+            error: "Failed to remove contact",
           },
           {
             position: "bottom-center",
@@ -41,24 +47,9 @@ export default function RemoveContactModal({
       }}
       open={open}
       setOpen={setOpen}
-      actionType="success"
+      actionType="danger"
     >
-      <div className="mt-6 pr-5">
-        {removeContact.error && (
-          <div className="mb-4">
-            <AlertBlock type="error" heading="Missing field">
-              Please enter a valid email address
-            </AlertBlock>
-          </div>
-        )}
-        <InputWithLabel
-          type="text"
-          label="List Name"
-          id="name"
-          state={listName}
-          setState={setListName}
-        />
-      </div>
+      <p>Are you sure you want to remove {contact.email} from this list?</p>
     </Modal>
   );
 }
