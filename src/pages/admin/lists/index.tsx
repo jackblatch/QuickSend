@@ -5,6 +5,8 @@ import Button from "~/components/Button";
 import { api } from "~/utils/api";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useSession } from "next-auth/react";
+import formatDateTime from "~/utils/formatDateTime";
+import Modal from "~/components/Modal";
 
 export default function List() {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -15,9 +17,7 @@ export default function List() {
   >([]);
   const allLists = api.lists.getLists.useQuery();
   const lists = allLists.data ?? [];
-
-  const session = useSession();
-  console.log({ session });
+  const [showNewListModal, setShowNewListModal] = useState(false);
 
   useLayoutEffect(() => {
     if (allLists.data) {
@@ -39,6 +39,18 @@ export default function List() {
 
   return (
     <div>
+      {showNewListModal && (
+        <Modal
+          heading="Create a new list"
+          buttonCancelText="Cancel"
+          buttonActionText="Create"
+          open={showNewListModal}
+          setOpen={setShowNewListModal}
+          actionType="success"
+        >
+          <p>Body!</p>
+        </Modal>
+      )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <p className="mt-2 text-sm text-gray-700">
@@ -47,7 +59,11 @@ export default function List() {
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Button type="primary" size="md">
+          <Button
+            type="primary"
+            size="md"
+            onClick={() => setShowNewListModal(true)}
+          >
             <p>New List</p>
           </Button>
         </div>
@@ -147,10 +163,10 @@ export default function List() {
                         {list.name}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {list.name}
+                        {list._count.contacts}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {JSON.stringify(list.createdAt)}
+                        {formatDateTime(list.createdAt)}
                       </td>
                       <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                         <a

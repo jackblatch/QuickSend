@@ -1,17 +1,20 @@
-import { PropsWithChildren } from "react";
+import { MouseEvent, MouseEventHandler, PropsWithChildren } from "react";
 
 export default function Button({
   size,
   type,
+  onClick,
   children,
 }: PropsWithChildren<{
   size: "sm" | "md" | "lg" | "xl" | "2xl";
   type: "primary" | "secondary";
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }>) {
   if (size === "sm") {
     return (
       <button
         type="button"
+        onClick={onClick}
         className={`${
           type === "primary"
             ? "bg-blue-600 text-white hover:bg-blue-700"
@@ -26,6 +29,7 @@ export default function Button({
   } else if (size === "md") {
     return (
       <button
+        onClick={onClick}
         type="button"
         className={`${
           type === "primary"
@@ -41,6 +45,7 @@ export default function Button({
   } else if (size === "lg") {
     return (
       <button
+        onClick={onClick}
         type="button"
         className={`${
           type === "primary"
@@ -56,6 +61,7 @@ export default function Button({
   } else if (size === "xl") {
     return (
       <button
+        onClick={onClick}
         type="button"
         className={`${
           type === "primary"
@@ -71,6 +77,7 @@ export default function Button({
   } else {
     return (
       <button
+        onClick={onClick}
         type="button"
         className={`${
           type === "primary"

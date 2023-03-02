@@ -18,6 +18,11 @@ export const listsRouter = createTRPCRouter({
           id: true,
           name: true,
           createdAt: true,
+          _count: {
+            select: {
+              contacts: true,
+            },
+          },
         },
       });
     } catch (err) {
