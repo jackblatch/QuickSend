@@ -35,7 +35,7 @@ export default function RemoveContactModal({
             loading: "Removing contact...",
             success: () => {
               setOpen(false);
-              return "Contact removed from list!";
+              return "Contact removed!";
             },
             error: "Failed to remove contact",
           },

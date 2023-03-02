@@ -28,6 +28,30 @@ export const contactsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  removeMultipleContactsFromList: protectedProcedure
+    .input(z.object({ listId: z.string(), contactIds: z.array(z.string()) }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return Promise.all(
+          input.contactIds.map((id) => {
+            ctx.prisma.contact.update({
+              where: {
+                id: id,
+              },
+              data: {
+                lists: {
+                  disconnect: {
+                    id: input.listId,
+                  },
+                },
+              },
+            });
+          })
+        );
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
   addContactToList: protectedProcedure
     .input(z.object({ listId: z.string(), email: z.string().email() }))
     .mutation(async ({ ctx, input }) => {

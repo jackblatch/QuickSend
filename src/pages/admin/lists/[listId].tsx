@@ -29,11 +29,12 @@ export default function ListDetails() {
   }>({ id: "", createdAt: new Date(), email: "" });
 
   const utils = api.useContext();
-  const deleteLists = api.lists.deleteLists.useMutation({
-    onSuccess: () => {
-      utils.lists.invalidate();
-    },
-  });
+  const removeMultipleContactsFromList =
+    api.contacts.removeMultipleContactsFromList.useMutation({
+      onSuccess: () => {
+        utils.lists.invalidate();
+      },
+    });
 
   const router = useRouter();
   const { listId } = router.query;
@@ -137,16 +138,17 @@ export default function ListDetails() {
                           className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
                           onClick={() => {
                             toast.promise(
-                              deleteLists.mutateAsync(
-                                selectedlists.map((item) => item.id)
-                              ),
+                              removeMultipleContactsFromList.mutateAsync({
+                                listId: listId as string,
+                                contactIds: selectedlists.map(
+                                  (item) => item.id
+                                ),
+                              }),
                               {
                                 loading: "Deleting...",
                                 success: (res) => {
                                   setSelectedlists([]);
-                                  return `Deleted ${res.count} list${
-                                    res.count === 1 ? "" : "s"
-                                  }`;
+                                  return "Added to list!";
                                 },
                                 error: "Error deleting lists",
                               },
