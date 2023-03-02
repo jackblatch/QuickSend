@@ -50,4 +50,19 @@ export const listsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  deleteLists: protectedProcedure
+    .input(z.array(z.string()))
+    .mutation(({ ctx, input }) => {
+      try {
+        return ctx.prisma.list.deleteMany({
+          where: {
+            id: {
+              in: input,
+            },
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
 });

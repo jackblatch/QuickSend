@@ -1,15 +1,11 @@
 import AdminLayout from "~/layouts/AdminLayout";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import formatClasses from "~/utils/formatClasses";
 import Button from "~/components/Button";
 import { api } from "~/utils/api";
-import { PlusIcon } from "@heroicons/react/20/solid";
-import { useSession } from "next-auth/react";
 import formatDateTime from "~/utils/formatDateTime";
-import Modal from "~/components/Modal";
-import InputWithLabel from "~/components/InputWithLabel";
 import NewListModal from "~/components/NewListModal";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 export default function List() {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -21,6 +17,13 @@ export default function List() {
   const allLists = api.lists.getLists.useQuery();
   const lists = allLists.data ?? [];
   const [showNewListModal, setShowNewListModal] = useState(false);
+
+  const utils = api.useContext();
+  const deleteLists = api.lists.deleteLists.useMutation({
+    onSuccess: () => {
+      utils.lists.invalidate();
+    },
+  });
 
   useLayoutEffect(() => {
     if (allLists.data) {
@@ -78,8 +81,28 @@ export default function List() {
                   <button
                     type="button"
                     className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
+                    onClick={() => {
+                      toast.promise(
+                        deleteLists.mutateAsync(
+                          selectedlists.map((item) => item.id)
+                        ),
+                        {
+                          loading: "Deleting...",
+                          success: (res) => {
+                            setSelectedlists([]);
+                            return `Deleted ${res.count} list${
+                              res.count === 1 ? "" : "s"
+                            }`;
+                          },
+                          error: "Error deleting lists",
+                        },
+                        {
+                          position: "bottom-center",
+                        }
+                      );
+                    }}
                   >
-                    Delete all
+                    Delete selected
                   </button>
                 </div>
               )}
