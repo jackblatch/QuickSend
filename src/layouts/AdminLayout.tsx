@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, PropsWithChildren, use, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowRightOnRectangleIcon,
@@ -13,8 +13,10 @@ import {
 import Logo from "~/components/Logo";
 import formatClasses from "~/utils/formatClasses";
 import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const navigation = [
+const initialNavigation = [
   {
     name: "Dashboard",
     href: "/admin/dashboard",
@@ -42,8 +44,24 @@ const navigation = [
   },
 ];
 
-export default function AdminLayout({ children }: React.PropsWithChildren) {
+export default function AdminLayout({
+  children,
+  pageHeading,
+}: PropsWithChildren<{ pageHeading: string }>) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [navigation, setNavigation] = useState(initialNavigation);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const res = navigation.map((item) => {
+      if (item.href === router.pathname) {
+        return { ...item, current: true };
+      }
+      return { ...item, current: false };
+    });
+    setNavigation(res);
+  }, [router]);
 
   return (
     <>
@@ -111,7 +129,7 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
                     </div>
                     <nav className="mt-5 space-y-1 px-2">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
                           href={item.href}
                           className={formatClasses(
@@ -131,12 +149,12 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
                             aria-hidden="true"
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </nav>
                   </div>
                   <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-                    <a href="#" className="group block flex-shrink-0">
+                    <Link href="#" className="group block flex-shrink-0">
                       <div className="flex items-center">
                         <div>
                           <img
@@ -154,7 +172,7 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
                           </p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -171,7 +189,7 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
               </div>
               <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
                     href={item.href}
                     className={formatClasses(
@@ -191,12 +209,12 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
                       aria-hidden="true"
                     />
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-              <a href="#" className="group block w-full flex-shrink-0">
+              <Link href="#" className="group block w-full flex-shrink-0">
                 <div className="flex items-center">
                   <div>
                     <img
@@ -214,7 +232,7 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
                     </p>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -233,7 +251,7 @@ export default function AdminLayout({ children }: React.PropsWithChildren) {
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h1 className="text-2xl font-semibold text-gray-900">
-                  Dashboard
+                  {pageHeading}
                 </h1>
               </div>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

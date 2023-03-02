@@ -6,5 +6,5 @@ export default function Dashboard() {
 }
 
 Dashboard.getLayout = function getLayout(page: React.ReactNode) {
-  return <AdminLayout>{page}</AdminLayout>;
+  return <AdminLayout pageHeading="Dashboard">{page}</AdminLayout>;
 };
