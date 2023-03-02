@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import AlertBlock from "./AlertBlock";
+import FileUpload from "./FileUpload";
 import InputWithLabel from "./InputWithLabel";
 import Modal from "./Modal";
 
@@ -46,20 +47,23 @@ export default function AddContactToListModal({
       actionType="success"
     >
       <div className="mt-6 pr-5">
-        {addContactToList.error && (
-          <div className="mb-4">
-            <AlertBlock type="error" heading="Sorry, an error occured">
-              Please try again later.
-            </AlertBlock>
-          </div>
-        )}
-        <InputWithLabel
-          type="email"
-          label="Email Address"
-          id="email"
-          state={inputValues}
-          setState={setInputValues}
-        />
+        <>
+          {addContactToList.error && (
+            <div className="mb-4">
+              <AlertBlock type="error" heading="Sorry, an error occured">
+                Please try again later.
+              </AlertBlock>
+            </div>
+          )}
+          <InputWithLabel
+            type="email"
+            label="Email Address"
+            id="email"
+            state={inputValues}
+            setState={setInputValues}
+          />
+        </>
+        <FileUpload listId={listId} />
       </div>
     </Modal>
   );

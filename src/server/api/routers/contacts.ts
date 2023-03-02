@@ -91,4 +91,28 @@ export const contactsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  addMultipleContactsToList: protectedProcedure
+    .input(
+      z.object({ emails: z.array(z.string().email()), listId: z.string() })
+    )
+    .mutation(({ ctx, input }) => {
+      try {
+        return Promise.all(
+          input.emails.map(async (email) => {
+            await ctx.prisma.contact.create({
+              data: {
+                email: email,
+                lists: {
+                  connect: {
+                    id: input.listId,
+                  },
+                },
+              },
+            });
+          })
+        );
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
 });
