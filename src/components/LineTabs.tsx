@@ -19,7 +19,7 @@ export default function LineTabs({
           id="tabs"
           name="tabs"
           className="block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-          value={tabs.find((tab) => tab.current)?.name}
+          defaultValue={tabs.find((tab) => tab.current)?.name}
         >
           {tabs.map((tab) => (
             <option key={tab.name}>{tab.name}</option>

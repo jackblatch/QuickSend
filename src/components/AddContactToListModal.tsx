@@ -25,26 +25,31 @@ export default function AddContactToListModal({
     { name: "Single Contact", current: true },
     { name: "CSV Import", current: false },
   ]);
+  const [formValues, setFormValues] = useState<any>("");
 
   return (
     <Modal
       buttonCancelText="Cancel"
-      buttonActionText="Add"
+      buttonActionText={tabs[0]?.current ? "Add" : null}
       actionOnClick={() => {
-        toast.promise(
-          addContactToList.mutateAsync({ email: inputValues.email, listId }),
-          {
-            loading: "Adding contact...",
-            success: () => {
-              setOpen(false);
-              return "Contact added!";
+        if (tabs[0]?.current) {
+          toast.promise(
+            addContactToList.mutateAsync({ email: inputValues.email, listId }),
+            {
+              loading: "Adding contact...",
+              success: () => {
+                setOpen(false);
+                return "Contact added!";
+              },
+              error: "Failed to add contact",
             },
-            error: "Failed to add contact",
-          },
-          {
-            position: "bottom-center",
-          }
-        );
+            {
+              position: "bottom-center",
+            }
+          );
+        } else if (tabs[1]?.current) {
+          setOpen(false);
+        }
       }}
       open={open}
       setOpen={setOpen}
@@ -61,7 +66,7 @@ export default function AddContactToListModal({
             {addContactToList.error && (
               <div className="mb-4">
                 <AlertBlock type="error" heading="Sorry, an error occured">
-                  Please check or input or try again later.
+                  Please check your input or try again later.
                 </AlertBlock>
               </div>
             )}
@@ -74,7 +79,12 @@ export default function AddContactToListModal({
             />
           </>
         ) : (
-          <FileUpload listId={listId} />
+          <FileUpload
+            listId={listId}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            setOpen={setOpen}
+          />
         )}
       </div>
     </Modal>

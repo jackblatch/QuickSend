@@ -99,16 +99,36 @@ export const contactsRouter = createTRPCRouter({
       try {
         return Promise.all(
           input.emails.map(async (email) => {
-            await ctx.prisma.contact.create({
-              data: {
+            const contact = await ctx.prisma.contact.findFirst({
+              where: {
                 email: email,
-                lists: {
-                  connect: {
-                    id: input.listId,
-                  },
-                },
               },
             });
+            if (contact) {
+              return ctx.prisma.contact.update({
+                where: {
+                  id: contact.id,
+                },
+                data: {
+                  lists: {
+                    connect: {
+                      id: input.listId,
+                    },
+                  },
+                },
+              });
+            } else {
+              return ctx.prisma.contact.create({
+                data: {
+                  email: email,
+                  lists: {
+                    connect: {
+                      id: input.listId,
+                    },
+                  },
+                },
+              });
+            }
           })
         );
       } catch (err) {

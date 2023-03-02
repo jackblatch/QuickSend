@@ -3,14 +3,21 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import Papa from "papaparse";
 import { toast, Toaster } from "react-hot-toast";
 import { api } from "~/utils/api";
+import AlertBlock from "./AlertBlock";
 
-export default function FileUpload({ listId }: { listId: string }) {
+export default function FileUpload({
+  listId,
+  formValues,
+  setOpen,
+  setFormValues,
+}: {
+  listId: string;
+  formValues: any;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setFormValues: React.Dispatch<React.SetStateAction<any>>;
+}) {
   const addMultipleContactsToList =
     api.contacts.addMultipleContactsToList.useMutation();
-  const [formValues, setFormValues] = useState<any>({
-    file: "",
-    ignoreFirstRow: true,
-  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({ status: false, message: "" });
 
@@ -28,11 +35,10 @@ export default function FileUpload({ listId }: { listId: string }) {
     }
     setIsLoading(true);
     Papa.parse(formValues.file, {
-      header: formValues.ignoreFirstRow, // needs to be ignored so it can then return an array of objects
+      header: true, // ignores first line of CSV
       delimiter: ",",
       skipEmptyLines: true,
       complete: function (results: any) {
-        // consider contact may already be in there, then just add contact to list
         toast.promise(
           addMultipleContactsToList.mutateAsync({
             emails: results.data.map(
@@ -43,14 +49,14 @@ export default function FileUpload({ listId }: { listId: string }) {
           {
             loading: "Uploading contacts...",
             success: (res) => {
-              setFormValues({ ...formValues, file: "" });
+              setOpen(false);
               setIsLoading(false);
               return `Uploaded ${res.length} contact${
                 res.length === 1 ? "" : "s"
               }`;
             },
             error: () => {
-              //   setIsError({ status: true, message: "An error has occurred" });
+              setIsError({ status: true, message: "An error has occurred" });
               setIsLoading(false);
               return "Failed to upload contacts";
             },
@@ -64,27 +70,29 @@ export default function FileUpload({ listId }: { listId: string }) {
   };
 
   useEffect(() => {
-    if (isError.status) {
-      const msg = isError.message;
-      toast.error(msg, {
-        position: "bottom-center",
-      });
-    }
-  }, [isError]);
+    setIsError({ status: false, message: "" });
+  }, [formValues.file]);
 
   return (
     <>
-      <h2 className="flex flex-col items-center pt-8 text-2xl font-semibold text-gray-800">
-        File uploader
-      </h2>
+      <div className="mb-4 flex flex-col items-center justify-center gap-2 pt-8 text-gray-800">
+        <h2 className="text-2xl font-semibold">File uploader</h2>
+        <p className="text-center text-sm text-gray-700">
+          Please note, the first line on the CSV will be ignored to accomodate
+          headings
+        </p>
+      </div>
       <div className="flex max-w-md items-center justify-center">
         <form
           onSubmit={handleSubmit}
           className="flex min-w-full flex-col items-center justify-center gap-8"
         >
+          {isError.status && (
+            <AlertBlock type="error" heading={isError.message} />
+          )}
           {formValues.file ? (
             <div className="min-w-full">
-              <p className="mb-2 mt-6 font-semibold">Added file:</p>
+              <p className="mb-2 font-semibold">Added file:</p>
               <div className="flex items-center justify-between border-y-2 border-gray-200 py-3">
                 <p>{formValues.file.name}</p>
                 <button
@@ -96,7 +104,7 @@ export default function FileUpload({ listId }: { listId: string }) {
               </div>
             </div>
           ) : (
-            <div className="relative mt-8 flex max-w-sm flex-col items-center rounded-md">
+            <div className="relative flex max-w-sm flex-col items-center rounded-md">
               <div className="border-2 border-dashed border-gray-300">
                 <div
                   className="absolute top-0 z-10 items-center text-white"
