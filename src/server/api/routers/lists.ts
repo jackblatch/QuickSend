@@ -32,6 +32,12 @@ export const listsRouter = createTRPCRouter({
   createList: protectedProcedure
     .input(z.object({ name: z.string() }))
     .mutation(({ ctx, input }) => {
+      if (!input.name || input.name === "") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Name is required",
+        });
+      }
       try {
         return ctx.prisma.list.create({
           data: {

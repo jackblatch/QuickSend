@@ -1,4 +1,10 @@
-import { Dispatch, Fragment, PropsWithChildren, useRef } from "react";
+import {
+  Dispatch,
+  Fragment,
+  MouseEventHandler,
+  PropsWithChildren,
+  useRef,
+} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
@@ -8,6 +14,7 @@ export default function Modal({
   buttonActionText,
   heading,
   actionType,
+  actionOnClick,
   open,
   setOpen,
 }: PropsWithChildren<{
@@ -15,6 +22,7 @@ export default function Modal({
   buttonActionText: string;
   heading: string;
   actionType: "success" | "danger";
+  actionOnClick: any;
   open: boolean;
   setOpen: Dispatch<React.SetStateAction<boolean>>;
 }>) {
@@ -79,7 +87,7 @@ export default function Modal({
                         ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
                         : "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
                     } mr-5 inline-flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white  shadow-sm focus:outline-none  focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm`}
-                    onClick={() => setOpen(false)}
+                    onClick={actionOnClick}
                   >
                     {buttonActionText}
                   </button>

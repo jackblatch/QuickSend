@@ -9,6 +9,7 @@ import formatDateTime from "~/utils/formatDateTime";
 import Modal from "~/components/Modal";
 import InputWithLabel from "~/components/InputWithLabel";
 import NewListModal from "~/components/NewListModal";
+import { Toaster } from "react-hot-toast";
 
 export default function List() {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -41,6 +42,7 @@ export default function List() {
 
   return (
     <div>
+      <Toaster />
       {showNewListModal && (
         <NewListModal open={showNewListModal} setOpen={setShowNewListModal} />
       )}

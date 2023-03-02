@@ -3,7 +3,7 @@ import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { PropsWithChildren } from "react";
 
-export default function ErrorBlock({
+export default function AlertBlock({
   type,
   heading,
   children,
