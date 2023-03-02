@@ -1,8 +1,6 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
-import AlertBlock from "./AlertBlock";
-import InputWithLabel from "./InputWithLabel";
 import Modal from "./Modal";
 
 export default function RemoveContactModal({

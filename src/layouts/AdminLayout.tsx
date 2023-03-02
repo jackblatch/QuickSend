@@ -15,6 +15,7 @@ import formatClasses from "~/utils/formatClasses";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Breadcrumbs from "~/components/Breadcrumbs";
 
 const initialNavigation = [
   {
@@ -47,7 +48,11 @@ const initialNavigation = [
 export default function AdminLayout({
   children,
   pageHeading,
-}: PropsWithChildren<{ pageHeading: string }>) {
+  pages,
+}: PropsWithChildren<{
+  pageHeading: string;
+  pages?: { name: string; href: string; current?: boolean | undefined }[];
+}>) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [navigation, setNavigation] = useState(initialNavigation);
 
@@ -250,6 +255,7 @@ export default function AdminLayout({
           <main className="flex-1">
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                {pages && <Breadcrumbs pages={pages} />}
                 <h1 className="text-2xl font-semibold text-gray-900">
                   {pageHeading}
                 </h1>

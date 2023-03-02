@@ -7,17 +7,17 @@ export default function Breadcrumbs({
   pages: { name: string; href: string; current?: boolean }[];
 }) {
   return (
-    <nav className="flex" aria-label="Breadcrumb">
+    <nav className="mb-4 flex" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-4">
         <li>
           <div>
-            <a
+            <Link
               href="/admin/dashboard"
               className="text-gray-400 hover:text-gray-500"
             >
               <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
               <span className="sr-only">Home</span>
-            </a>
+            </Link>
           </div>
         </li>
         {pages.map((page) => (

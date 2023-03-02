@@ -5,7 +5,7 @@ import { toast, Toaster } from "react-hot-toast";
 import AddContactToListModal from "~/components/AddContactToListModal";
 import Breadcrumbs from "~/components/Breadcrumbs";
 import Button from "~/components/Button";
-import NewListModal from "~/components/NewListModal";
+import EmptyListState from "~/components/EmptyListState";
 import RemoveContactModal from "~/components/RemoveContactModal";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
@@ -42,15 +42,6 @@ export default function ListDetails() {
   const contacts = getListInfo.data?.contacts ?? [];
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log({ contacts });
-
-  const pages = useMemo(() => {
-    return [
-      { name: "Lists", href: "/admin/lists", current: false },
-      { name: getListInfo.data?.name ?? "List", href: "#", current: true },
-    ];
-  }, [getListInfo.data]);
-
   useEffect(() => {
     if (router.isReady && getListInfo.data) {
       setIsLoading(false);
@@ -80,11 +71,10 @@ export default function ListDetails() {
       <Toaster />
       {isLoading ? (
         <p>Loading...</p>
+      ) : contacts.length === 0 ? (
+        <EmptyListState listId={listId as string} />
       ) : (
         <>
-          <div className="my-3">
-            <Breadcrumbs pages={pages} />
-          </div>
           <div>
             {showRemoveContactModal && (
               <RemoveContactModal
@@ -274,8 +264,19 @@ export default function ListDetails() {
 ListDetails.getLayout = function getLayout(page: React.ReactNode) {
   const router = useRouter();
   const { listId } = router.query;
-  const getList = api.lists.getListInfo.useQuery(listId as string);
-  const listName = getList.data?.name ?? "";
+  const getListInfo = api.lists.getListInfo.useQuery(listId as string);
+  const listName = getListInfo.data?.name ?? "";
 
-  return <AdminLayout pageHeading={listName}>{page}</AdminLayout>;
+  const pages = useMemo(() => {
+    return [
+      { name: "Lists", href: "/admin/lists", current: false },
+      { name: listName ?? "List", href: "#", current: true },
+    ];
+  }, [getListInfo.data]);
+
+  return (
+    <AdminLayout pageHeading={listName} pages={pages}>
+      {page}
+    </AdminLayout>
+  );
 };
