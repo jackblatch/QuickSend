@@ -65,4 +65,28 @@ export const listsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  getListInfo: protectedProcedure
+    .input(z.string().nullish())
+    .query(({ ctx, input }) => {
+      if (!input) return null;
+      try {
+        return ctx.prisma.list.findUnique({
+          where: {
+            id: input,
+          },
+          select: {
+            name: true,
+            contacts: {
+              select: {
+                id: true,
+                email: true,
+                createdAt: true,
+              },
+            },
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
 });

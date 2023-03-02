@@ -1,11 +1,12 @@
 import AdminLayout from "~/layouts/AdminLayout";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import formatClasses from "~/utils/formatClasses";
 import Button from "~/components/Button";
 import { api } from "~/utils/api";
 import formatDateTime from "~/utils/formatDateTime";
 import NewListModal from "~/components/NewListModal";
 import { toast, Toaster } from "react-hot-toast";
+import Link from "next/link";
 
 export default function List() {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -25,7 +26,7 @@ export default function List() {
     },
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (allLists.data) {
       const isIndeterminate =
         selectedlists.length > 0 && selectedlists.length < lists.length;
@@ -178,7 +179,9 @@ export default function List() {
                             : "text-gray-900"
                         )}
                       >
-                        {list.name}
+                        <Link href={`/admin/lists/${list.id}`}>
+                          {list.name}
+                        </Link>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {list._count.contacts}
@@ -187,12 +190,12 @@ export default function List() {
                         {formatDateTime(list.createdAt)}
                       </td>
                       <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                        <a
-                          href="#"
+                        <Link
+                          href={`/admin/lists/${list.id}`}
                           className="text-blue-600 hover:text-blue-900"
                         >
-                          Edit<span className="sr-only">, {list.name}</span>
-                        </a>
+                          View<span className="sr-only">, {list.name}</span>
+                        </Link>
                       </td>
                     </tr>
                   ))}
