@@ -24,7 +24,6 @@ export default function NewListModal({
       buttonCancelText="Cancel"
       buttonActionText="Create"
       actionOnClick={() => {
-        if (listName.name === "") return;
         toast.promise(
           createList.mutateAsync(listName),
           {
@@ -46,9 +45,11 @@ export default function NewListModal({
     >
       <div className="mt-6 pr-5">
         {createList.error && (
-          <AlertBlock type="error" heading="Missing field">
-            Please enter a list name.
-          </AlertBlock>
+          <div className="mb-4">
+            <AlertBlock type="error" heading="Missing field">
+              Please enter a list name.
+            </AlertBlock>
+          </div>
         )}
         <InputWithLabel
           type="text"
