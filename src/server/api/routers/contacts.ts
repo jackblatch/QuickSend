@@ -61,9 +61,8 @@ export const contactsRouter = createTRPCRouter({
             email: input.email,
           },
         });
-        console.log("CONTACT", contact);
         if (contact) {
-          return ctx.prisma.contact.update({
+          return await ctx.prisma.contact.update({
             where: {
               id: contact.id,
             },
@@ -76,7 +75,7 @@ export const contactsRouter = createTRPCRouter({
             },
           });
         } else {
-          return ctx.prisma.contact.create({
+          return await ctx.prisma.contact.create({
             data: {
               email: input.email,
               lists: {
@@ -105,7 +104,7 @@ export const contactsRouter = createTRPCRouter({
               },
             });
             if (contact) {
-              return ctx.prisma.contact.update({
+              return await ctx.prisma.contact.update({
                 where: {
                   id: contact.id,
                 },
@@ -118,7 +117,7 @@ export const contactsRouter = createTRPCRouter({
                 },
               });
             } else {
-              return ctx.prisma.contact.create({
+              return await ctx.prisma.contact.create({
                 data: {
                   email: email,
                   lists: {
