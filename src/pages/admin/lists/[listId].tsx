@@ -148,7 +148,9 @@ export default function ListDetails() {
                                 loading: "Deleting...",
                                 success: (res) => {
                                   setSelectedlists([]);
-                                  return "Added to list!";
+                                  return `Deleted ${res.length} list${
+                                    res.length === 1 ? "" : "s"
+                                  }`;
                                 },
                                 error: "Error deleting lists",
                               },

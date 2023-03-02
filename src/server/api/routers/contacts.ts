@@ -33,8 +33,8 @@ export const contactsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       try {
         return Promise.all(
-          input.contactIds.map((id) => {
-            ctx.prisma.contact.update({
+          input.contactIds.map(async (id) => {
+            await ctx.prisma.contact.update({
               where: {
                 id: id,
               },
