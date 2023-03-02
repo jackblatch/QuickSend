@@ -1,9 +1,7 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import AddContactToListModal from "~/components/AddContactToListModal";
-import Breadcrumbs from "~/components/Breadcrumbs";
 import Button from "~/components/Button";
 import EmptyListState from "~/components/EmptyListState";
 import RemoveContactModal from "~/components/RemoveContactModal";
@@ -114,7 +112,7 @@ export default function ListDetails() {
             <div className="mt-8 flow-root">
               <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div className="relative">
+                  <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                     {selectedlists.length > 0 && (
                       <div className="absolute top-0 left-14 flex h-12 items-center space-x-3 bg-white sm:left-12">
                         <button
@@ -155,7 +153,7 @@ export default function ListDetails() {
                       </div>
                     )}
                     <table className="min-w-full table-fixed divide-y divide-gray-300">
-                      <thead>
+                      <thead className="bg-gray-50">
                         <tr>
                           <th
                             scope="col"
@@ -227,9 +225,7 @@ export default function ListDetails() {
                                   : "text-gray-900"
                               )}
                             >
-                              <Link href={`/admin/lists/${contact.id}`}>
-                                {contact.email}
-                              </Link>
+                              {contact.email}
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               {formatDateTime(contact.createdAt)}

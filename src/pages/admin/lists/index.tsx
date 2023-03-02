@@ -7,6 +7,7 @@ import formatDateTime from "~/utils/formatDateTime";
 import NewListModal from "~/components/NewListModal";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
+import StackedList from "~/components/StackedList";
 
 export default function List() {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -67,10 +68,13 @@ export default function List() {
           </Button>
         </div>
       </div>
-      <div className="mt-8 flow-root">
-        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="relative">
+      <div className="mt-8">
+        <StackedList />
+      </div>
+      <div className="mt-8 flow-root ">
+        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 ">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 ">
+            <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
               {selectedlists.length > 0 && (
                 <div className="absolute top-0 left-14 flex h-12 items-center space-x-3 bg-white sm:left-12">
                   <button
@@ -108,9 +112,9 @@ export default function List() {
                 </div>
               )}
               <table className="min-w-full table-fixed divide-y divide-gray-300">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr>
-                    <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
+                    <th scope="col" className="relative px-7 sm:w-12 sm:px-6 ">
                       <input
                         type="checkbox"
                         className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
@@ -129,7 +133,7 @@ export default function List() {
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Members
+                      Contacts
                     </th>
                     <th
                       scope="col"
@@ -139,13 +143,13 @@ export default function List() {
                     </th>
                     <th
                       scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-3"
+                      className="relative py-3.5 pl-3 pr-4 sm:pr-3 "
                     >
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
+                <tbody className="divide-y divide-gray-200 bg-white ">
                   {lists.map((list) => (
                     <tr
                       key={list.id}
@@ -153,7 +157,7 @@ export default function List() {
                         selectedlists.includes(list) ? "bg-gray-50" : undefined
                       }
                     >
-                      <td className="relative px-7 sm:w-12 sm:px-6">
+                      <td className="relative rounded-md px-7 sm:w-12 sm:px-6 ">
                         {selectedlists.includes(list) && (
                           <div className="absolute inset-y-0 left-0 w-0.5 bg-blue-600" />
                         )}
@@ -179,7 +183,10 @@ export default function List() {
                             : "text-gray-900"
                         )}
                       >
-                        <Link href={`/admin/lists/${list.id}`}>
+                        <Link
+                          href={`/admin/lists/${list.id}`}
+                          className="hover:text-blue-600"
+                        >
                           {list.name}
                         </Link>
                       </td>
