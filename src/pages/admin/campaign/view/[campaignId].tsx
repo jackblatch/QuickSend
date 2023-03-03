@@ -1,4 +1,5 @@
 import { PencilSquareIcon, WindowIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
@@ -155,13 +156,25 @@ function CampaignDetails() {
                   Preview image of components
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button appearance="secondary" size="md">
+                  <Button
+                    appearance="secondary"
+                    size="md"
+                    onClick={() => {
+                      router.push(`/admin/campaign/edit/${campaignId}`);
+                    }}
+                  >
                     <div className="flex items-center justify-center gap-2">
                       <p className="col-span-1">Edit</p>
                       <PencilSquareIcon className="mb-[1px] h-4 w-4" />
                     </div>
                   </Button>
-                  <Button appearance="secondary" size="md">
+                  <Button
+                    appearance="secondary"
+                    size="md"
+                    onClick={() => {
+                      router.push(`/admin/campaign/preview/${campaignId}`);
+                    }}
+                  >
                     <div className="flex items-center justify-center gap-2">
                       <p className="col-span-1">Preview</p>
                       <WindowIcon className="mb-[1px] h-4 w-4" />

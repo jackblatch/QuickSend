@@ -78,7 +78,7 @@ function Campaigns() {
         ]}
         screenReaderRowButtonText="View"
         rowButtonActions={(item: any) => {
-          router.push(`/admin/campaign/${item.id}`);
+          router.push(`/admin/campaign/view/${item.id}`);
         }}
         rowButtonText="View"
       ></MultiSelectTable>
