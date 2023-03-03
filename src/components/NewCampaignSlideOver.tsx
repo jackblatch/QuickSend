@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
+import CampaignInputFields from "./CampaignInputFields";
 import ComboBox from "./ComboBox";
-import InputWithLabel from "./InputWithLabel";
 import SlideOver from "./SlideOver";
 
 const initialInputValues = {
@@ -54,7 +54,6 @@ export default function NewCampaignSlideOver({
         position: "bottom-center",
       }
     );
-    // push to new page
   };
 
   return (
@@ -68,36 +67,12 @@ export default function NewCampaignSlideOver({
       handleSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-8">
-        <InputWithLabel
-          label="Campaign Name"
-          id="campaignName"
-          type="text"
-          state={inputValues}
-          setState={setInputValues}
-        />
-        <InputWithLabel
-          label="Email Subject"
-          id="emailSubject"
-          type="text"
-          state={inputValues}
-          setState={setInputValues}
-        />
-        <InputWithLabel
-          label="From Name"
-          placeholder="The 'from' name displayed in the email"
-          id="fromName"
-          type="text"
-          state={inputValues}
-          setState={setInputValues}
-        />
-        <ComboBox
-          label="Select list to send to"
-          comboBoxValues={listData.map((item) => ({
-            id: item.id,
-            value: item.name,
-          }))}
-          selectedValue={selectedList}
-          setSelectedValue={setSelectedList}
+        <CampaignInputFields
+          inputValues={inputValues}
+          setInputValues={setInputValues}
+          listData={listData}
+          selectedList={selectedList}
+          setSelectedList={setSelectedList}
         />
       </div>
     </SlideOver>

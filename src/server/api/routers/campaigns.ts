@@ -20,6 +20,12 @@ export const campaignsRouter = createTRPCRouter({
           subject: true,
           createdAt: true,
           updatedAt: true,
+          list: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       });
     } catch (err) {
@@ -47,6 +53,28 @@ export const campaignsRouter = createTRPCRouter({
                 id: ctx.session.user.id,
               },
             },
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
+  getCampaignInfo: protectedProcedure
+    .input(z.object({ campaignId: z.string().nullish() }))
+    .query(async ({ ctx, input }) => {
+      if (!input.campaignId) return null;
+      try {
+        return await ctx.prisma.campaign.findUnique({
+          where: {
+            id: input.campaignId,
+          },
+          select: {
+            id: true,
+            name: true,
+            subject: true,
+            sendFromName: true,
+            createdAt: true,
+            updatedAt: true,
           },
         });
       } catch (err) {
