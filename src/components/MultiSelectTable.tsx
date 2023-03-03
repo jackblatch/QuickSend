@@ -91,7 +91,7 @@ export default function MultiSelectTable({
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                   <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                     {selectedlists.length > 0 && (
-                      <div className="absolute top-0 left-14 flex h-12 items-center space-x-3 bg-white sm:left-12">
+                      <div className="absolute top-0 left-14 flex h-12 items-center space-x-3 bg-gray-50 sm:left-12">
                         {multiSelectButtons}
                       </div>
                     )}

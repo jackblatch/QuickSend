@@ -157,7 +157,7 @@ function List() {
                         selectedlists.includes(list) ? "bg-gray-50" : undefined
                       }
                     >
-                      <td className="relative rounded-md px-7 sm:w-12 sm:px-6 ">
+                      <td className="relative px-7 sm:w-12 sm:px-6">
                         {selectedlists.includes(list) && (
                           <div className="absolute inset-y-0 left-0 w-0.5 bg-blue-600" />
                         )}
