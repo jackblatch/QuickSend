@@ -1,5 +1,5 @@
 import AdminLayout from "~/layouts/AdminLayout";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import formatClasses from "~/utils/formatClasses";
 import Button from "~/components/Button";
 import { api } from "~/utils/api";
@@ -27,7 +27,7 @@ function List() {
     },
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (allLists.data) {
       const isIndeterminate =
         selectedlists.length > 0 && selectedlists.length < lists.length;

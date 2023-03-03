@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import AddContactToListModal from "~/components/AddContactToListModal";
 import Button from "~/components/Button";
+import EditListNameModal from "~/components/EditListNameModal";
 import EmptyListState from "~/components/EmptyListState";
 import RemoveContactModal from "~/components/RemoveContactModal";
 import AdminLayout from "~/layouts/AdminLayout";
@@ -25,6 +26,7 @@ function ListDetails() {
     createdAt: Date;
     email: string;
   }>({ id: "", createdAt: new Date(), email: "" });
+  const [showEditListNameModal, setShowEditListNameModal] = useState(false);
 
   const utils = api.useContext();
   const removeMultipleContactsFromList =
@@ -46,7 +48,7 @@ function ListDetails() {
     }
   }, [router, getListInfo]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (getListInfo.data) {
       const isIndeterminate =
         selectedlists.length > 0 && selectedlists.length < contacts.length;
@@ -89,6 +91,14 @@ function ListDetails() {
                 listId={listId as string}
               />
             )}
+            {showEditListNameModal && (
+              <EditListNameModal
+                open={showEditListNameModal}
+                setOpen={setShowEditListNameModal}
+                listId={listId as string}
+                existingName={getListInfo.data?.name ?? ""}
+              />
+            )}
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
                 <p className="mt-2 text-sm text-gray-700">
@@ -96,16 +106,24 @@ function ListDetails() {
                   below.
                 </p>
               </div>
-              <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <div className="mt-4 flex gap-2 sm:mt-0 sm:ml-16">
+                <Button
+                  type="secondary"
+                  size="md"
+                  onClick={() => {
+                    setShowEditListNameModal(true);
+                  }}
+                >
+                  Edit List Name
+                </Button>
                 <Button
                   type="primary"
                   size="md"
                   onClick={() => {
                     setShowAddContactToListModal(true);
-                    console.log("clcoc");
                   }}
                 >
-                  <p>Add New</p>
+                  Add New
                 </Button>
               </div>
             </div>

@@ -8,7 +8,6 @@ export default function LineTabs({
   tabs: { name: string; current: boolean }[];
   setTabs: Dispatch<SetStateAction<any>>;
 }) {
-  console.log(tabs);
   return (
     <div>
       <div className="sm:hidden">

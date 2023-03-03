@@ -71,7 +71,7 @@ export default function Modal({
                       {heading && (
                         <Dialog.Title
                           as="h3"
-                          className="text-xl font-semibold leading-6 text-gray-900"
+                          className="mb-6 text-xl font-semibold leading-6 text-gray-900"
                         >
                           {heading}
                         </Dialog.Title>

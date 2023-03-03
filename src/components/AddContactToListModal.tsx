@@ -13,7 +13,7 @@ export default function AddContactToListModal({
   listId,
 }: {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<any>>;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   listId: string;
 }) {
   const utils = api.useContext();
