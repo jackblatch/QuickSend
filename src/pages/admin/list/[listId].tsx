@@ -55,7 +55,7 @@ function ListDetails() {
       topRowButtons={
         <>
           <Button
-            type="secondary"
+            appearance="secondary"
             size="md"
             onClick={() => {
               setShowEditListNameModal(true);
@@ -64,7 +64,7 @@ function ListDetails() {
             Edit List Name
           </Button>
           <Button
-            type="primary"
+            appearance="primary"
             size="md"
             onClick={() => {
               setShowAddContactToListModal(true);

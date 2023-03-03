@@ -16,7 +16,7 @@ function List() {
   const [selectedlists, setSelectedlists] = useState<
     { id: string; createdAt: Date; name: string }[]
   >([]);
-  const allLists = api.lists.getLists.useQuery();
+  const allLists = api.lists.getListsAndContactsCount.useQuery();
   const lists = allLists.data ?? [];
   const [showNewListModal, setShowNewListModal] = useState(false);
 
@@ -60,7 +60,7 @@ function List() {
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Button
-            type="primary"
+            appearance="primary"
             size="md"
             onClick={() => setShowNewListModal(true)}
           >

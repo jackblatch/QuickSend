@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import Button from "~/components/Button";
 import MultiSelectTable from "~/components/MultiSelectTable";
 import NewCampaignSlideOver from "~/components/NewCampaignSlideOver";
@@ -34,11 +34,11 @@ function Campaigns() {
 
   return (
     <>
+      <Toaster />
       <NewCampaignSlideOver
         open={openNewCampaignSlideOut}
         setOpen={setOpenNewCampaignSlideOut}
       />
-
       <MultiSelectTable
         primaryScreenReaderInfo="name"
         isLoading={isLoading}
@@ -51,7 +51,7 @@ function Campaigns() {
         topRowButtons={
           <>
             <Button
-              type="primary"
+              appearance="primary"
               size="md"
               onClick={() => {
                 setOpenNewCampaignSlideOut(true);

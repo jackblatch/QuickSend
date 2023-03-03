@@ -8,7 +8,7 @@ import {
 } from "~/server/api/trpc";
 
 export const listsRouter = createTRPCRouter({
-  getLists: protectedProcedure.query(({ ctx }) => {
+  getListsAndContactsCount: protectedProcedure.query(({ ctx }) => {
     try {
       return ctx.prisma.list.findMany({
         where: {
@@ -23,6 +23,21 @@ export const listsRouter = createTRPCRouter({
               contacts: true,
             },
           },
+        },
+      });
+    } catch (err) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+    }
+  }),
+  getLists: protectedProcedure.query(({ ctx }) => {
+    try {
+      return ctx.prisma.list.findMany({
+        where: {
+          userId: ctx.session.user.id,
+        },
+        select: {
+          id: true,
+          name: true,
         },
       });
     } catch (err) {
