@@ -39,13 +39,13 @@ function CampaignDetails() {
   }, [getCampaignInfo.data]);
 
   useEffect(() => {
-    if (lists.data && lists.data[0]) {
+    if (getCampaignInfo.data) {
       setSelectedList({
         id: getCampaignInfo.data?.list?.id ?? "",
         value: getCampaignInfo.data?.list?.name ?? "",
       });
     }
-  }, [lists.data]);
+  }, [getCampaignInfo.data]);
 
   const utils = api.useContext();
 
@@ -121,7 +121,7 @@ function CampaignDetails() {
                     selectedList={selectedList}
                     setSelectedList={setSelectedList}
                   />
-                  <div className="flex flex-row-reverse justify-start gap-2">
+                  <div className="mt-4 flex flex-row-reverse justify-start gap-2">
                     <Button
                       appearance="primary"
                       size="md"
@@ -130,7 +130,15 @@ function CampaignDetails() {
                     >
                       Save
                     </Button>
-                    <Button appearance="secondary" size="md">
+                    <Button
+                      appearance="secondary"
+                      size="md"
+                      onClick={() => {
+                        setTabs(
+                          tabs.map((tab) => ({ ...tab, current: !tab.current }))
+                        );
+                      }}
+                    >
                       Cancel
                     </Button>
                   </div>
@@ -141,7 +149,11 @@ function CampaignDetails() {
               <h2 className="text-xl font-semibold text-gray-900">
                 Manage Campaign
               </h2>
-              <p>hdhdh</p>
+              <div className="mt-6 flex flex-col gap-4">
+                <Button appearance="primary" size="md">
+                  <p className="min-w-[100%]">Send</p>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
