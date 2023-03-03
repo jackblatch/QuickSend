@@ -1,5 +1,6 @@
+import { PencilSquareIcon, WindowIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { MouseEventHandler, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import Button from "~/components/Button";
 import CampaignInputFields from "~/components/CampaignInputFields";
@@ -155,14 +156,20 @@ function CampaignDetails() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Button appearance="secondary" size="md">
-                    <p className="col-span-1">Edit</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="col-span-1">Edit</p>
+                      <PencilSquareIcon className="mb-[1px] h-4 w-4" />
+                    </div>
                   </Button>
                   <Button appearance="secondary" size="md">
-                    <p className="col-span-1">Preview</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="col-span-1">Preview</p>
+                      <WindowIcon className="mb-[1px] h-4 w-4" />
+                    </div>
                   </Button>
                 </div>
                 <Button appearance="primary" size="md">
-                  <p className="min-w-[100%]">Send Campaign</p>
+                  <p className="col-span-1">Send Campaign</p>
                 </Button>
               </div>
             </div>
