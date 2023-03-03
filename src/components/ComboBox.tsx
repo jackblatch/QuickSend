@@ -3,16 +3,21 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Combobox } from "@headlessui/react";
 import formatClasses from "~/utils/formatClasses";
 
+type valuesType = {
+  id: string;
+  value: string;
+};
+
 export default function ComboBox({
   comboBoxValues,
   label,
   selectedValue,
   setSelectedValue,
 }: {
-  comboBoxValues: { id: string; value: string }[];
+  comboBoxValues: valuesType[];
   label: string;
-  selectedValue: string;
-  setSelectedValue: React.Dispatch<React.SetStateAction<string>>;
+  selectedValue: valuesType;
+  setSelectedValue: React.Dispatch<React.SetStateAction<valuesType>>;
 }) {
   const [query, setQuery] = useState("");
 

@@ -1,4 +1,4 @@
-import { Fragment, PropsWithChildren, useState } from "react";
+import { Fragment, PropsWithChildren, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
@@ -10,6 +10,7 @@ export default function SlideOver({
   heading,
   actionText,
   handleSubmit,
+  openActions,
   children,
 }: PropsWithChildren<{
   open: boolean;
@@ -17,8 +18,15 @@ export default function SlideOver({
   subheading: string;
   heading: string;
   actionText: string;
+  openActions?: () => void;
   handleSubmit: (e: React.FormEvent) => void;
 }>) {
+  useEffect(() => {
+    if (open === true) {
+      openActions && openActions();
+    }
+  }, [open]);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>

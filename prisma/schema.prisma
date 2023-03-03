@@ -93,6 +93,7 @@ model Campaign {
     id        String   @id @default(cuid())
     name      String
     subject   String
+    sendFromName String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     userId    String

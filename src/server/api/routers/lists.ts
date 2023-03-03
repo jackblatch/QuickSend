@@ -8,9 +8,9 @@ import {
 } from "~/server/api/trpc";
 
 export const listsRouter = createTRPCRouter({
-  getListsAndContactsCount: protectedProcedure.query(({ ctx }) => {
+  getListsAndContactsCount: protectedProcedure.query(async ({ ctx }) => {
     try {
-      return ctx.prisma.list.findMany({
+      return await ctx.prisma.list.findMany({
         where: {
           userId: ctx.session.user.id,
         },
@@ -29,9 +29,9 @@ export const listsRouter = createTRPCRouter({
       throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
     }
   }),
-  getLists: protectedProcedure.query(({ ctx }) => {
+  getLists: protectedProcedure.query(async ({ ctx }) => {
     try {
-      return ctx.prisma.list.findMany({
+      return await ctx.prisma.list.findMany({
         where: {
           userId: ctx.session.user.id,
         },
@@ -46,7 +46,7 @@ export const listsRouter = createTRPCRouter({
   }),
   createList: protectedProcedure
     .input(z.object({ name: z.string() }))
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (!input.name || input.name === "") {
         console.log("error");
         throw new TRPCError({
@@ -55,7 +55,7 @@ export const listsRouter = createTRPCRouter({
         });
       }
       try {
-        return ctx.prisma.list.create({
+        return await ctx.prisma.list.create({
           data: {
             name: input.name,
             userId: ctx.session.user.id,
@@ -67,9 +67,9 @@ export const listsRouter = createTRPCRouter({
     }),
   deleteLists: protectedProcedure
     .input(z.array(z.string()))
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       try {
-        return ctx.prisma.list.deleteMany({
+        return await ctx.prisma.list.deleteMany({
           where: {
             id: {
               in: input,
@@ -82,10 +82,10 @@ export const listsRouter = createTRPCRouter({
     }),
   getListInfo: protectedProcedure
     .input(z.string().nullish())
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       if (!input) return null;
       try {
-        return ctx.prisma.list.findUnique({
+        return await ctx.prisma.list.findUnique({
           where: {
             id: input,
           },
@@ -106,11 +106,11 @@ export const listsRouter = createTRPCRouter({
     }),
   editListName: protectedProcedure
     .input(z.object({ listId: z.string(), name: z.string() }))
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (!input.name || input.name === "")
         throw new TRPCError({ code: "BAD_REQUEST" });
       try {
-        return ctx.prisma.list.update({
+        return await ctx.prisma.list.update({
           where: {
             id: input.listId,
           },

@@ -18,9 +18,9 @@ export const authRouter = createTRPCRouter({
         password: z.string(),
       })
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const hashedPassword = bcrypt.hashSync(input.password, 10);
-      return ctx.prisma.user
+      return await ctx.prisma.user
         .create({
           data: {
             first_name: input.firstName,
