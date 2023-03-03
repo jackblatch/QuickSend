@@ -7,7 +7,7 @@ function Dashboard() {
 
 export default function () {
   return (
-    <AdminLayout pageHeading="Lists">
+    <AdminLayout pageHeading="Dashboard">
       <Dashboard />
     </AdminLayout>
   );
