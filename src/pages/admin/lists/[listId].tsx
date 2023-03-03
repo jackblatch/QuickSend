@@ -10,7 +10,7 @@ import { api } from "~/utils/api";
 import formatClasses from "~/utils/formatClasses";
 import formatDateTime from "~/utils/formatDateTime";
 
-export default function ListDetails() {
+function ListDetails() {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
@@ -257,7 +257,7 @@ export default function ListDetails() {
   );
 }
 
-ListDetails.getLayout = function getLayout(page: React.ReactNode) {
+export default function () {
   const router = useRouter();
   const { listId } = router.query;
   const getListInfo = api.lists.getListInfo.useQuery(listId as string);
@@ -272,7 +272,7 @@ ListDetails.getLayout = function getLayout(page: React.ReactNode) {
 
   return (
     <AdminLayout pageHeading={listName} pages={pages}>
-      {page}
+      <ListDetails />
     </AdminLayout>
   );
-};
+}

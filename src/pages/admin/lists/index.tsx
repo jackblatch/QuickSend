@@ -9,7 +9,7 @@ import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import StackedList from "~/components/StackedList";
 
-export default function List() {
+function List() {
   const checkbox = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
@@ -216,6 +216,10 @@ export default function List() {
   );
 }
 
-List.getLayout = function getLayout(page: React.ReactNode) {
-  return <AdminLayout pageHeading="Lists">{page}</AdminLayout>;
-};
+export default function () {
+  return (
+    <AdminLayout pageHeading="Lists">
+      <List />
+    </AdminLayout>
+  );
+}
