@@ -150,8 +150,19 @@ function CampaignDetails() {
                 Manage Campaign
               </h2>
               <div className="mt-6 flex flex-col gap-4">
+                <div className="h-[300px] rounded-md bg-gray-300 p-4">
+                  Preview image of components
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <Button appearance="secondary" size="md">
+                    <p className="col-span-1">Edit</p>
+                  </Button>
+                  <Button appearance="secondary" size="md">
+                    <p className="col-span-1">Preview</p>
+                  </Button>
+                </div>
                 <Button appearance="primary" size="md">
-                  <p className="min-w-[100%]">Send</p>
+                  <p className="min-w-[100%]">Send Campaign</p>
                 </Button>
               </div>
             </div>
