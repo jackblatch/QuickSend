@@ -16,6 +16,8 @@ type Props = {
   listId: string;
   selectedlists: any[];
   rowButtonActions: any;
+  primaryScreenReaderInfo: string;
+  rowActionHighlight?: boolean;
   setSelectedlists: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
@@ -31,7 +33,9 @@ export default function MultiSelectTable({
   listId,
   selectedlists,
   setSelectedlists,
+  rowActionHighlight,
   rowButtonActions,
+  primaryScreenReaderInfo,
   children,
 }: PropsWithChildren<Props>) {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -177,7 +181,7 @@ export default function MultiSelectTable({
                                 return (
                                   <td
                                     key={i}
-                                    className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                    className="whitespace-nowrap py-4 pr-3 text-sm text-gray-500"
                                   >
                                     {item[column.id] instanceof Date
                                       ? formatDateTime(item[column.id])
@@ -189,13 +193,19 @@ export default function MultiSelectTable({
 
                             <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                               <button
-                                className="text-gray-600 hover:text-gray-900"
+                                className={`${
+                                  rowActionHighlight
+                                    ? "text-blue-600 hover:text-blue-700"
+                                    : "text-gray-400 hover:text-gray-500"
+                                }`}
                                 onClick={() => {
                                   rowButtonActions(item);
                                 }}
                               >
                                 {rowButtonText}
-                                <span className="sr-only">{rowButtonText}</span>
+                                <span className="sr-only">
+                                  {item[primaryScreenReaderInfo]}
+                                </span>
                               </button>
                             </td>
                           </tr>

@@ -1,3 +1,4 @@
+import { campaignsRouter } from "./routers/campaigns";
 import { contactsRouter } from "./routers/contacts";
 import { listsRouter } from "./routers/lists";
 import { createTRPCRouter } from "~/server/api/trpc";
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   auth: authRouter,
   lists: listsRouter,
   contacts: contactsRouter,
+  campaigns: campaignsRouter,
 });
 
 // export type definition of API

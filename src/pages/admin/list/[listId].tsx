@@ -45,6 +45,7 @@ function ListDetails() {
   return (
     <MultiSelectTable
       isLoading={isLoading}
+      primaryScreenReaderInfo="email"
       tableData={contacts}
       listId={listId as string}
       selectedlists={selectedlists}

@@ -184,7 +184,7 @@ function List() {
                         )}
                       >
                         <Link
-                          href={`/admin/lists/${list.id}`}
+                          href={`/admin/list/${list.id}`}
                           className="hover:text-blue-600"
                         >
                           {list.name}
@@ -198,7 +198,7 @@ function List() {
                       </td>
                       <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                         <Link
-                          href={`/admin/lists/${list.id}`}
+                          href={`/admin/list/${list.id}`}
                           className="text-blue-600 hover:text-blue-900"
                         >
                           View<span className="sr-only">, {list.name}</span>
