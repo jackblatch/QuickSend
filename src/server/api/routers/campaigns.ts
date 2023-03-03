@@ -75,6 +75,12 @@ export const campaignsRouter = createTRPCRouter({
             sendFromName: true,
             createdAt: true,
             updatedAt: true,
+            list: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         });
       } catch (err) {

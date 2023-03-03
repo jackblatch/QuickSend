@@ -3,6 +3,7 @@ import { MouseEventHandler, useEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import Button from "~/components/Button";
 import CampaignInputFields from "~/components/CampaignInputFields";
+import DescriptionRow from "~/components/DescriptionRow";
 import LineTabs from "~/components/LineTabs";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
@@ -40,8 +41,8 @@ function CampaignDetails() {
   useEffect(() => {
     if (lists.data && lists.data[0]) {
       setSelectedList({
-        id: lists.data[0].id,
-        value: lists.data[0].name,
+        id: getCampaignInfo.data?.list?.id ?? "",
+        value: getCampaignInfo.data?.list?.name ?? "",
       });
     }
   }, [lists.data]);
@@ -63,7 +64,8 @@ function CampaignDetails() {
       }),
       {
         loading: "Updating campaign...",
-        success: (res) => {
+        success: () => {
+          setTabs(tabs.map((tab) => ({ ...tab, current: !tab.current })));
           return "Campaign updated!";
         },
         error: "Error updating campaign",
@@ -85,30 +87,55 @@ function CampaignDetails() {
       {getCampaignInfo.isLoading || lists.isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="mt-6 ">
+        <div className="mt-6">
           <div className="flex flex-col gap-8 md:flex-row">
             <div className="flex flex-1 flex-col gap-4 rounded-md bg-white p-6 shadow">
-              <LineTabs tabs={tabs} setTabs={setTabs} />
-
-              <CampaignInputFields
-                inputValues={inputValues}
-                setInputValues={setInputValues}
-                listData={listData}
-                selectedList={selectedList}
-                setSelectedList={setSelectedList}
-              />
-              <div className="flex flex-row-reverse justify-start gap-2">
-                <Button
-                  appearance="primary"
-                  size="md"
-                  onClick={handleSaveCampaign}
-                >
-                  Save
-                </Button>
-                <Button appearance="secondary" size="md">
-                  Cancel
-                </Button>
+              <div className="mb-3">
+                <LineTabs tabs={tabs} setTabs={setTabs} />
               </div>
+              {tabs[0]?.current ? (
+                <div className="flex flex-col gap-3">
+                  <DescriptionRow
+                    title="Campaign Name"
+                    value={getCampaignInfo.data?.name ?? ""}
+                  />
+                  <DescriptionRow
+                    title="Email Subject"
+                    value={getCampaignInfo.data?.subject ?? ""}
+                  />
+                  <DescriptionRow
+                    title="From Name"
+                    value={getCampaignInfo.data?.sendFromName ?? ""}
+                  />
+                  <DescriptionRow
+                    title="Selected list"
+                    value={getCampaignInfo.data?.list?.name ?? ""}
+                  />
+                </div>
+              ) : (
+                <>
+                  <CampaignInputFields
+                    inputValues={inputValues}
+                    setInputValues={setInputValues}
+                    listData={listData}
+                    selectedList={selectedList}
+                    setSelectedList={setSelectedList}
+                  />
+                  <div className="flex flex-row-reverse justify-start gap-2">
+                    <Button
+                      appearance="primary"
+                      size="md"
+                      onClick={handleSaveCampaign}
+                      disabled={updateCampaign.isLoading}
+                    >
+                      Save
+                    </Button>
+                    <Button appearance="secondary" size="md">
+                      Cancel
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
             <div className="flex-1 rounded-md bg-white p-6 shadow">
               <h2 className="text-xl font-semibold text-gray-900">
