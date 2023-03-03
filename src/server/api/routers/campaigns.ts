@@ -81,4 +81,48 @@ export const campaignsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  updateCampaign: protectedProcedure
+    .input(
+      z.object({
+        campaignId: z.string(),
+        emailSubject: z.string(),
+        sendFromName: z.string(),
+        listId: z.string(),
+        campaignName: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const isUserAuthorisedToEditCampaign = async () => {
+          const campaign = await ctx.prisma.campaign.findUnique({
+            where: {
+              id: input.campaignId,
+            },
+          });
+          if (campaign?.userId !== ctx.session.user.id) {
+            throw new TRPCError({ code: "UNAUTHORIZED" });
+          } else {
+            return true;
+          }
+        };
+        await isUserAuthorisedToEditCampaign();
+        return await ctx.prisma.campaign.update({
+          where: {
+            id: input.campaignId,
+          },
+          data: {
+            name: input.campaignName,
+            subject: input.emailSubject,
+            sendFromName: input.sendFromName,
+            list: {
+              connect: {
+                id: input.listId,
+              },
+            },
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
 });

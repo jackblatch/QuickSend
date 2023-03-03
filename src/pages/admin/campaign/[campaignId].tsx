@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import { MouseEventHandler, useEffect, useMemo, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
+import Button from "~/components/Button";
 import CampaignInputFields from "~/components/CampaignInputFields";
+import LineTabs from "~/components/LineTabs";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
 
@@ -44,22 +46,79 @@ function CampaignDetails() {
     }
   }, [lists.data]);
 
+  const utils = api.useContext();
+
+  const updateCampaign = api.campaigns.updateCampaign.useMutation({
+    onSuccess: () => utils.campaigns.invalidate(),
+  });
+
+  const handleSaveCampaign = () => {
+    toast.promise(
+      updateCampaign.mutateAsync({
+        campaignId: campaignId as string,
+        campaignName: inputValues.campaignName,
+        emailSubject: inputValues.emailSubject,
+        sendFromName: inputValues.fromName,
+        listId: selectedList.id,
+      }),
+      {
+        loading: "Updating campaign...",
+        success: (res) => {
+          return "Campaign updated!";
+        },
+        error: "Error updating campaign",
+      },
+      {
+        position: "bottom-center",
+      }
+    );
+  };
+
+  const [tabs, setTabs] = useState([
+    { name: "Saved Details", current: true },
+    { name: "Edit Details", current: false },
+  ]);
+
   return (
     <>
       <Toaster />
-      <div className="mt-6 flex flex-col gap-4">
-        {getCampaignInfo.isLoading || lists.isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <CampaignInputFields
-            inputValues={inputValues}
-            setInputValues={setInputValues}
-            listData={listData}
-            selectedList={selectedList}
-            setSelectedList={setSelectedList}
-          />
-        )}
-      </div>
+      {getCampaignInfo.isLoading || lists.isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="mt-6 ">
+          <div className="flex flex-col gap-8 md:flex-row">
+            <div className="flex flex-1 flex-col gap-4 rounded-md bg-white p-6 shadow">
+              <LineTabs tabs={tabs} setTabs={setTabs} />
+
+              <CampaignInputFields
+                inputValues={inputValues}
+                setInputValues={setInputValues}
+                listData={listData}
+                selectedList={selectedList}
+                setSelectedList={setSelectedList}
+              />
+              <div className="flex flex-row-reverse justify-start gap-2">
+                <Button
+                  appearance="primary"
+                  size="md"
+                  onClick={handleSaveCampaign}
+                >
+                  Save
+                </Button>
+                <Button appearance="secondary" size="md">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+            <div className="flex-1 rounded-md bg-white p-6 shadow">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Manage Campaign
+              </h2>
+              <p>hdhdh</p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -19,10 +19,10 @@ export default function InputWithLabel({
 }: Props) {
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      <label htmlFor={id} className="block text-sm font-medium text-gray-900">
         {label}
       </label>
-      <div className="mt-1">
+      <div className="mt-2">
         <input
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           type={type}
