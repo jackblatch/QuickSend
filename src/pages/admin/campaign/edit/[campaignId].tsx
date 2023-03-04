@@ -36,17 +36,25 @@ export default function CampaignBuilder() {
   console.log({ newBlocks });
 
   const handleNewDragEnd = (e: DragEndEvent) => {
+    console.log(e); // look at over.current.value
+    const overContainer =
+      e.over?.data.current?.sortable.containerId || e.over?.id;
+    const over = e.over?.id;
+    const activeIndex = e.active.data.current?.index;
     const container = e.over?.id;
     const title = e.active.data.current?.title ?? "";
     const id = e.active.data.current?.itemId ?? "";
     const index = e.active.data.current?.index ?? 0;
     const parent = e.active.data.current?.parent ?? "Components";
+    const activeId = e.active.id;
 
-    console.log("CONTAINER", container);
-    console.log("TITLE", title);
-    console.log("INDEX", index);
-    console.log("PARENT", parent);
-    console.log("ID", id);
+    // console.log("CONTAINER", container);
+    // console.log("TITLE", title);
+    // console.log("INDEX", index);
+    // console.log("PARENT", parent);
+    // console.log("ID", id);
+    console.log("activeIndex", activeIndex);
+    console.log("over", over);
 
     if (container === "blocks" && parent !== container) {
       setNewBlocks([
@@ -103,7 +111,7 @@ export default function CampaignBuilder() {
           </div>
           <div className="flex justify-center pt-12">
             <div className="bg-yellow-500">
-              <DndContext
+              {/* <DndContext
                 modifiers={[restrictToVerticalAxis]}
                 collisionDetection={closestCenter}
                 onDragEnd={handleSortableDragEnd}
@@ -117,7 +125,7 @@ export default function CampaignBuilder() {
                     <SortableItem id={item.id}>{item.name}</SortableItem>
                   ))}
                 </SortableContext>
-              </DndContext>
+              </DndContext> */}
             </div>
             <div className="min-w-[600px] max-w-[600px] bg-red-500">
               <DndContext
