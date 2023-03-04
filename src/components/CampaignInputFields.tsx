@@ -37,7 +37,7 @@ export default function CampaignInputFields({
         setState={setInputValues}
       />
       <InputWithLabel
-        label="From Name"
+        label="Sender Name"
         id="fromName"
         type="text"
         state={inputValues}

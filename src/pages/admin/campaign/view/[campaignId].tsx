@@ -106,7 +106,7 @@ function CampaignDetails() {
                     value={getCampaignInfo.data?.subject ?? ""}
                   />
                   <DescriptionRow
-                    title="From Name"
+                    title="Sender Name"
                     value={getCampaignInfo.data?.sendFromName ?? ""}
                   />
                   <DescriptionRow
