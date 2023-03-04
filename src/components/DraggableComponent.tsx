@@ -28,8 +28,7 @@ export default function DraggableComponent({
 
   return (
     <div style={style} {...listeners} {...attributes} ref={setNodeRef}>
-      {/* <p>{title}</p> */}
-      <DraggableEmailBlock name={title} id={title} />
+      <DraggableEmailBlock name={title} id={itemId} />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function EditEmailContainer({ title, items }: KanbanLaneProps) {
 
   return (
     <div>
-      <div className="flex flex-col" ref={setNodeRef}>
+      <div className="grid  grid-cols-3 gap-8" ref={setNodeRef}>
         {items.map((item, key) => (
           <DraggableComponent
             title={item.name}

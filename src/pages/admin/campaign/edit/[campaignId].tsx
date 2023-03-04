@@ -37,8 +37,14 @@ export default function CampaignBuilder() {
   ]);
 
   const [components, setComponents] = useState<any>([
-    { id: "1", name: "ParagraphText" },
-    { id: "2", name: "heading" },
+    { id: "Heading", name: "Heading" },
+    { id: "ParagraphText", name: "Body Text" },
+    { id: "List", name: "List" },
+    { id: "NavBar", name: "NavBar" },
+    { id: "Button", name: "Button" },
+    { id: "Image", name: "Image" },
+    { id: "Spacing", name: "Spacing" },
+    { id: "Social", name: "Social Links" },
   ]);
 
   function handleSortableDragEnd(event: any) {
@@ -67,14 +73,19 @@ export default function CampaignBuilder() {
             .map((mapItem: any) => mapItem.id)
             .indexOf(active.id);
           const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
-          return arrayMove(
-            [
-              ...items,
-              { id: String(Math.random() * 200), name: currentItem[0].name },
-            ],
-            activeIndex,
-            overIndex
-          );
+
+          if (over.id === "components") {
+            return items;
+          } else {
+            return arrayMove(
+              [
+                ...items,
+                { id: String(Math.random() * 200), name: currentItem[0].name },
+              ],
+              activeIndex,
+              overIndex
+            );
+          }
         });
       }
     }

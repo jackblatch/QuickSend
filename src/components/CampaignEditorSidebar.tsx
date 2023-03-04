@@ -21,9 +21,13 @@ export default function CampaignEditorSidebar({
   return (
     <>
       <LineTabs tabs={tabs} setTabs={setTabs} />
-      <EditEmailContainer title="components" items={components} />
-      <div className="flex flex-col items-center py-6">
-        <DraggableEmailBlocksGroup />
+      <div className="flex flex-col items-center justify-start p-6">
+        <div className="mb-4 w-full">
+          <h3 className="text-left text-sm font-semibold uppercase text-gray-700">
+            Blocks
+          </h3>
+        </div>
+        <EditEmailContainer title="components" items={components} />
       </div>
     </>
   );

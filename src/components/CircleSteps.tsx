@@ -94,7 +94,7 @@ export default function CircleSteps({
                 : i === steps.length - 1
                 ? "mr-[-5px]"
                 : null
-            } text-white`}
+            } leading-loose text-gray-100`}
           >
             {step.name}
           </p>
