@@ -1,8 +1,15 @@
+import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Button from "~/components/Button";
 import CampaignEditNavBar from "~/components/CampaignEditNavBar";
 import CampaignEditorSidebar from "~/components/CampaignEditorSidebar";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import SortableItem from "~/components/SortableItem";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -15,11 +22,34 @@ export default function CampaignBuilder() {
     { name: "Global Styles", current: false },
   ]);
 
+  const [blocks, setBlocks] = useState([
+    { id: "1", name: "john" },
+    { id: "2", name: "mike" },
+  ]);
+
+  const handleDragEnd = (e: DragEndEvent) => {
+    // setIsDragInProgress(false);
+    const { active, over } = e;
+
+    console.log(active, over);
+
+    if (over && active.id !== over.id) {
+      setBlocks((items) => {
+        const activeIndex = items
+          .map((mapItem) => mapItem.id)
+          .indexOf(String(active.id));
+        const overIndex = items
+          .map((mapItem) => mapItem.id)
+          .indexOf(String(over.id));
+        return arrayMove(items, activeIndex, overIndex);
+      });
+    }
+  };
+
   return (
     <div className="flex min-h-[100vh] flex-col">
       <CampaignEditNavBar router={router} />
       <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
-        {/* <LineTabs /> */}
         <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
           <CampaignEditorSidebar tabs={tabs} setTabs={setTabs} />
         </div>
@@ -31,7 +61,21 @@ export default function CampaignBuilder() {
           </div>
           <div className="flex justify-center pt-12">
             <div className="min-w-[600px] max-w-[600px]  bg-red-500">
-              <p>dd</p>
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={blocks}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {blocks.map((item) => (
+                    <SortableItem key={item.id} id={item.id}>
+                      <div className="p-6">{item.id}</div>
+                    </SortableItem>
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
           </div>
         </div>

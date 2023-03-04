@@ -1,4 +1,6 @@
-import DraggableEmailBlocksGroup from "./DraggableEmailBlocksGroup";
+import DraggableEmailBlocksGroup, {
+  ParagraphText,
+} from "./DraggableEmailBlocksGroup";
 import LineTabs from "./LineTabs";
 
 type Tabs = {
@@ -17,7 +19,8 @@ export default function CampaignEditorSidebar({
     <>
       <LineTabs tabs={tabs} setTabs={setTabs} />
       <div className="flex flex-col items-center py-6">
-        <DraggableEmailBlocksGroup />
+        {/* <DraggableEmailBlocksGroup /> */}
+        <ParagraphText parent="content" index="1" />
       </div>
     </>
   );
