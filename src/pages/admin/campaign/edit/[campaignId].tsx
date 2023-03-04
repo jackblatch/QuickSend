@@ -1,10 +1,7 @@
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
   closestCenter,
   DndContext,
-  DragEndEvent,
   DragOverlay,
-  rectIntersection,
   UniqueIdentifier,
 } from "@dnd-kit/core";
 import { useRouter } from "next/router";
@@ -18,8 +15,6 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import SortableItem from "~/components/SortableItem";
-import DraggableComponent from "~/components/DraggableComponent";
-import EditEmailContainer from "~/components/EditEmailContainer";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -34,30 +29,29 @@ export default function CampaignBuilder() {
   const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
   const [dragOver, setDragOver] = useState<UniqueIdentifier | undefined>();
 
-  // NEW
-  const [newBlocks, setNewBlocks] = useState([
+  const [blocks, setBlocks] = useState([
     { id: "joh", name: "john" },
     { id: "jer", name: "Jeremy" },
     { id: "t", name: "Tim" },
     { id: "M", name: "Matt" },
   ]);
 
-  const [newComponents, setNewComponents] = useState<any>([
-    { id: "10", name: "text" },
-    { id: "20", name: "heading" },
+  const [components, setComponents] = useState<any>([
+    { id: "1", name: "ParagraphText" },
+    { id: "2", name: "heading" },
   ]);
 
   function handleSortableDragEnd(event: any) {
     const { active, over } = event;
 
-    const activeIsInBlocksArray = newBlocks.some(
+    const activeIsInBlocksArray = blocks.some(
       (block) => block.id === active.id
     );
 
     if (active.id !== over.id) {
       setActiveId(undefined);
       if (activeIsInBlocksArray) {
-        setNewBlocks((items) => {
+        setBlocks((items) => {
           const activeIndex = items
             .map((mapItem) => mapItem.id)
             .indexOf(active.id);
@@ -65,10 +59,10 @@ export default function CampaignBuilder() {
           return arrayMove(items, activeIndex, overIndex);
         });
       } else {
-        const currentItem = newComponents.filter(
+        const currentItem = components.filter(
           (comp: any) => comp.id === active.id
         );
-        setNewBlocks((items) => {
+        setBlocks((items) => {
           const activeIndex = items
             .map((mapItem: any) => mapItem.id)
             .indexOf(active.id);
@@ -105,7 +99,7 @@ export default function CampaignBuilder() {
             <CampaignEditorSidebar
               tabs={tabs}
               setTabs={setTabs}
-              newComponents={newComponents}
+              components={components}
             />
           </div>
           <div className="flex-1 bg-gray-50">
@@ -117,16 +111,16 @@ export default function CampaignBuilder() {
             <div className="flex justify-center pt-12">
               <div className="min-w-[600px] max-w-[600px] bg-red-500">
                 <SortableContext
-                  items={newBlocks.map((item) => item.name)}
+                  items={blocks.map((item) => item.name)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {newBlocks.map((item) => {
+                  {blocks.map((item) => {
                     return (
-                      <>
+                      <div key={item.id}>
                         {/* wip for adding hover effect */}
                         {/* <div>{dragOver === item.id && <p>YES</p>}</div> */}
                         <SortableItem id={item.id}>{item.name}</SortableItem>
-                      </>
+                      </div>
                     );
                   })}
                 </SortableContext>
@@ -141,10 +135,10 @@ export default function CampaignBuilder() {
         </div>
       </div>
       <DragOverlay>
-        {activeId && newBlocks.some((item) => item.id === activeId) ? (
+        {activeId && blocks.some((item) => item.id === activeId) ? (
           <SortableItem id={String(activeId)}>
-            {newBlocks.find((item) => item.id === activeId)?.name ||
-              newComponents.find((item: any) => item.id === activeId)?.name}
+            {blocks.find((item) => item.id === activeId)?.name ||
+              components.find((item: any) => item.id === activeId)?.name}
           </SortableItem>
         ) : null}
       </DragOverlay>

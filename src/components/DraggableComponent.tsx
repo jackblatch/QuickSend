@@ -1,5 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import DraggableEmailBlock from "./DraggableEmailBlocksGroup";
 
 export default function DraggableComponent({
   title,
@@ -24,9 +25,11 @@ export default function DraggableComponent({
   const style = {
     transform: CSS.Translate.toString(transform),
   };
+
   return (
     <div style={style} {...listeners} {...attributes} ref={setNodeRef}>
-      <p>{title}</p>
+      {/* <p>{title}</p> */}
+      <DraggableEmailBlock name={title} id={title} />
     </div>
   );
 }
