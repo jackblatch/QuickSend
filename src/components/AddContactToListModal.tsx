@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import AlertBlock from "./AlertBlock";
@@ -13,7 +13,7 @@ export default function AddContactToListModal({
   listId,
 }: {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   listId: string;
 }) {
   const utils = api.useContext();

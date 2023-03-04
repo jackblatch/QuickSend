@@ -1,11 +1,10 @@
 const people = [
   {
-    name: "Lindsay Walton",
+    name: "John",
     title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
+    email: "test@example.com",
     role: "Member",
   },
-  // More people...
 ];
 
 export default function Contacts() {
