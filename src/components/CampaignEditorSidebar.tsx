@@ -1,5 +1,5 @@
 import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
-import Draggable from "./Draggable";
+import Draggable from "./DraggableComponent";
 import DraggableEmailBlocksGroup from "./DraggableEmailBlocksGroup";
 import LineTabs from "./LineTabs";
 
