@@ -18,9 +18,9 @@ export default function CampaignBuilder() {
   return (
     <div className="flex min-h-[100vh] flex-col">
       <CampaignEditNavBar router={router} />
-      <div className="flex flex-1">
+      <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
         {/* <LineTabs /> */}
-        <div className="min-w-[400px] border-r border-gray-200 bg-white py-2">
+        <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
           <CampaignEditorSidebar tabs={tabs} setTabs={setTabs} />
         </div>
         <div className="flex-1 bg-gray-50">
@@ -30,7 +30,7 @@ export default function CampaignBuilder() {
             </Button>
           </div>
           <div className="flex justify-center pt-12">
-            <div className="min-w-[600px] max-w-[600px] bg-red-500">
+            <div className="min-w-[600px] max-w-[600px]  bg-red-500">
               <p>dd</p>
             </div>
           </div>

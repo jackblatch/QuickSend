@@ -1,3 +1,4 @@
+import DraggableEmailBlocksGroup from "./DraggableEmailBlocksGroup";
 import LineTabs from "./LineTabs";
 
 type Tabs = {
@@ -12,5 +13,12 @@ export default function CampaignEditorSidebar({
   tabs: Tabs[];
   setTabs: React.Dispatch<React.SetStateAction<Tabs[]>>;
 }) {
-  return <LineTabs tabs={tabs} setTabs={setTabs} />;
+  return (
+    <>
+      <LineTabs tabs={tabs} setTabs={setTabs} />
+      <div className="flex flex-col items-center py-6">
+        <DraggableEmailBlocksGroup />
+      </div>
+    </>
+  );
 }
