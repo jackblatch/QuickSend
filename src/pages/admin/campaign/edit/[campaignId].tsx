@@ -4,6 +4,7 @@ import {
   DndContext,
   DragEndEvent,
   rectIntersection,
+  UniqueIdentifier,
 } from "@dnd-kit/core";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -20,25 +21,31 @@ import DraggableComponent from "~/components/DraggableComponent";
 import EditEmailContainer from "~/components/EditEmailContainer";
 
 export default function CampaignBuilder() {
+  const [currentOverId, setCurrentOverId] = useState<
+    UniqueIdentifier | undefined
+  >();
+
   // NEW
 
   const [newBlocks, setNewBlocks] = useState([
-    { id: "1", name: "john" },
-    { id: "2", name: "Jeremy" },
+    { id: "joh", name: "john" },
+    { id: "jer", name: "Jeremy" },
+    { id: "t", name: "Tim" },
+    { id: "M", name: "Matt" },
   ]);
 
-  const [newComponents, setNewComponents] = useState([
+  const [newComponents, setNewComponents] = useState<any>([
     { id: "10", name: "text" },
     { id: "20", name: "heading" },
   ]);
 
-  console.log({ newComponents });
+  // console.log({ newComponents });
   console.log({ newBlocks });
 
   const handleNewDragEnd = (e: DragEndEvent) => {
-    console.log(e); // look at over.current.value
-    const overContainer =
-      e.over?.data.current?.sortable.containerId || e.over?.id;
+    // console.log(e); // look at over.current.value
+    // const overContainer =
+    //   e.over?.data.current?.sortable.containerId || e.over?.id;
     const over = e.over?.id;
     const activeIndex = e.active.data.current?.index;
     const container = e.over?.id;
@@ -53,8 +60,8 @@ export default function CampaignBuilder() {
     // console.log("INDEX", index);
     // console.log("PARENT", parent);
     // console.log("ID", id);
-    console.log("activeIndex", activeIndex);
-    console.log("over", over);
+    // console.log("activeIndex", activeIndex);
+    // console.log("over", over);
 
     if (container === "blocks" && parent !== container) {
       setNewBlocks([
@@ -85,14 +92,63 @@ export default function CampaignBuilder() {
     // DragEndEvent
     const { active, over } = event;
 
+    // console.log("OVERID", over.id);
+    // console.log("ACTIVE", active.id);
+
+    // check if active exists in array. If not, add.
+
+    // const newItem: { id: string; name: string }[] = [];
+
+    // if (active.id !== over.id) {
+    //   const activeIsInBlocksArray = newBlocks.find(
+    //     (block) => block.id === active.id
+    //   );
+    //   if (!activeIsInBlocksArray) {
+    //     const currentItem = newBlocks.filter((block) => block.id === active.id);
+    //     newItem.push({ id: active.id, name: currentItem.name });
+    //   }
+    //   console.log({ newItem });
+    //   // const newItemsState = [...blocks, ...newItem];
+    //   setNewBlocks((items) => {
+    //     const activeIndex = items
+    //       .map((mapItem) => mapItem.id)
+    //       .indexOf(active.id);
+    //     const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
+    //     return arrayMove(items, activeIndex, overIndex);
+    //   });
+
+    // if (blocks.some((block) => block.id === active.id)) {
+    //   console.log("TRUE");
+    // }
+
+    const activeIsInBlocksArray = newBlocks.some(
+      (block) => block.id === active.id
+    );
+
+    console.log("IS IN BLOCKS ARR", activeIsInBlocksArray);
+
+    // re-ordering logic
     if (active.id !== over.id) {
-      setNewBlocks((items) => {
-        const activeIndex = items
-          .map((mapItem) => mapItem.id)
-          .indexOf(active.id);
-        const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
-        return arrayMove(items, activeIndex, overIndex);
-      });
+      if (activeIsInBlocksArray) {
+        setNewBlocks((items) => {
+          const activeIndex = items
+            .map((mapItem) => mapItem.id)
+            .indexOf(active.id);
+          const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
+          return arrayMove(items, activeIndex, overIndex);
+        });
+      } else {
+        console.log("RUNNINGNGNGNGNGNGN");
+        const currentItem = newComponents.filter(
+          (comp: any) => comp.id === active.id
+        );
+        setNewBlocks((prev) => {
+          return [
+            ...prev,
+            { id: String(Math.random() * 200), name: currentItem[0].name },
+          ];
+        });
+      }
     }
   }
 
@@ -129,6 +185,27 @@ export default function CampaignBuilder() {
             </div>
             <div className="min-w-[600px] max-w-[600px] bg-red-500">
               <DndContext
+                modifiers={[restrictToVerticalAxis]}
+                collisionDetection={closestCenter}
+                onDragEnd={handleSortableDragEnd}
+                onDragOver={(e) => {
+                  setCurrentOverId(e.over?.id);
+                  // console.log("OVER", e);
+                }}
+                id="1"
+              >
+                <SortableContext
+                  items={newBlocks.map((item) => item.name)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {newBlocks.map((item) => (
+                    <SortableItem id={item.id}>{item.name}</SortableItem>
+                  ))}
+                </SortableContext>
+                <br />
+                <EditEmailContainer title="components" items={newComponents} />
+              </DndContext>
+              {/* <DndContext
                 id="0"
                 collisionDetection={rectIntersection}
                 onDragEnd={handleNewDragEnd}
@@ -137,7 +214,7 @@ export default function CampaignBuilder() {
 
                 <br />
                 <EditEmailContainer title="components" items={newComponents} />
-              </DndContext>
+              </DndContext> */}
             </div>
           </div>
         </div>

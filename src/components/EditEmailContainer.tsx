@@ -7,15 +7,16 @@ interface KanbanLaneProps {
 }
 
 export default function EditEmailContainer({ title, items }: KanbanLaneProps) {
-  const { setNodeRef } = useDroppable({
+  const { isOver, setNodeRef } = useDroppable({
     id: title,
     data: {
       title,
       items,
     },
   }); // added 'data' obj in - not sure if necessary
+
   return (
-    <div>
+    <div className={`${isOver ? "bg-yellow-500" : ""}`}>
       <div className="flex flex-col" ref={setNodeRef}>
         {items.map((item, key) => (
           <DraggableComponent
