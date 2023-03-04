@@ -23,9 +23,9 @@ export default function Button({
           appearance === "primary"
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : appearance === "secondary"
-            ? "border-gray-400 bg-gray-50 text-gray-700 hover:bg-gray-100"
+            ? "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50"
             : null
-        } inline-flex items-center rounded border border-transparent  px-2.5 py-1.5 text-xs font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2  disabled:cursor-not-allowed disabled:opacity-75`}
+        }  rounded-md py-1.5 px-2.5 text-xs font-medium  shadow-sm ring-1 ring-inset  disabled:cursor-not-allowed disabled:opacity-75`}
         {...delegated}
       >
         {children}
