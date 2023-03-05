@@ -57,12 +57,14 @@ export default function CampaignBuilder() {
     if (getCampaignEditorInfo.data && blocks?.length === 1) {
       const blocks = JSON.parse(getCampaignEditorInfo.data.blocks as string);
       console.log("DB blocks", blocks);
-      const newBlocks = blocks.map((item: any) => {
-        item.element = generateElement(item.componentName, item.attributes);
-        return item;
-      });
-      console.log(blocks);
-      setBlocks(newBlocks);
+      if (blocks) {
+        const newBlocks = blocks.map((item: any) => {
+          item.element = generateElement(item.componentName, item.attributes);
+          return item;
+        });
+        console.log(blocks);
+        setBlocks(newBlocks);
+      }
     }
   }, [getCampaignEditorInfo.data]);
 
@@ -175,14 +177,18 @@ export default function CampaignBuilder() {
             </div>
             <div className="flex justify-center pt-12">
               <div className="min-w-[600px] max-w-[600px] bg-gray-200">
-                <CampaignEditorEmailBody
-                  blocks={blocks}
-                  isDragInProgress={isDragInProgress}
-                  handleDeleteBlock={handleDeleteBlock}
-                  setIsEditing={setIsEditing}
-                  isEditing={isEditing}
-                  setEditorValues={setEditorValues}
-                />
+                {getCampaignEditorInfo.isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <CampaignEditorEmailBody
+                    blocks={blocks}
+                    isDragInProgress={isDragInProgress}
+                    handleDeleteBlock={handleDeleteBlock}
+                    setIsEditing={setIsEditing}
+                    isEditing={isEditing}
+                    setEditorValues={setEditorValues}
+                  />
+                )}
               </div>
             </div>
           </div>

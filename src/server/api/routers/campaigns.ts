@@ -62,11 +62,11 @@ export const campaignsRouter = createTRPCRouter({
   getCampaignInfo: protectedProcedure
     .input(z.object({ campaignId: z.string().nullish() }))
     .query(async ({ ctx, input }) => {
-      if (!input.campaignId) return null;
+      if (!input || !input.campaignId) return null;
       try {
         return await ctx.prisma.campaign.findUnique({
           where: {
-            id: input.campaignId,
+            id: input.campaignId as string,
           },
           select: {
             id: true,
