@@ -1,3 +1,5 @@
+import { HeadingTextProps } from "~/campaignEditor/utils/blockattributes";
+
 export default function HeadingText({
   text,
   backgroundColor,

@@ -18,6 +18,7 @@ import {
   generateElement,
   getDefaultAttributeValues,
 } from "~/campaignEditor/utils/campaignEditorUtils";
+import { toast, Toaster } from "react-hot-toast";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -30,7 +31,8 @@ export default function CampaignBuilder() {
     { name: "Global Styles", current: false },
   ]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
-  const [dragOver, setDragOver] = useState<UniqueIdentifier | undefined>();
+  const [isDragInProgress, setIsDragInProgress] = useState(false);
+  const [isEditing, setIsEditing] = useState({ blockId: "", current: false });
 
   const [blocks, setBlocks] = useState<any[]>([
     {
@@ -40,8 +42,6 @@ export default function CampaignBuilder() {
       attributes: getDefaultAttributeValues("HeadingText"),
     },
   ]);
-
-  console.log({ blocks });
 
   const [components, setComponents] = useState<any>([
     { id: "HeadingText", name: "Heading" },
@@ -55,6 +55,7 @@ export default function CampaignBuilder() {
   ]);
 
   function handleSortableDragEnd(event: any) {
+    setIsDragInProgress(false);
     const { active, over } = event;
 
     const activeIsInBlocksArray = blocks.some(
@@ -63,28 +64,21 @@ export default function CampaignBuilder() {
 
     if (active.id !== over.id) {
       setActiveId(undefined);
-      if (activeIsInBlocksArray) {
-        setBlocks((items) => {
-          const activeIndex = items
-            .map((mapItem) => mapItem.id)
-            .indexOf(active.id);
-          const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
-          return arrayMove(items, activeIndex, overIndex);
-        });
-      } else {
-        const currentItem = components.filter(
-          (comp: any) => comp.id === active.id
-        );
-        setBlocks((items) => {
-          const activeIndex = items
-            .map((mapItem: any) => mapItem.id)
-            .indexOf(active.id);
-          const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
 
+      setBlocks((items) => {
+        const activeIndex = items
+          .map((mapItem) => mapItem.id)
+          .indexOf(active.id);
+        const overIndex = items.map((mapItem) => mapItem.id).indexOf(over.id);
+        if (activeIsInBlocksArray) {
+          return arrayMove(items, activeIndex, overIndex);
+        } else {
           if (over.id === "components") {
             return items;
           } else {
-            console.log({ currentItem });
+            const currentItem = components.filter(
+              (comp: any) => comp.id === active.id
+            );
             const componentName = currentItem[0].id;
             const attributes = getDefaultAttributeValues(componentName);
             return arrayMove(
@@ -100,25 +94,38 @@ export default function CampaignBuilder() {
               activeIndex,
               overIndex
             );
-            // { id: String(Math.random() * 200), name: currentItem[0].name }
           }
-        });
-      }
+        }
+      });
     }
   }
 
+  const handleDeleteBlock = (id: string) => {
+    if (blocks.length === 1) {
+      toast.error("You must have at least one block", {
+        position: "bottom-center",
+      });
+    } else {
+      setBlocks((items) => {
+        return items.filter((item) => item.id !== id);
+      });
+      toast.success("Block deleted", {
+        position: "bottom-center",
+      });
+    }
+  };
+
   return (
     <DndContext
-      // modifiers={[restrictToVerticalAxis]}
       collisionDetection={closestCenter}
-      onDragStart={(e) => setActiveId(e.active.id)}
-      onDragEnd={handleSortableDragEnd}
-      onDragOver={(e: any) => {
-        // console.log("running");
-        setDragOver(e.active.id);
+      onDragStart={(e) => {
+        setActiveId(e.active.id);
+        setIsDragInProgress(true);
       }}
+      onDragEnd={handleSortableDragEnd}
       id="1"
     >
+      <Toaster />
       <div className="flex min-h-[100vh] flex-col">
         <CampaignEditNavBar router={router} />
         <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
@@ -127,6 +134,9 @@ export default function CampaignBuilder() {
               tabs={tabs}
               setTabs={setTabs}
               components={components}
+              blocks={blocks}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
             />
           </div>
           <div className="flex-1 bg-gray-50">
@@ -136,8 +146,13 @@ export default function CampaignBuilder() {
               </Button>
             </div>
             <div className="flex justify-center pt-12">
-              <div className="min-w-[600px] max-w-[600px] bg-red-500">
-                <CampaignEditorEmailBody blocks={blocks} />
+              <div className="min-w-[600px] max-w-[600px] bg-gray-700">
+                <CampaignEditorEmailBody
+                  blocks={blocks}
+                  isDragInProgress={isDragInProgress}
+                  handleDeleteBlock={handleDeleteBlock}
+                  setIsEditing={setIsEditing}
+                />
               </div>
             </div>
           </div>

@@ -15,3 +15,6 @@ export const generateElement = (componentName: string, attributes: any) => {
   }
   return element;
 };
+
+export const getIndexOfId = (id: string, blocks: any[]) =>
+  blocks.map((item) => item.id).indexOf(id);
