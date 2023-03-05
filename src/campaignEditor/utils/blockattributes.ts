@@ -37,18 +37,24 @@ export type ButtonProps = {
   borderRadius?: string;
 };
 
-export type Image = {
+export type ImageProps = {
   src?: string;
   alt?: string;
   padding?: string;
   backgroundColor?: string;
 };
 
+export type SpacerProps = {
+  backgroundColor?: string;
+  spacing?: string;
+};
+
 type BlockAttributes =
   | HeadingTextProps
   | ParagraphTextProps
   | ButtonProps
-  | Image;
+  | ImageProps
+  | SpacerProps;
 
 // separation of concerns - values need to be stored in different object to how the application uses those values
 
@@ -87,6 +93,10 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     padding: "10px",
     backgroundColor: "#ffffff",
   },
+  Spacer: {
+    backgroundColor: "#ffffff",
+    spacing: "40px",
+  },
 };
 
 type BlockInfo = {
@@ -116,9 +126,14 @@ export const blockInfo: { [index: string]: BlockInfo } = {
     label: "Padding (px)",
     options: ["0px", "10px", "20px", "30px"],
   },
+  spacing: {
+    inputType: "select",
+    label: "Spacing (px)",
+    options: ["10px", "20px", "30px", "40px"],
+  },
   text: { inputType: "text", label: "Text" },
   alt: { inputType: "text", label: "Alt Text" },
-  src: { inputType: "file", label: "Upload Image" },
+  src: { inputType: "file", label: "Image" },
   URLAddress: { inputType: "text", label: "URL Address" },
   backgroundColor: {
     inputType: "color",

@@ -1,14 +1,11 @@
+import { ImageProps } from "./utils/blockattributes";
+
 export default function EmailImage({
   src,
   alt,
   padding,
   backgroundColor,
-}: {
-  src: string;
-  alt: string;
-  padding: string;
-  backgroundColor: string;
-}) {
+}: ImageProps) {
   const styles = {
     container: {
       backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",

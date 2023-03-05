@@ -79,7 +79,7 @@ export default function CampaignBuilder() {
     { id: "NavBar", name: "NavBar" },
     { id: "Button", name: "Button" },
     { id: "Image", name: "Image" },
-    { id: "Spacing", name: "Spacing" },
+    { id: "Spacer", name: "Spacer" },
     { id: "Social", name: "Social Links" },
   ]);
 
@@ -109,16 +109,27 @@ export default function CampaignBuilder() {
           if (over.id === "components") {
             return items;
           } else {
+            const uniqueId = uuidv4();
             const currentItem = components.filter(
               (comp: any) => comp.id === active.id
             );
+
             const componentName = currentItem[0].id;
             const attributes = getDefaultAttributeValues(componentName);
+
+            setIsEditing({
+              blockId: uniqueId,
+              current: true,
+              initialValues: attributes!,
+            });
+
+            setEditorValues(attributes as any);
+
             return arrayMove(
               [
                 ...items,
                 {
-                  id: uuidv4(),
+                  id: uniqueId,
                   element: generateElement(componentName, attributes),
                   componentName: componentName,
                   attributes: attributes,
@@ -187,13 +198,13 @@ export default function CampaignBuilder() {
               setGlobalStyles={setGlobalStyles}
             />
           </div>
-          <div className="flex-1 bg-gray-50">
-            <div className="flex h-[62px] items-center justify-end border-b border-gray-200 bg-white px-6">
+          <div className="max-h-[calc(100vh-122px)] flex-1 overflow-auto bg-gray-200">
+            <div className="sticky top-0 flex h-[62px] w-full items-center justify-end border-b border-gray-200 bg-white px-6">
               <Button appearance="secondary" size="sm">
                 Send Preview
               </Button>
             </div>
-            <div className="flex justify-center pt-12">
+            <div className="flex justify-center py-12">
               <div className="min-w-[600px] max-w-[600px] bg-gray-200">
                 {getCampaignEditorInfo.isLoading ? (
                   <p>Loading...</p>

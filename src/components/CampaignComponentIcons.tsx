@@ -34,7 +34,7 @@ export default function CampaignComponentIcons({
             <CursorArrowRaysIcon className={iconStyles} />
           ) : id === "Social" ? (
             <MegaphoneIcon className={iconStyles} />
-          ) : id === "Spacing" ? (
+          ) : id === "Spacer" ? (
             <Bars2Icon className={iconStyles} />
           ) : id === "List" ? (
             <ListBulletIcon className={iconStyles} />

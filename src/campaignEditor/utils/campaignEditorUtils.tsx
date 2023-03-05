@@ -1,4 +1,5 @@
 import EmailButton from "../EmailButton";
+import Spacer from "../Spacer";
 import EmailImage from "../EmailImage";
 import HeadingText from "../HeadingText";
 import ParagraphText from "../ParagraphText";
@@ -18,6 +19,8 @@ export const generateElement = (componentName: string, attributes: any) => {
     element = <EmailButton {...attributes} />;
   } else if (componentName === "Image") {
     element = <EmailImage {...attributes} />;
+  } else if (componentName === "Spacer") {
+    element = <Spacer {...attributes} />;
   }
   return element;
 };
