@@ -3,7 +3,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { component } from "~/campaignEditor/utils/blockattributes";
+import { Block } from "~/campaignEditor/utils/blockattributes";
 import SortableItem from "./SortableItem";
 
 export default function CampaignEditorEmailBody({
@@ -14,7 +14,7 @@ export default function CampaignEditorEmailBody({
   isEditing,
   setEditorValues,
 }: {
-  blocks: component[];
+  blocks: Block[];
   isDragInProgress: boolean;
   handleDeleteBlock: (id: string) => void;
   setEditorValues: React.Dispatch<React.SetStateAction<any>>;

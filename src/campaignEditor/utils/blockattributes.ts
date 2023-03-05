@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type component = {
+export type Block = {
   id: string;
   element: ReactNode;
   componentName: string;

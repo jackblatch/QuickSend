@@ -21,3 +21,15 @@ export const generateElement = (componentName: string, attributes: any) => {
 
 export const getIndexOfId = (id: string, blocks: any[]) =>
   blocks.map((item) => item.id).indexOf(id);
+
+export const parseAndGenerateBlocks = (stringifiedBlocks: string) => {
+  const blocks = JSON.parse(stringifiedBlocks);
+  if (blocks) {
+    const newBlocks = blocks.map((item: any) => {
+      item.element = generateElement(item.componentName, item.attributes);
+      return item;
+    });
+    return newBlocks;
+  }
+  return false;
+};
