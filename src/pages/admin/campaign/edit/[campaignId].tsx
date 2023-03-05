@@ -19,6 +19,7 @@ import {
   getDefaultAttributeValues,
 } from "~/campaignEditor/utils/campaignEditorUtils";
 import { toast, Toaster } from "react-hot-toast";
+import { api } from "~/utils/api";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -39,6 +40,10 @@ export default function CampaignBuilder() {
   });
   const [editorValues, setEditorValues] = useState();
 
+  const getCampaignEditorInfo = api.campaigns.getCampaignEditorInfo.useQuery({
+    campaignId: router.query.campaignId as string,
+  });
+
   const [blocks, setBlocks] = useState<any[]>([
     {
       id: "1",
@@ -47,6 +52,19 @@ export default function CampaignBuilder() {
       attributes: getDefaultAttributeValues("HeadingText"),
     },
   ]);
+
+  useEffect(() => {
+    if (getCampaignEditorInfo.data && blocks?.length === 1) {
+      const blocks = JSON.parse(getCampaignEditorInfo.data.blocks as string);
+      console.log("DB blocks", blocks);
+      const newBlocks = blocks.map((item: any) => {
+        item.element = generateElement(item.componentName, item.attributes);
+        return item;
+      });
+      console.log(blocks);
+      setBlocks(newBlocks);
+    }
+  }, [getCampaignEditorInfo.data]);
 
   const [components, setComponents] = useState<any>([
     { id: "HeadingText", name: "Heading" },

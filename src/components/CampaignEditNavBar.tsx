@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { api } from "~/utils/api";
 import Button from "./Button";
 import CircleSteps from "./CircleSteps";
 import Logo from "./Logo";
@@ -10,8 +12,9 @@ export default function CampaignEditNavBar({
   router: any;
   blocks: any[];
 }) {
-  const { campaignId } = router.query;
+  const updateCampaignBlocks = api.campaigns.updateCampaignBlocks.useMutation();
 
+  const { campaignId } = router.query;
   const [steps, setSteps] = useState<
     {
       name: string;
@@ -52,7 +55,28 @@ export default function CampaignEditNavBar({
 
   const handleSaveAndExit = () => {
     // save to DB
-    router.push(`/admin/campaign/view/${campaignId}`);
+    const blocksForDB = blocks.map((block) => ({
+      id: block.id,
+      attributes: block.attributes,
+      componentName: block.componentName,
+    }));
+    toast.promise(
+      updateCampaignBlocks.mutateAsync({
+        campaignId,
+        blocks: JSON.stringify(blocksForDB),
+      }),
+      {
+        loading: "Saving...",
+        success: () => {
+          router.push(`/admin/campaign/view/${campaignId}`);
+          return "Campaign saved";
+        },
+        error: "Error saving",
+      },
+      {
+        position: "bottom-center",
+      }
+    );
   };
 
   return (

@@ -131,4 +131,67 @@ export const campaignsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  updateCampaignBlocks: protectedProcedure
+    .input(z.object({ campaignId: z.string(), blocks: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const isUserAuthorisedToEditCampaign = async () => {
+          const campaign = await ctx.prisma.campaign.findUnique({
+            where: {
+              id: input.campaignId,
+            },
+          });
+          if (campaign?.userId !== ctx.session.user.id) {
+            throw new TRPCError({ code: "UNAUTHORIZED" });
+          } else {
+            return true;
+          }
+        };
+        await isUserAuthorisedToEditCampaign();
+        return await ctx.prisma.campaign.update({
+          where: {
+            id: input.campaignId,
+          },
+          data: {
+            blocks: {
+              set: input.blocks,
+            },
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
+  getCampaignEditorInfo: protectedProcedure
+    .input(z.object({ campaignId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      if (!input.campaignId) return null;
+      try {
+        const isUserAuthorisedToEditCampaign = async () => {
+          const campaign = await ctx.prisma.campaign.findUnique({
+            where: {
+              id: input.campaignId,
+            },
+          });
+          if (campaign?.userId !== ctx.session.user.id) {
+            throw new TRPCError({ code: "UNAUTHORIZED" });
+          } else {
+            return true;
+          }
+        };
+        await isUserAuthorisedToEditCampaign();
+        return await ctx.prisma.campaign.findUnique({
+          where: {
+            id: input.campaignId,
+          },
+          select: {
+            id: true,
+            name: true,
+            blocks: true,
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
 });
