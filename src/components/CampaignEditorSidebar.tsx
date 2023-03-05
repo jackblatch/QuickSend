@@ -80,12 +80,12 @@ export default function CampaignEditorSidebar({
               {Object.entries(
                 blocks[getIndexOfId(isEditing.blockId, blocks)].attributes
               ).map(([indentifier], i) => {
-                const onChangeEvent = (e: any) => {
+                const onChangeEvent = (value: string) => {
                   {
                     setEditorValues((prev: any) => {
                       const newEditorValues = {
                         ...prev,
-                        [indentifier]: e.target.value,
+                        [indentifier]: value,
                       };
                       handleUpdateComponent(newEditorValues);
                       return newEditorValues;
@@ -102,7 +102,7 @@ export default function CampaignEditorSidebar({
                           label={String(blockInfo[indentifier]?.label)}
                           id={indentifier}
                           value={editorValues[indentifier]}
-                          onChange={(e: any) => onChangeEvent(e)}
+                          onChange={(e: any) => onChangeEvent(e.target.value)}
                         />
                       </>
                     ) : blockInfo[indentifier]?.inputType === "textarea" ? (
@@ -110,14 +110,14 @@ export default function CampaignEditorSidebar({
                         label={String(blockInfo[indentifier]?.label)}
                         id={indentifier}
                         value={editorValues[indentifier]}
-                        onChange={(e: any) => onChangeEvent(e)}
+                        onChange={(e: any) => onChangeEvent(e.target.value)}
                       />
                     ) : blockInfo[indentifier]?.inputType === "select" ? (
                       <EditorSelectMenu
                         label={String(blockInfo[indentifier]?.label)}
                         value={editorValues[indentifier]}
                         options={blockInfo[indentifier]?.options ?? []}
-                        setValue={(e: any) => onChangeEvent(e)}
+                        setValue={(value) => onChangeEvent(value)}
                       />
                     ) : (
                       ""
