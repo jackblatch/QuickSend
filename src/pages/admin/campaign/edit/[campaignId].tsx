@@ -6,7 +6,7 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/Button";
 import CampaignEditNavBar from "~/components/CampaignEditNavBar";
 import CampaignEditorSidebar from "~/components/CampaignEditorSidebar";
@@ -33,6 +33,7 @@ export default function CampaignBuilder() {
   const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
   const [isDragInProgress, setIsDragInProgress] = useState(false);
   const [isEditing, setIsEditing] = useState({ blockId: "", current: false });
+  const [editorValues, setEditorValues] = useState();
 
   const [blocks, setBlocks] = useState<any[]>([
     {
@@ -135,8 +136,11 @@ export default function CampaignBuilder() {
               setTabs={setTabs}
               components={components}
               blocks={blocks}
+              setBlocks={setBlocks}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
+              editorValues={editorValues}
+              setEditorValues={setEditorValues}
             />
           </div>
           <div className="flex-1 bg-gray-50">
@@ -152,6 +156,7 @@ export default function CampaignBuilder() {
                   isDragInProgress={isDragInProgress}
                   handleDeleteBlock={handleDeleteBlock}
                   setIsEditing={setIsEditing}
+                  setEditorValues={setEditorValues}
                 />
               </div>
             </div>
