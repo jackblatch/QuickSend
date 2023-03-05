@@ -9,10 +9,12 @@ export default function CampaignEditNavBar({
   router,
   blocks,
   campaignName,
+  globalStyles,
 }: {
   router: any;
   blocks: any[];
   campaignName: string;
+  globalStyles: { fontFamily: string };
 }) {
   const utils = api.useContext();
   const updateCampaignBlocks = api.campaigns.updateCampaignBlocks.useMutation({
@@ -69,6 +71,7 @@ export default function CampaignEditNavBar({
       updateCampaignBlocks.mutateAsync({
         campaignId,
         blocks: JSON.stringify(blocksForDB),
+        globalStyles: JSON.stringify(globalStyles),
       }),
       {
         loading: "Saving...",
@@ -88,7 +91,7 @@ export default function CampaignEditNavBar({
     <div className="flex flex-col items-center justify-between gap-8 bg-gray-800 p-3 px-6 lg:flex-row lg:gap-0">
       <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-10">
         <Logo justifyContent="start" type="iconAndText" colorTheme="light" />
-        <h2 className="text-md max-w-[300px] truncate font-semibold text-gray-200">
+        <h2 className="text-md w-[250px] max-w-[250px] truncate font-semibold text-gray-200">
           Email Campaign {campaignName}
         </h2>
       </div>

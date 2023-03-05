@@ -75,6 +75,7 @@ export const campaignsRouter = createTRPCRouter({
             sendFromName: true,
             createdAt: true,
             updatedAt: true,
+            blocks: true,
             list: {
               select: {
                 id: true,
@@ -132,7 +133,13 @@ export const campaignsRouter = createTRPCRouter({
       }
     }),
   updateCampaignBlocks: protectedProcedure
-    .input(z.object({ campaignId: z.string(), blocks: z.string() }))
+    .input(
+      z.object({
+        campaignId: z.string(),
+        blocks: z.string(),
+        globalStyles: z.string(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       try {
         const isUserAuthorisedToEditCampaign = async () => {
@@ -153,9 +160,8 @@ export const campaignsRouter = createTRPCRouter({
             id: input.campaignId,
           },
           data: {
-            blocks: {
-              set: input.blocks,
-            },
+            blocks: input.blocks,
+            globalStyles: input.globalStyles,
           },
         });
       } catch (err) {
@@ -188,6 +194,7 @@ export const campaignsRouter = createTRPCRouter({
             id: true,
             name: true,
             blocks: true,
+            globalStyles: true,
           },
         });
       } catch (err) {

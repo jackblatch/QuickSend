@@ -7,6 +7,7 @@ import Button from "~/components/Button";
 import CampaignInputFields from "~/components/CampaignInputFields";
 import DescriptionRow from "~/components/DescriptionRow";
 import LineTabs from "~/components/LineTabs";
+import VerticalSteps from "~/components/VerticalSteps";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
 
@@ -152,8 +153,29 @@ function CampaignDetails() {
                 Manage Campaign
               </h2>
               <div className="mt-6 flex flex-col gap-4">
-                <div className="h-[300px] rounded-md bg-gray-300 p-4">
-                  Preview image of components
+                <div className="flex w-full items-center justify-start rounded-md bg-gray-100 p-8">
+                  <VerticalSteps
+                    steps={[
+                      {
+                        name: "Step 1",
+                        description:
+                          "Create a new campaign and enter your campaign details",
+                        status: "complete",
+                      },
+                      {
+                        name: "Step 2",
+                        description:
+                          "Design your campaign with our drag and drop editor",
+                        status: "current",
+                      },
+                      {
+                        name: "Step 3",
+                        description:
+                          "Send your campaign and have it received by your recipients",
+                        status: "upcoming",
+                      },
+                    ]}
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Button
@@ -174,6 +196,10 @@ function CampaignDetails() {
                     onClick={() => {
                       router.push(`/admin/campaign/preview/${campaignId}`);
                     }}
+                    disabled={
+                      !getCampaignInfo?.data?.blocks ||
+                      getCampaignInfo.isLoading
+                    }
                   >
                     <div className="flex items-center justify-center gap-2">
                       <p className="col-span-1">Preview</p>
@@ -181,7 +207,13 @@ function CampaignDetails() {
                     </div>
                   </Button>
                 </div>
-                <Button appearance="primary" size="md">
+                <Button
+                  appearance="primary"
+                  size="md"
+                  disabled={
+                    !getCampaignInfo?.data?.blocks || getCampaignInfo.isLoading
+                  }
+                >
                   <p className="col-span-1">Send Campaign</p>
                 </Button>
               </div>
@@ -204,12 +236,16 @@ export default function () {
   const pages = useMemo(() => {
     return [
       { name: "Campaigns", href: "/admin/campaigns", current: false },
-      { name: campaignName ?? "", href: "#", current: true },
+      {
+        name: `Email Campaign ${campaignName}` ?? "",
+        href: "#",
+        current: true,
+      },
     ];
   }, [getCampaignInfo.data]);
 
   return (
-    <AdminLayout pageHeading={campaignName} pages={pages}>
+    <AdminLayout pageHeading={`Email Campaign ${campaignName}`} pages={pages}>
       <CampaignDetails />
     </AdminLayout>
   );

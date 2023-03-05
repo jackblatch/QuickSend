@@ -29,8 +29,8 @@ export default function NewCampaignSlideOver({
   const createCampaign = api.campaigns.createCampaign.useMutation();
 
   const [selectedList, setSelectedList] = useState({
-    id: listData[0]?.id ?? "",
-    value: listData[0]?.name ?? "",
+    id: "",
+    value: "",
   });
 
   const handleSubmit = (e: FormEvent) => {
@@ -45,7 +45,7 @@ export default function NewCampaignSlideOver({
       {
         loading: "Creating campaign...",
         success: (res) => {
-          router.push(`/admin/campaign/${res.id}`);
+          router.push(`/admin/campaign/view/${res.id}`);
           return "Campaign created!";
         },
         error: "Error creating campaign",

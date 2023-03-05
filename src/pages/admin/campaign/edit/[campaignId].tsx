@@ -64,6 +64,12 @@ export default function CampaignBuilder() {
         console.log(blocks);
         setBlocks(newBlocks);
       }
+      const globalStyles = JSON.parse(
+        getCampaignEditorInfo.data.globalStyles as string
+      );
+      if (globalStyles) {
+        setGlobalStyles(globalStyles);
+      }
     }
   }, [getCampaignEditorInfo.data]);
 
@@ -164,6 +170,7 @@ export default function CampaignBuilder() {
           router={router}
           blocks={blocks}
           campaignName={getCampaignEditorInfo?.data?.name ?? ""}
+          globalStyles={globalStyles}
         />
         <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
           <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
@@ -177,6 +184,8 @@ export default function CampaignBuilder() {
               setIsEditing={setIsEditing}
               editorValues={editorValues}
               setEditorValues={setEditorValues}
+              globalStyles={globalStyles}
+              setGlobalStyles={setGlobalStyles}
             />
           </div>
           <div className="flex-1 bg-gray-50">
