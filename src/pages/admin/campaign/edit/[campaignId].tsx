@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   closestCenter,
   DndContext,
@@ -9,13 +10,14 @@ import { useState } from "react";
 import Button from "~/components/Button";
 import CampaignEditNavBar from "~/components/CampaignEditNavBar";
 import CampaignEditorSidebar from "~/components/CampaignEditorSidebar";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { arrayMove } from "@dnd-kit/sortable";
 import SortableItem from "~/components/SortableItem";
 import CampaignEditorEmailBody from "~/components/CampaignEditorEmailBody";
+import HeadingText from "~/campaignEditor/HeadingText";
+import {
+  generateElement,
+  getDefaultAttributeValues,
+} from "~/campaignEditor/utils/campaignEditorUtils";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -30,15 +32,19 @@ export default function CampaignBuilder() {
   const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
   const [dragOver, setDragOver] = useState<UniqueIdentifier | undefined>();
 
-  const [blocks, setBlocks] = useState([
-    { id: "joh", name: "john" },
-    { id: "jer", name: "Jeremy" },
-    { id: "t", name: "Tim" },
-    { id: "M", name: "Matt" },
+  const [blocks, setBlocks] = useState<any[]>([
+    {
+      id: "1",
+      element: <HeadingText {...getDefaultAttributeValues("HeadingText")} />,
+      componentName: "HeadingText",
+      attributes: getDefaultAttributeValues("HeadingText"),
+    },
   ]);
 
+  console.log({ blocks });
+
   const [components, setComponents] = useState<any>([
-    { id: "Heading", name: "Heading" },
+    { id: "HeadingText", name: "Heading" },
     { id: "ParagraphText", name: "Body Text" },
     { id: "List", name: "List" },
     { id: "NavBar", name: "NavBar" },
@@ -78,14 +84,23 @@ export default function CampaignBuilder() {
           if (over.id === "components") {
             return items;
           } else {
+            console.log({ currentItem });
+            const componentName = currentItem[0].id;
+            const attributes = getDefaultAttributeValues(componentName);
             return arrayMove(
               [
                 ...items,
-                { id: String(Math.random() * 200), name: currentItem[0].name },
+                {
+                  id: uuidv4(),
+                  element: generateElement(componentName, attributes),
+                  componentName: componentName,
+                  attributes: attributes,
+                },
               ],
               activeIndex,
               overIndex
             );
+            // { id: String(Math.random() * 200), name: currentItem[0].name }
           }
         });
       }
@@ -132,14 +147,14 @@ export default function CampaignBuilder() {
           <p>Documentation</p>
         </div>
       </div>
-      <DragOverlay>
+      {/* <DragOverlay>
         {activeId && blocks.some((item) => item.id === activeId) ? (
           <SortableItem id={String(activeId)}>
             {blocks.find((item) => item.id === activeId)?.name ||
               components.find((item: any) => item.id === activeId)?.name}
           </SortableItem>
         ) : null}
-      </DragOverlay>
+      </DragOverlay> */}
     </DndContext>
   );
 }

@@ -24,7 +24,7 @@ export default function CampaignComponentIcons({
         <div className="rounded-md border-2 border-gray-800 p-1">
           {id === "ParagraphText" ? (
             <Bars3BottomLeftIcon className={iconStyles} />
-          ) : id === "Heading" ? (
+          ) : id === "HeadingText" ? (
             <ChatBubbleBottomCenterTextIcon className={iconStyles} />
           ) : id === "Image" ? (
             <PhotoIcon className={iconStyles} />
