@@ -7,12 +7,12 @@ export default function HeadingText({
   justifyContent,
   headingSize,
   fontWeight,
-  outerPadding,
+  padding,
 }: HeadingTextProps) {
   const styles = {
     container: {
       backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
-      padding: outerPadding !== "" ? outerPadding : "10px",
+      padding: padding !== "" ? padding : "10px",
     },
     heading: {
       fontSize:
@@ -34,18 +34,16 @@ export default function HeadingText({
   const Tag: any = headingSize;
 
   return (
-    <>
-      <table role="presentation" border={0} width="100%" cellSpacing={0}>
-        <tbody>
-          <tr>
-            <td style={styles.container}>
-              <Tag is={headingSize} style={styles.heading}>
-                {text}
-              </Tag>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </>
+    <table role="presentation" border={0} width="100%" cellSpacing={0}>
+      <tbody>
+        <tr>
+          <td style={styles.container}>
+            <Tag is={headingSize} style={styles.heading}>
+              {text}
+            </Tag>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 }

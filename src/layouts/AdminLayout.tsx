@@ -16,6 +16,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Breadcrumbs from "~/components/Breadcrumbs";
+import { useSession } from "next-auth/react";
 
 const initialNavigation = [
   {
@@ -57,6 +58,8 @@ export default function AdminLayout({
   const [navigation, setNavigation] = useState(initialNavigation);
 
   const router = useRouter();
+
+  const { data: session } = useSession();
 
   useEffect(() => {
     const res = navigation.map((item) => {
@@ -161,16 +164,19 @@ export default function AdminLayout({
                   <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
                     <Link href="#" className="group block flex-shrink-0">
                       <div className="flex items-center">
-                        <div>
+                        {/* <div>
                           <img
                             className="inline-block h-10 w-10 rounded-full"
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                             alt=""
                           />
+                        </div> */}
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 p-1 text-sm text-white">
+                          {`${session?.user?.firstName[0]}${session?.user?.lastName[0]}`}
                         </div>
                         <div className="ml-3">
                           <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                            Tom Cook
+                            {`${session?.user?.firstName} ${session?.user?.lastName}`}
                           </p>
                           <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
                             View profile
@@ -222,15 +228,18 @@ export default function AdminLayout({
               <Link href="#" className="group block w-full flex-shrink-0">
                 <div className="flex items-center">
                   <div>
-                    <img
+                    {/* <img
                       className="inline-block h-9 w-9 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
-                    />
+                    /> */}
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-600 p-1 text-sm text-white">
+                      {`${session?.user?.firstName[0]}${session?.user?.lastName[0]}`}
+                    </div>
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                      Tom Cook
+                      {`${session?.user?.firstName} ${session?.user?.lastName}`}
                     </p>
                     <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
                       View profile

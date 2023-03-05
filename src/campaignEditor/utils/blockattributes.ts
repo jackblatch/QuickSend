@@ -14,7 +14,7 @@ export type HeadingTextProps = {
   justifyContent?: string;
   headingSize?: string;
   fontWeight?: string;
-  outerPadding?: string;
+  padding?: string;
 };
 
 export type ParagraphTextProps = {
@@ -37,7 +37,18 @@ export type ButtonProps = {
   borderRadius?: string;
 };
 
-type BlockAttributes = HeadingTextProps | ParagraphTextProps | ButtonProps;
+export type Image = {
+  src?: string;
+  alt?: string;
+  padding?: string;
+  backgroundColor?: string;
+};
+
+type BlockAttributes =
+  | HeadingTextProps
+  | ParagraphTextProps
+  | ButtonProps
+  | Image;
 
 // separation of concerns - values need to be stored in different object to how the application uses those values
 
@@ -49,7 +60,7 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     justifyContent: "left",
     headingSize: "h1",
     fontWeight: "bold",
-    outerPadding: "10px",
+    padding: "10px",
   },
   ParagraphText: {
     paragraphText: "Add text here",
@@ -57,6 +68,7 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     textColor: "#000000",
     justifyContent: "left",
     fontWeight: "normal",
+    padding: "10px",
   },
   Button: {
     text: "Your button text",
@@ -68,6 +80,12 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     buttonPadding: "10px",
     outerPadding: "10px",
     borderRadius: "5px",
+  },
+  Image: {
+    src: "",
+    alt: "",
+    padding: "10px",
+    backgroundColor: "#ffffff",
   },
 };
 
@@ -93,7 +111,14 @@ export const blockInfo: { [index: string]: BlockInfo } = {
     label: "Outer Padding (px)",
     options: ["10px", "20px", "30px"],
   },
+  padding: {
+    inputType: "select",
+    label: "Padding (px)",
+    options: ["0px", "10px", "20px", "30px"],
+  },
   text: { inputType: "text", label: "Text" },
+  alt: { inputType: "text", label: "Alt Text" },
+  src: { inputType: "file", label: "Upload Image" },
   URLAddress: { inputType: "text", label: "URL Address" },
   backgroundColor: {
     inputType: "color",

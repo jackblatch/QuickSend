@@ -1,4 +1,5 @@
 import EmailButton from "../EmailButton";
+import EmailImage from "../EmailImage";
 import HeadingText from "../HeadingText";
 import ParagraphText from "../ParagraphText";
 import { blockAttributes } from "./blockattributes";
@@ -15,6 +16,8 @@ export const generateElement = (componentName: string, attributes: any) => {
     element = <ParagraphText {...attributes} />;
   } else if (componentName === "Button") {
     element = <EmailButton {...attributes} />;
+  } else if (componentName === "Image") {
+    element = <EmailImage {...attributes} />;
   }
   return element;
 };

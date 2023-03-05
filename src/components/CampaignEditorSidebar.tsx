@@ -9,6 +9,8 @@ import { blockInfo } from "~/campaignEditor/utils/blockattributes";
 import EditorInputField from "~/campaignEditor/EditorInputField";
 import EditorTextArea from "~/campaignEditor/EditorTextArea";
 import EditorSelectMenu from "~/campaignEditor/EditorSelectMenu";
+import { useState } from "react";
+import EditorImageUpload from "~/campaignEditor/EditorImageUpload";
 
 type Tabs = {
   name: string;
@@ -66,12 +68,14 @@ export default function CampaignEditorSidebar({
     setBlocks(newBlocks);
   };
 
+  console.log({ editorValues });
+
   return (
     <>
       <LineTabs tabs={tabs} setTabs={setTabs} />
       <div className="flex flex-col items-center justify-start p-6">
         <div className="mb-4 h-full w-full">
-          <h3 className="text-left text-sm font-semibold uppercase text-gray-700">
+          <h3 className="text-md border-b border-gray-200 p-1 text-left font-semibold uppercase text-gray-700">
             {tabs[0]?.current && isEditing.current
               ? "Block Editor"
               : tabs[0]?.current
@@ -130,6 +134,16 @@ export default function CampaignEditorSidebar({
                             options={blockInfo[indentifier]?.options ?? []}
                             setValue={(value) => onChangeEvent(value)}
                           />
+                        ) : blockInfo[indentifier]?.inputType === "file" ? (
+                          <div>
+                            <p className="mb-2">
+                              {String(blockInfo[indentifier]?.label)}
+                            </p>
+                            <EditorImageUpload
+                              editorValues={editorValues}
+                              onChangeEvent={onChangeEvent}
+                            />
+                          </div>
                         ) : (
                           ""
                         )}
