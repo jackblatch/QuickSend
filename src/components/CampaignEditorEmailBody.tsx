@@ -23,6 +23,7 @@ export default function CampaignEditorEmailBody({
   }: {
     blockId: string;
     current: boolean;
+    initialValues: any;
   }) => void;
 }) {
   return (
@@ -37,7 +38,11 @@ export default function CampaignEditorEmailBody({
               <button
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-white"
                 onClick={() => {
-                  setIsEditing({ blockId: item.id, current: true });
+                  setIsEditing({
+                    blockId: item.id,
+                    current: true,
+                    initialValues: item.attributes,
+                  });
                   setEditorValues(item.attributes);
                 }}
               >

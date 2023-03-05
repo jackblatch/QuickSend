@@ -13,7 +13,7 @@ export default function EditorInputField({
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-gray-900"
+        className="text-md block font-medium leading-6 text-gray-900"
       >
         {label}
       </label>

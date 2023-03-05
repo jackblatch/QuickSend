@@ -1,6 +1,3 @@
-import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
-import Draggable from "./DraggableComponent";
-import DraggableEmailBlocksGroup from "./CampaignComponentIcons";
 import CampaignComponentsGroup from "./CampaignComponentsGroup";
 import LineTabs from "./LineTabs";
 import Button from "./Button";
@@ -9,8 +6,8 @@ import {
   getIndexOfId,
 } from "~/campaignEditor/utils/campaignEditorUtils";
 import { blockInfo } from "~/campaignEditor/utils/blockattributes";
-import InputWithLabel from "./InputWithLabel";
 import EditorInputField from "~/campaignEditor/EditorInputField";
+import { useEffect, useState } from "react";
 
 type Tabs = {
   name: string;
@@ -20,6 +17,13 @@ type Tabs = {
 type isEditing = {
   blockId: string;
   current: boolean;
+  initialValues: any;
+};
+
+const initialIsEditingValues = {
+  blockId: "",
+  current: false,
+  initialValues: {},
 };
 
 export default function CampaignEditorSidebar({
@@ -43,7 +47,7 @@ export default function CampaignEditorSidebar({
   editorValues: any;
   setEditorValues: React.Dispatch<React.SetStateAction<any>>;
 }) {
-  console.log(editorValues);
+  console.log({ editorValues });
 
   const handleUpdateComponent = (newEditorValues: any) => {
     const newBlocks = [...blocks];
@@ -70,46 +74,57 @@ export default function CampaignEditorSidebar({
         </div>
         {isEditing.current ? (
           <div className="w-[400px] p-6">
-            <div>
+            <div className="flex flex-col justify-start gap-6">
               {Object.entries(
                 blocks[getIndexOfId(isEditing.blockId, blocks)].attributes
-              ).map(([indentifier, value], i) => (
-                <div key={i}>
-                  {blockInfo[indentifier]?.inputType === "text" ||
-                  blockInfo[indentifier]?.inputType === "color" ? (
-                    <>
-                      <EditorInputField
-                        type={String(blockInfo[indentifier]?.inputType)}
-                        label={String(blockInfo[indentifier]?.label)}
-                        id={indentifier}
-                        value={editorValues[indentifier]}
-                        onChange={(e: any) => {
-                          setEditorValues((prev: any) => {
-                            const newEditorValues = {
-                              ...prev,
-                              [indentifier]: e.target.value,
-                            };
-                            handleUpdateComponent(newEditorValues);
-                            return newEditorValues;
-                          });
-                        }}
-                      />
-                      <p>TEXT</p>
-                      <p>LABEL: {blockInfo[indentifier]?.label}</p>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                // <p>{item[0]}</p>
-                // <p>{JSON.stringify(blockInfo[item[0]]?.inputType)}</p>
-              ))}
+              ).map(([indentifier], i) => {
+                return (
+                  <div key={i}>
+                    {blockInfo[indentifier]?.inputType === "text" ||
+                    blockInfo[indentifier]?.inputType === "color" ? (
+                      <>
+                        <EditorInputField
+                          type={String(blockInfo[indentifier]?.inputType)}
+                          label={String(blockInfo[indentifier]?.label)}
+                          id={indentifier}
+                          value={editorValues[indentifier]}
+                          onChange={(e: any) => {
+                            setEditorValues((prev: any) => {
+                              const newEditorValues = {
+                                ...prev,
+                                [indentifier]: e.target.value,
+                              };
+                              handleUpdateComponent(newEditorValues);
+                              return newEditorValues;
+                            });
+                          }}
+                        />
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                );
+              })}
             </div>
             <div className="flex w-full items-center justify-end gap-2">
-              <Button appearance="secondary" size="md">
+              <Button
+                appearance="secondary"
+                size="md"
+                onClick={() => {
+                  handleUpdateComponent(isEditing.initialValues);
+                  setIsEditing(initialIsEditingValues);
+                }}
+              >
                 Cancel
               </Button>
-              <Button appearance="primary" size="md">
+              <Button
+                appearance="primary"
+                size="md"
+                onClick={() => {
+                  setIsEditing(initialIsEditingValues);
+                }}
+              >
                 Save
               </Button>
             </div>

@@ -32,7 +32,11 @@ export default function CampaignBuilder() {
   ]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
   const [isDragInProgress, setIsDragInProgress] = useState(false);
-  const [isEditing, setIsEditing] = useState({ blockId: "", current: false });
+  const [isEditing, setIsEditing] = useState({
+    blockId: "",
+    current: false,
+    initialValues: {},
+  });
   const [editorValues, setEditorValues] = useState();
 
   const [blocks, setBlocks] = useState<any[]>([
