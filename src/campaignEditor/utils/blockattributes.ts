@@ -24,7 +24,19 @@ export type ParagraphTextProps = {
   fontWeight?: string;
 };
 
-type BlockAttributes = HeadingTextProps | ParagraphTextProps;
+export type ButtonProps = {
+  text?: string;
+  buttonBackgroundColor?: string;
+  buttonTextColor?: string;
+  backgroundColor?: string;
+  fontWeight?: string;
+  URLAddress?: string;
+  buttonPadding?: string;
+  outerPadding?: string;
+  borderRadius?: string;
+};
+
+type BlockAttributes = HeadingTextProps | ParagraphTextProps | ButtonProps;
 
 // separation of concerns - values need to be stored in different object to how the application uses those values
 
@@ -44,6 +56,17 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     justifyContent: "left",
     fontWeight: "normal",
   },
+  Button: {
+    text: "Your button text",
+    buttonBackgroundColor: "#000000",
+    buttonTextColor: "#ffffff",
+    backgroundColor: "#ffffff",
+    fontWeight: "normal",
+    URLAddress: "#",
+    buttonPadding: "10px",
+    outerPadding: "10px",
+    borderRadius: "5px",
+  },
 };
 
 type BlockInfo = {
@@ -53,12 +76,33 @@ type BlockInfo = {
 };
 
 export const blockInfo: { [index: string]: BlockInfo } = {
+  borderRadius: {
+    inputType: "select",
+    label: "Border Radius (px)",
+    options: ["0px", "5px", "10px", "20px"],
+  },
+  buttonPadding: {
+    inputType: "select",
+    label: "Button Padding (px)",
+    options: ["5px 10px", "10px 20px", "20px 40px"],
+  },
+  outerPadding: {
+    inputType: "select",
+    label: "Outer Padding (px)",
+    options: ["10px", "20px", "30px"],
+  },
   text: { inputType: "text", label: "Text" },
+  URLAddress: { inputType: "text", label: "URL Address" },
   backgroundColor: {
     inputType: "color",
     label: "Background Color",
   },
+  buttonBackgroundColor: {
+    inputType: "color",
+    label: "Button Background Color",
+  },
   textColor: { inputType: "color", label: "Text Color" },
+  buttonTextColor: { inputType: "color", label: "Button Text Color" },
   justifyContent: {
     inputType: "select",
     label: "Justify Content",

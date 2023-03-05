@@ -18,7 +18,7 @@ export default function EditorSelectMenu({
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
-          <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+          <Listbox.Label className="text-md block font-medium leading-6 text-gray-900">
             {label}
           </Listbox.Label>
           <div className="relative mt-2">

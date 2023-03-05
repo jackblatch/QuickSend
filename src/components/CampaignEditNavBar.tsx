@@ -12,7 +12,10 @@ export default function CampaignEditNavBar({
   router: any;
   blocks: any[];
 }) {
-  const updateCampaignBlocks = api.campaigns.updateCampaignBlocks.useMutation();
+  const utils = api.useContext();
+  const updateCampaignBlocks = api.campaigns.updateCampaignBlocks.useMutation({
+    onSuccess: () => utils.campaigns.invalidate(),
+  });
 
   const { campaignId } = router.query;
   const [steps, setSteps] = useState<
@@ -94,7 +97,12 @@ export default function CampaignEditNavBar({
         <Button appearance="secondary" size="md">
           Discard
         </Button>
-        <Button appearance="primary" size="md" onClick={handleSaveAndExit}>
+        <Button
+          appearance="primary"
+          size="md"
+          onClick={handleSaveAndExit}
+          disabled={updateCampaignBlocks.isLoading}
+        >
           Save and Exit
         </Button>
       </div>

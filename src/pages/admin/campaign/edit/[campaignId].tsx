@@ -56,7 +56,6 @@ export default function CampaignBuilder() {
   useEffect(() => {
     if (getCampaignEditorInfo.data && blocks?.length === 1) {
       const blocks = JSON.parse(getCampaignEditorInfo.data.blocks as string);
-      console.log("DB blocks", blocks);
       if (blocks) {
         const newBlocks = blocks.map((item: any) => {
           item.element = generateElement(item.componentName, item.attributes);

@@ -163,14 +163,14 @@ export const campaignsRouter = createTRPCRouter({
       }
     }),
   getCampaignEditorInfo: protectedProcedure
-    .input(z.object({ campaignId: z.string() }))
+    .input(z.object({ campaignId: z.string().nullish() }))
     .query(async ({ ctx, input }) => {
-      if (!input.campaignId) return null;
+      if (!input || !input.campaignId) return null;
       try {
         const isUserAuthorisedToEditCampaign = async () => {
           const campaign = await ctx.prisma.campaign.findUnique({
             where: {
-              id: input.campaignId,
+              id: input.campaignId as string,
             },
           });
           if (campaign?.userId !== ctx.session.user.id) {
