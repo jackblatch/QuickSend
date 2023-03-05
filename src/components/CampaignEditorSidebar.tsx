@@ -7,7 +7,6 @@ import {
 } from "~/campaignEditor/utils/campaignEditorUtils";
 import { blockInfo } from "~/campaignEditor/utils/blockattributes";
 import EditorInputField from "~/campaignEditor/EditorInputField";
-import { useEffect, useState } from "react";
 import EditorTextArea from "~/campaignEditor/EditorTextArea";
 import EditorSelectMenu from "~/campaignEditor/EditorSelectMenu";
 
@@ -49,8 +48,6 @@ export default function CampaignEditorSidebar({
   editorValues: any;
   setEditorValues: React.Dispatch<React.SetStateAction<any>>;
 }) {
-  console.log({ editorValues });
-
   const handleUpdateComponent = (newEditorValues: any) => {
     const newBlocks = [...blocks];
     const indexOfId = getIndexOfId(isEditing.blockId, blocks);
@@ -71,11 +68,11 @@ export default function CampaignEditorSidebar({
       <div className="flex flex-col items-center justify-start p-6">
         <div className="mb-4 w-full">
           <h3 className="text-left text-sm font-semibold uppercase text-gray-700">
-            {isEditing.current ? "Editing" : "Blocks"}
+            {isEditing.current ? "Block Editor" : "Blocks"}
           </h3>
         </div>
         {isEditing.current ? (
-          <div className="w-[400px] p-6">
+          <div className="flex w-[400px] flex-col justify-between gap-8 p-6 pt-0">
             <div className="flex flex-col justify-start gap-6">
               {Object.entries(
                 blocks[getIndexOfId(isEditing.blockId, blocks)].attributes

@@ -94,6 +94,7 @@ model Campaign {
     name      String
     subject   String
     sendFromName String
+    blocks    Json?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     userId    String

@@ -59,6 +59,8 @@ export default function CampaignBuilder() {
     { id: "Social", name: "Social Links" },
   ]);
 
+  console.log({ blocks });
+
   function handleSortableDragEnd(event: any) {
     setIsDragInProgress(false);
     const { active, over } = event;
@@ -132,7 +134,7 @@ export default function CampaignBuilder() {
     >
       <Toaster />
       <div className="flex min-h-[100vh] flex-col">
-        <CampaignEditNavBar router={router} />
+        <CampaignEditNavBar router={router} blocks={blocks} />
         <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
           <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
             <CampaignEditorSidebar
@@ -154,12 +156,13 @@ export default function CampaignBuilder() {
               </Button>
             </div>
             <div className="flex justify-center pt-12">
-              <div className="min-w-[600px] max-w-[600px] bg-gray-700">
+              <div className="min-w-[600px] max-w-[600px] bg-gray-200">
                 <CampaignEditorEmailBody
                   blocks={blocks}
                   isDragInProgress={isDragInProgress}
                   handleDeleteBlock={handleDeleteBlock}
                   setIsEditing={setIsEditing}
+                  isEditing={isEditing}
                   setEditorValues={setEditorValues}
                 />
               </div>

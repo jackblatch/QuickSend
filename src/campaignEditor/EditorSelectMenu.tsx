@@ -14,8 +14,6 @@ export default function EditorSelectMenu({
   value: any;
   setValue: React.Dispatch<React.SetStateAction<any>>;
 }) {
-  console.log(options);
-
   return (
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (

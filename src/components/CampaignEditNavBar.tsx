@@ -3,7 +3,13 @@ import Button from "./Button";
 import CircleSteps from "./CircleSteps";
 import Logo from "./Logo";
 
-export default function CampaignEditNavBar({ router }: { router: any }) {
+export default function CampaignEditNavBar({
+  router,
+  blocks,
+}: {
+  router: any;
+  blocks: any[];
+}) {
   const { campaignId } = router.query;
 
   const [steps, setSteps] = useState<
@@ -44,6 +50,11 @@ export default function CampaignEditNavBar({ router }: { router: any }) {
     }
   }, [router]);
 
+  const handleSaveAndExit = () => {
+    // save to DB
+    router.push(`/admin/campaign/view/${campaignId}`);
+  };
+
   return (
     <div className="flex flex-col items-center justify-between gap-8 bg-gray-800 p-3 px-6 lg:flex-row lg:gap-0">
       <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-10">
@@ -59,7 +70,7 @@ export default function CampaignEditNavBar({ router }: { router: any }) {
         <Button appearance="secondary" size="md">
           Discard
         </Button>
-        <Button appearance="primary" size="md">
+        <Button appearance="primary" size="md" onClick={handleSaveAndExit}>
           Save and Exit
         </Button>
       </div>

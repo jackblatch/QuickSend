@@ -48,7 +48,6 @@ export const listsRouter = createTRPCRouter({
     .input(z.object({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {
       if (!input.name || input.name === "") {
-        console.log("error");
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Name is required",
