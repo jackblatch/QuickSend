@@ -66,14 +66,14 @@ export default function CampaignEditorSidebar({
     <>
       <LineTabs tabs={tabs} setTabs={setTabs} />
       <div className="flex flex-col items-center justify-start p-6">
-        <div className="mb-4 w-full">
+        <div className="mb-4 h-full w-full">
           <h3 className="text-left text-sm font-semibold uppercase text-gray-700">
             {isEditing.current ? "Block Editor" : "Blocks"}
           </h3>
         </div>
         {isEditing.current ? (
           <div className="flex w-[400px] flex-col justify-between gap-8 p-6 pt-0">
-            <div className="flex flex-col justify-start gap-6">
+            <div className="flex max-h-[600px] flex-col justify-start gap-6 overflow-auto p-2">
               {Object.entries(
                 blocks[getIndexOfId(isEditing.blockId, blocks)].attributes
               ).map(([indentifier], i) => {

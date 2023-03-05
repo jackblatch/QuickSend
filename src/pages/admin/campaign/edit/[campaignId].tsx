@@ -78,7 +78,9 @@ export default function CampaignBuilder() {
     { id: "Social", name: "Social Links" },
   ]);
 
-  console.log({ blocks });
+  const [globalStyles, setGlobalStyles] = useState({
+    fontFamily: "Arial, Helvetica, sans-serif",
+  });
 
   function handleSortableDragEnd(event: any) {
     setIsDragInProgress(false);
@@ -132,6 +134,11 @@ export default function CampaignBuilder() {
         position: "bottom-center",
       });
     } else {
+      setIsEditing({
+        blockId: "",
+        current: false,
+        initialValues: {},
+      });
       setBlocks((items) => {
         return items.filter((item) => item.id !== id);
       });
@@ -153,7 +160,11 @@ export default function CampaignBuilder() {
     >
       <Toaster />
       <div className="flex min-h-[100vh] flex-col">
-        <CampaignEditNavBar router={router} blocks={blocks} />
+        <CampaignEditNavBar
+          router={router}
+          blocks={blocks}
+          campaignName={getCampaignEditorInfo?.data?.name ?? ""}
+        />
         <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
           <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
             <CampaignEditorSidebar
@@ -179,14 +190,16 @@ export default function CampaignBuilder() {
                 {getCampaignEditorInfo.isLoading ? (
                   <p>Loading...</p>
                 ) : (
-                  <CampaignEditorEmailBody
-                    blocks={blocks}
-                    isDragInProgress={isDragInProgress}
-                    handleDeleteBlock={handleDeleteBlock}
-                    setIsEditing={setIsEditing}
-                    isEditing={isEditing}
-                    setEditorValues={setEditorValues}
-                  />
+                  <div style={globalStyles}>
+                    <CampaignEditorEmailBody
+                      blocks={blocks}
+                      isDragInProgress={isDragInProgress}
+                      handleDeleteBlock={handleDeleteBlock}
+                      setIsEditing={setIsEditing}
+                      isEditing={isEditing}
+                      setEditorValues={setEditorValues}
+                    />
+                  </div>
                 )}
               </div>
             </div>

@@ -14,6 +14,7 @@ export type HeadingTextProps = {
   justifyContent?: string;
   headingSize?: string;
   fontWeight?: string;
+  outerPadding?: string;
 };
 
 export type ParagraphTextProps = {
@@ -48,6 +49,7 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     justifyContent: "left",
     headingSize: "h1",
     fontWeight: "bold",
+    outerPadding: "10px",
   },
   ParagraphText: {
     paragraphText: "Add text here",

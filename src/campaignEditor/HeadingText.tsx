@@ -7,11 +7,12 @@ export default function HeadingText({
   justifyContent,
   headingSize,
   fontWeight,
+  outerPadding,
 }: HeadingTextProps) {
   const styles = {
     container: {
       backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
-      padding: "10px",
+      padding: outerPadding !== "" ? outerPadding : "10px",
     },
     heading: {
       fontSize:

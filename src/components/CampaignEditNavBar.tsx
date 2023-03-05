@@ -8,9 +8,11 @@ import Logo from "./Logo";
 export default function CampaignEditNavBar({
   router,
   blocks,
+  campaignName,
 }: {
   router: any;
   blocks: any[];
+  campaignName: string;
 }) {
   const utils = api.useContext();
   const updateCampaignBlocks = api.campaigns.updateCampaignBlocks.useMutation({
@@ -87,14 +89,20 @@ export default function CampaignEditNavBar({
       <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-10">
         <Logo justifyContent="start" type="iconAndText" colorTheme="light" />
         <h2 className="text-md max-w-[300px] truncate font-semibold text-gray-200">
-          Email Campaign 'NAME'
+          Email Campaign {campaignName}
         </h2>
       </div>
       <div>
         <CircleSteps steps={steps} />
       </div>
       <div className="flex items-center gap-4">
-        <Button appearance="secondary" size="md">
+        <Button
+          appearance="secondary"
+          size="md"
+          onClick={() => {
+            router.push(`/admin/campaign/view/${campaignId}`);
+          }}
+        >
           Discard
         </Button>
         <Button
