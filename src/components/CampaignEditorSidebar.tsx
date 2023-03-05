@@ -8,6 +8,8 @@ import {
 import { blockInfo } from "~/campaignEditor/utils/blockattributes";
 import EditorInputField from "~/campaignEditor/EditorInputField";
 import { useEffect, useState } from "react";
+import EditorTextArea from "~/campaignEditor/EditorTextArea";
+import EditorSelectMenu from "~/campaignEditor/EditorSelectMenu";
 
 type Tabs = {
   name: string;
@@ -78,6 +80,18 @@ export default function CampaignEditorSidebar({
               {Object.entries(
                 blocks[getIndexOfId(isEditing.blockId, blocks)].attributes
               ).map(([indentifier], i) => {
+                const onChangeEvent = (e: any) => {
+                  {
+                    setEditorValues((prev: any) => {
+                      const newEditorValues = {
+                        ...prev,
+                        [indentifier]: e.target.value,
+                      };
+                      handleUpdateComponent(newEditorValues);
+                      return newEditorValues;
+                    });
+                  }
+                };
                 return (
                   <div key={i}>
                     {blockInfo[indentifier]?.inputType === "text" ||
@@ -88,18 +102,23 @@ export default function CampaignEditorSidebar({
                           label={String(blockInfo[indentifier]?.label)}
                           id={indentifier}
                           value={editorValues[indentifier]}
-                          onChange={(e: any) => {
-                            setEditorValues((prev: any) => {
-                              const newEditorValues = {
-                                ...prev,
-                                [indentifier]: e.target.value,
-                              };
-                              handleUpdateComponent(newEditorValues);
-                              return newEditorValues;
-                            });
-                          }}
+                          onChange={(e: any) => onChangeEvent(e)}
                         />
                       </>
+                    ) : blockInfo[indentifier]?.inputType === "textarea" ? (
+                      <EditorTextArea
+                        label={String(blockInfo[indentifier]?.label)}
+                        id={indentifier}
+                        value={editorValues[indentifier]}
+                        onChange={(e: any) => onChangeEvent(e)}
+                      />
+                    ) : blockInfo[indentifier]?.inputType === "select" ? (
+                      <EditorSelectMenu
+                        label={String(blockInfo[indentifier]?.label)}
+                        value={editorValues[indentifier]}
+                        options={blockInfo[indentifier]?.options ?? []}
+                        setValue={(e: any) => onChangeEvent(e)}
+                      />
                     ) : (
                       ""
                     )}

@@ -33,7 +33,7 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     text: "Add text here",
     backgroundColor: "#ffffff",
     textColor: "#000000",
-    justifyContent: "",
+    justifyContent: "left",
     headingSize: "h1",
     fontWeight: "bold",
   },
@@ -41,7 +41,7 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     paragraphText: "Add text here",
     backgroundColor: "#ffffff",
     textColor: "#000000",
-    justifyContent: "",
+    justifyContent: "left",
     fontWeight: "normal",
   },
 };
@@ -52,24 +52,18 @@ type BlockInfo = {
   options?: string[];
 };
 
-const globalOptions = {
-  justifyContent: {
-    inputType: "select",
-    label: "Justify Content",
-    options: ["left", "center", "right"],
-  },
+export const blockInfo: { [index: string]: BlockInfo } = {
+  text: { inputType: "text", label: "Text" },
   backgroundColor: {
     inputType: "color",
     label: "Background Color",
   },
   textColor: { inputType: "color", label: "Text Color" },
-};
-
-export const blockInfo: { [index: string]: BlockInfo } = {
-  text: { inputType: "text", label: "Text" },
-  backgroundColor: globalOptions.backgroundColor,
-  textColor: globalOptions.textColor,
-  justifyContent: globalOptions.justifyContent,
+  justifyContent: {
+    inputType: "select",
+    label: "Justify Content",
+    options: ["left", "center", "right"],
+  },
   headingSize: {
     inputType: "select",
     label: "Heading Size",
