@@ -7,6 +7,7 @@ export default function ParagraphText({
   textColor,
   justifyContent,
   fontWeight,
+  padding,
 }: ParagraphTextProps) {
   const styles = {
     container: {
@@ -18,6 +19,7 @@ export default function ParagraphText({
       textAlign: justifyContent !== "" ? justifyContent : "left",
       fontWeight: fontWeight === "bold" ? "bold" : "normal",
       color: textColor !== "" ? textColor : "#000000",
+      padding: padding !== "" ? padding : "10px",
     } as CSSProperties,
   } as const;
 

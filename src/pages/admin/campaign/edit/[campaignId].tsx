@@ -22,6 +22,7 @@ import {
 import { toast, Toaster } from "react-hot-toast";
 import { api } from "~/utils/api";
 import { Block } from "~/campaignEditor/utils/blockattributes";
+import renderToHtml from "~/campaignEditor/utils/renderToHtml";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -200,7 +201,13 @@ export default function CampaignBuilder() {
           </div>
           <div className="max-h-[calc(100vh-117px)] flex-1 overflow-auto bg-gray-200">
             <div className="sticky top-0 flex h-[62px] w-full items-center justify-end border-b border-gray-200 bg-white px-6">
-              <Button appearance="secondary" size="sm">
+              <Button
+                appearance="secondary"
+                size="sm"
+                onClick={() => {
+                  // console.log(renderToHtml(blocks, globalStyles));
+                }}
+              >
                 Send Preview
               </Button>
             </div>

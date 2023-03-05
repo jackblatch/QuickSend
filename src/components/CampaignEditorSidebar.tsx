@@ -9,7 +9,6 @@ import { blockInfo } from "~/campaignEditor/utils/blockattributes";
 import EditorInputField from "~/campaignEditor/EditorInputField";
 import EditorTextArea from "~/campaignEditor/EditorTextArea";
 import EditorSelectMenu from "~/campaignEditor/EditorSelectMenu";
-import { useState } from "react";
 import EditorImageUpload from "~/campaignEditor/EditorImageUpload";
 
 type Tabs = {
@@ -67,8 +66,6 @@ export default function CampaignEditorSidebar({
     );
     setBlocks(newBlocks);
   };
-
-  console.log({ editorValues });
 
   return (
     <>

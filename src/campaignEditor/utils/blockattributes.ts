@@ -23,6 +23,7 @@ export type ParagraphTextProps = {
   textColor?: string;
   justifyContent?: string;
   fontWeight?: string;
+  padding?: string;
 };
 
 export type ButtonProps = {
