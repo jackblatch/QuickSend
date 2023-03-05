@@ -1,7 +1,6 @@
 import { Fragment, PropsWithChildren, use, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
-  ArrowRightOnRectangleIcon,
   Bars3Icon,
   ChartBarIcon,
   DocumentTextIcon,
@@ -74,7 +73,7 @@ export default function AdminLayout({
   return (
     <>
       <Head>
-        <title>Dashboard - QuickSend</title>
+        <title>{pageHeading ?? "Dashboard"} - QuickSend</title>
         <meta name="description" content="Visual email builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

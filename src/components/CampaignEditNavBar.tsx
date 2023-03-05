@@ -92,7 +92,7 @@ export default function CampaignEditNavBar({
       <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-10">
         <Logo justifyContent="start" type="iconAndText" colorTheme="light" />
         <h2 className="text-md w-[250px] max-w-[250px] truncate font-semibold text-gray-200">
-          Email Campaign {campaignName}
+          {campaignName}
         </h2>
       </div>
       <div>

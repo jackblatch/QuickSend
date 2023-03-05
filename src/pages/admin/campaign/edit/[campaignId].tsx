@@ -23,6 +23,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { api } from "~/utils/api";
 import { Block } from "~/campaignEditor/utils/blockattributes";
 import renderToHtml from "~/campaignEditor/utils/renderToHtml";
+import Head from "next/head";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -166,77 +167,85 @@ export default function CampaignBuilder() {
   };
 
   return (
-    <DndContext
-      collisionDetection={closestCenter}
-      onDragStart={(e) => {
-        setActiveId(e.active.id);
-        setIsDragInProgress(true);
-      }}
-      onDragEnd={handleSortableDragEnd}
-      id="1"
-    >
-      <Toaster />
-      <div className="flex min-h-[100vh] flex-col">
-        <CampaignEditNavBar
-          router={router}
-          blocks={blocks}
-          campaignName={getCampaignEditorInfo?.data?.name ?? ""}
-          globalStyles={globalStyles}
-        />
-        <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
-          <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
-            <CampaignEditorSidebar
-              tabs={tabs}
-              setTabs={setTabs}
-              components={components}
-              blocks={blocks}
-              setBlocks={setBlocks}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              editorValues={editorValues}
-              setEditorValues={setEditorValues}
-              globalStyles={globalStyles}
-              setGlobalStyles={setGlobalStyles}
-            />
-          </div>
-          <div className="max-h-[calc(100vh-117px)] flex-1 overflow-auto bg-gray-200">
-            <div className="sticky top-0 flex h-[62px] w-full items-center justify-end border-b border-gray-200 bg-white px-6">
-              <Button
-                appearance="secondary"
-                size="sm"
-                onClick={() => {
-                  // console.log(renderToHtml(blocks, globalStyles));
-                }}
-              >
-                Send Preview
-              </Button>
+    <>
+      <Head>
+        <title>
+          Edit {getCampaignEditorInfo?.data?.name ?? "Campaign"} - QuickSend
+        </title>
+        <meta name="description" content="Visual email builder" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragStart={(e) => {
+          setActiveId(e.active.id);
+          setIsDragInProgress(true);
+        }}
+        onDragEnd={handleSortableDragEnd}
+        id="1"
+      >
+        <Toaster />
+        <div className="flex min-h-[100vh] flex-col">
+          <CampaignEditNavBar
+            router={router}
+            blocks={blocks}
+            campaignName={getCampaignEditorInfo?.data?.name ?? ""}
+            globalStyles={globalStyles}
+          />
+          <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
+            <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
+              <CampaignEditorSidebar
+                tabs={tabs}
+                setTabs={setTabs}
+                components={components}
+                blocks={blocks}
+                setBlocks={setBlocks}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                editorValues={editorValues}
+                setEditorValues={setEditorValues}
+                globalStyles={globalStyles}
+                setGlobalStyles={setGlobalStyles}
+              />
             </div>
-            <div className="flex justify-center py-12">
-              <div className="min-w-[600px] max-w-[600px] bg-gray-200">
-                {getCampaignEditorInfo.isLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <div style={globalStyles}>
-                    <CampaignEditorEmailBody
-                      blocks={blocks}
-                      isDragInProgress={isDragInProgress}
-                      handleDeleteBlock={handleDeleteBlock}
-                      setIsEditing={setIsEditing}
-                      isEditing={isEditing}
-                      setEditorValues={setEditorValues}
-                    />
-                  </div>
-                )}
+            <div className="max-h-[calc(100vh-117px)] flex-1 overflow-auto bg-gray-200">
+              <div className="sticky top-0 flex h-[62px] w-full items-center justify-end border-b border-gray-200 bg-white px-6">
+                <Button
+                  appearance="secondary"
+                  size="sm"
+                  onClick={() => {
+                    // console.log(renderToHtml(blocks, globalStyles));
+                  }}
+                >
+                  Send Preview
+                </Button>
+              </div>
+              <div className="flex justify-center py-12">
+                <div className="min-w-[600px] max-w-[600px] bg-gray-200">
+                  {getCampaignEditorInfo.isLoading ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <div style={globalStyles}>
+                      <CampaignEditorEmailBody
+                        blocks={blocks}
+                        isDragInProgress={isDragInProgress}
+                        handleDeleteBlock={handleDeleteBlock}
+                        setIsEditing={setIsEditing}
+                        isEditing={isEditing}
+                        setEditorValues={setEditorValues}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
+          <div className="flex items-center justify-end gap-4 border-t border-gray-200 bg-white p-2 px-4 text-xs text-gray-600">
+            <p>Support</p>
+            <p>Documentation</p>
+          </div>
         </div>
-        <div className="flex items-center justify-end gap-4 border-t border-gray-200 bg-white p-2 px-4 text-xs text-gray-600">
-          <p>Support</p>
-          <p>Documentation</p>
-        </div>
-      </div>
-      {/* <DragOverlay>
+        {/* <DragOverlay>
         {activeId && blocks.some((item) => item.id === activeId) ? (
           <SortableItem id={String(activeId)}>
             {blocks.find((item) => item.id === activeId)?.name ||
@@ -244,6 +253,7 @@ export default function CampaignBuilder() {
           </SortableItem>
         ) : null}
       </DragOverlay> */}
-    </DndContext>
+      </DndContext>
+    </>
   );
 }

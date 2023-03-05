@@ -237,7 +237,7 @@ export default function () {
     return [
       { name: "Campaigns", href: "/admin/campaigns", current: false },
       {
-        name: `Email Campaign ${campaignName}` ?? "",
+        name: `${campaignName}` ?? "",
         href: "#",
         current: true,
       },
@@ -245,7 +245,7 @@ export default function () {
   }, [getCampaignInfo.data]);
 
   return (
-    <AdminLayout pageHeading={`Email Campaign ${campaignName}`} pages={pages}>
+    <AdminLayout pageHeading={`${campaignName}`} pages={pages}>
       <CampaignDetails />
     </AdminLayout>
   );
