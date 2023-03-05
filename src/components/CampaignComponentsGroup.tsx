@@ -6,7 +6,10 @@ interface KanbanLaneProps {
   items: { id: string; name: string }[];
 }
 
-export default function EditEmailContainer({ title, items }: KanbanLaneProps) {
+export default function CampaignComponentsGroup({
+  title,
+  items,
+}: KanbanLaneProps) {
   const { isOver, setNodeRef } = useDroppable({
     id: title,
     data: {

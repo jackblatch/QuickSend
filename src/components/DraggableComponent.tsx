@@ -1,6 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import DraggableEmailBlock from "./DraggableEmailBlocksGroup";
+import CampaignComponentIcons from "./CampaignComponentIcons";
 
 export default function DraggableComponent({
   title,
@@ -28,7 +28,7 @@ export default function DraggableComponent({
 
   return (
     <div style={style} {...listeners} {...attributes} ref={setNodeRef}>
-      <DraggableEmailBlock name={title} id={itemId} />
+      <CampaignComponentIcons name={title} id={itemId} />
     </div>
   );
 }

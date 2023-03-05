@@ -1,7 +1,7 @@
 import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
 import Draggable from "./DraggableComponent";
-import DraggableEmailBlocksGroup from "./DraggableEmailBlocksGroup";
-import EditEmailContainer from "./EditEmailContainer";
+import DraggableEmailBlocksGroup from "./CampaignComponentIcons";
+import CampaignComponentsGroup from "./CampaignComponentsGroup";
 import LineTabs from "./LineTabs";
 
 type Tabs = {
@@ -27,7 +27,7 @@ export default function CampaignEditorSidebar({
             Blocks
           </h3>
         </div>
-        <EditEmailContainer title="components" items={components} />
+        <CampaignComponentsGroup title="components" items={components} />
       </div>
     </>
   );

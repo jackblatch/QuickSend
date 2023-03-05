@@ -11,7 +11,7 @@ import {
 
 const iconStyles = "h-6 w-6";
 
-export default function DraggableEmailBlock({
+export default function CampaignComponentIcons({
   name,
   id,
 }: {

@@ -15,6 +15,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import SortableItem from "~/components/SortableItem";
+import CampaignEditorEmailBody from "~/components/CampaignEditorEmailBody";
 
 export default function CampaignBuilder() {
   const router = useRouter();
@@ -121,21 +122,7 @@ export default function CampaignBuilder() {
             </div>
             <div className="flex justify-center pt-12">
               <div className="min-w-[600px] max-w-[600px] bg-red-500">
-                <SortableContext
-                  items={blocks.map((item) => item.name)}
-                  strategy={verticalListSortingStrategy}
-                >
-                  {blocks.map((item) => {
-                    return (
-                      <div key={item.id}>
-                        {/* wip for adding hover effect */}
-                        {/* <div>{dragOver === item.id && <p>YES</p>}</div> */}
-                        <SortableItem id={item.id}>{item.name}</SortableItem>
-                      </div>
-                    );
-                  })}
-                </SortableContext>
-                <br />
+                <CampaignEditorEmailBody blocks={blocks} />
               </div>
             </div>
           </div>
