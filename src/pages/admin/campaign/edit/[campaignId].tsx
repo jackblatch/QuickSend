@@ -198,7 +198,7 @@ export default function CampaignBuilder() {
               setGlobalStyles={setGlobalStyles}
             />
           </div>
-          <div className="max-h-[calc(100vh-122px)] flex-1 overflow-auto bg-gray-200">
+          <div className="max-h-[calc(100vh-117px)] flex-1 overflow-auto bg-gray-200">
             <div className="sticky top-0 flex h-[62px] w-full items-center justify-end border-b border-gray-200 bg-white px-6">
               <Button appearance="secondary" size="sm">
                 Send Preview
@@ -224,7 +224,7 @@ export default function CampaignBuilder() {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-4 border-t border-gray-200 bg-white p-2 text-xs text-gray-600">
+        <div className="flex items-center justify-end gap-4 border-t border-gray-200 bg-white p-2 px-4 text-xs text-gray-600">
           <p>Support</p>
           <p>Documentation</p>
         </div>
