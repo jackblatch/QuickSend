@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { Fragment, useState } from "react";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
@@ -15,6 +16,11 @@ import {
   Bars4Icon,
 } from "@heroicons/react/24/outline";
 import formatClasses from "~/utils/formatClasses";
+import {
+  generateElement,
+  getDefaultAttributeValues,
+} from "./utils/campaignEditorUtils";
+import CampaignComponentIcons from "~/components/CampaignComponentIcons";
 
 const items = [
   {
@@ -32,16 +38,51 @@ const items = [
 export default function EditorCommandPalette({
   open,
   setOpen,
+  setBlocks,
+  components,
+  setEditorValues,
+  setIsEditing,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setBlocks: React.Dispatch<React.SetStateAction<any[]>>;
+  components: { id: string; name: string }[];
+  setIsEditing: React.Dispatch<
+    React.SetStateAction<{
+      blockId: string;
+      current: boolean;
+      initialValues: {};
+    }>
+  >;
+  setEditorValues: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const [query, setQuery] = useState("");
 
+  const addNewBlock = (selectedComponent: { id: string; name: string }) => {
+    const attributes = getDefaultAttributeValues(selectedComponent.id);
+    const uniqueId = uuidv4();
+
+    const obj = {
+      id: uniqueId,
+      element: generateElement(selectedComponent.id, attributes),
+      componentName: selectedComponent.id,
+      attributes: attributes,
+    };
+    setBlocks((prev: any) => [...prev, obj]);
+
+    setIsEditing({
+      blockId: uniqueId,
+      current: true,
+      initialValues: attributes!,
+    });
+
+    setEditorValues(attributes as any);
+  };
+
   const filteredItems =
     query === ""
-      ? []
-      : items.filter((item) => {
+      ? components
+      : components.filter((item) => {
           return item.name.toLowerCase().includes(query.toLowerCase());
         });
 
@@ -76,7 +117,12 @@ export default function EditorCommandPalette({
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-              <Combobox onChange={(item: any) => (window.location = item.url)}>
+              <Combobox
+                onChange={(item: any) => {
+                  addNewBlock(item);
+                  setOpen(false);
+                }}
+              >
                 <div className="relative">
                   <MagnifyingGlassIcon
                     className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
@@ -110,11 +156,12 @@ export default function EditorCommandPalette({
                             <div
                               className={formatClasses(
                                 "flex h-10 w-10 flex-none items-center justify-center rounded-lg",
-                                item.color
+                                "bg-blue-200"
                               )}
                             >
-                              <item.icon
-                                className="h-6 w-6 text-white"
+                              <CampaignComponentIcons
+                                id={item.id}
+                                iconOnly={true}
                                 aria-hidden="true"
                               />
                             </div>
@@ -133,7 +180,7 @@ export default function EditorCommandPalette({
                                   active ? "text-gray-700" : "text-gray-500"
                                 )}
                               >
-                                {item.description}
+                                {item.name}
                               </p>
                             </div>
                           </>
