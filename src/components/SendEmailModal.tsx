@@ -26,7 +26,9 @@ export default function SendEmailModal({
   htmlContentFunc: () => string;
 }) {
   const utils = api.useContext();
-  const sendEmailsToList = api.email.sendEmailsToList.useMutation();
+  const sendEmailsToList = api.email.sendEmailsToList.useMutation({
+    onSuccess: () => utils.campaigns.invalidate(),
+  });
   const scheduleCampaign = api.campaigns.scheduleCampaign.useMutation({
     onSuccess: () => utils.campaigns.invalidate(),
   });

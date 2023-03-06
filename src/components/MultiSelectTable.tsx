@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import EmptyListState from "~/components/EmptyListState";
 import formatClasses from "~/utils/formatClasses";
@@ -17,6 +18,7 @@ type Props = {
   rowButtonActions: any;
   primaryScreenReaderInfo: string;
   rowActionHighlight?: boolean;
+  titleLink?: (item: any) => string;
   setSelectedlists: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
@@ -35,6 +37,7 @@ export default function MultiSelectTable({
   rowActionHighlight,
   rowButtonActions,
   primaryScreenReaderInfo,
+  titleLink,
   children,
 }: PropsWithChildren<Props>) {
   const checkbox = useRef<HTMLInputElement>(null);
@@ -170,9 +173,16 @@ export default function MultiSelectTable({
                                         : "text-gray-900"
                                     )}
                                   >
-                                    {item[column.id] instanceof Date
-                                      ? formatDateTime(item[column.id])
-                                      : item[column.id]}
+                                    <Link
+                                      href={`${
+                                        titleLink ? titleLink(item) : "#"
+                                      }`}
+                                      className="hover:text-blue-600"
+                                    >
+                                      {item[column.id] instanceof Date
+                                        ? formatDateTime(item[column.id])
+                                        : item[column.id]}
+                                    </Link>
                                   </td>
                                 );
                               } else {

@@ -33,8 +33,6 @@ export default function NewCampaignSlideOver({
     value: "",
   });
 
-  console.log({ selectedList });
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     toast.promise(

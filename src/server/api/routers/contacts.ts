@@ -134,4 +134,19 @@ export const contactsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  getAllUserContacts: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      return await ctx.prisma.contact.findMany({
+        where: {
+          lists: {
+            some: {
+              userId: ctx.session.user.id,
+            },
+          },
+        },
+      });
+    } catch (err) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+    }
+  }),
 });

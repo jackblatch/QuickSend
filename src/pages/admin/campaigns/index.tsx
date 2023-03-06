@@ -100,6 +100,7 @@ function Campaigns() {
           router.push(`/admin/campaign/view/${item.id}`);
         }}
         rowButtonText="View"
+        titleLink={(item: any) => `/admin/campaign/view/${item.id}`}
       ></MultiSelectTable>
     </>
   );
