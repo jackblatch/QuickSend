@@ -26,44 +26,29 @@ const Home: NextPage = () => {
         <meta name="description" content="Visual email builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="relative isolate overflow-hidden bg-white">
-        <div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:py-40 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-            <Logo justifyContent="justify-start" type="iconAndText" />
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-center px-6 pt-10 pb-24 text-center sm:pb-32 lg:flex lg:py-40 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+          <Logo justifyContent="justify-center" type="iconAndText" />
 
-            <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Visual drag and drop email builder
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Send emails fast, with confidence.
-            </p>
-            <div className="mt-10 flex items-center gap-x-6">
-              <Link
-                href="/auth/sign-up"
-                className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-              >
-                Sign up
-              </Link>
-              <Link
-                href="/auth/sign-in"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Login <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
-          <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mt-0 lg:mr-0 lg:max-w-none lg:flex-none xl:ml-32">
-            <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-              <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <Image
-                  src=""
-                  alt="App screenshot"
-                  width={2432}
-                  height={1442}
-                  className="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-900/10"
-                />
-              </div>
-            </div>
+          <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            Visual drag and drop email builder
+          </h1>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Send emails fast, with confidence.
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+            <Link
+              href="/auth/sign-up"
+              className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              Sign up
+            </Link>
+            <Link
+              href="/auth/sign-in"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Login <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
       </div>
