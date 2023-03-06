@@ -16,7 +16,7 @@ export default function SendEmailModal({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   sendFromName: string;
   subject: string;
-  list: { id: string; name: string; _count: { contacts: number } };
+  list: { id: string; name: string; _count: { contacts: number } } | null;
   campaignName: string;
   campaignId: string;
   htmlContentFunc: () => string;
@@ -32,34 +32,45 @@ export default function SendEmailModal({
       open={open}
       setOpen={setOpen}
       actionOnClick={() => {
-        toast.promise(
-          sendEmailsToList.mutateAsync({
-            listId: list.id,
-            campaignId,
-            subject,
-            sendFromName,
-            htmlContent: htmlContentFunc(),
-          }),
-          {
-            loading: "Sending...",
-            success: () => {
-              setOpen(false);
-              return "Campaign sent!";
+        if (list) {
+          toast.promise(
+            sendEmailsToList.mutateAsync({
+              listId: list.id,
+              campaignId,
+              subject,
+              sendFromName,
+              htmlContent: htmlContentFunc(),
+            }),
+            {
+              loading: "Sending...",
+              success: () => {
+                setOpen(false);
+                return "Campaign sent!";
+              },
+              error: "Error sending email",
             },
-            error: "Error sending email",
-          },
-          {
+            {
+              position: "bottom-center",
+            }
+          );
+        } else {
+          toast.error("Please select a list before sending", {
             position: "bottom-center",
-          }
-        );
-        console.log(htmlContentFunc());
+          });
+        }
       }}
     >
-      <p className="mb-4">
-        You are about to send campaign '{campaignName}' to your list {list.name}{" "}
-        which contains {list._count.contacts} recipient
-        {list._count.contacts === 1 ? "" : "s"}.
-      </p>
+      <div className="mb-4">
+        {list ? (
+          <p>
+            You are about to send campaign '{campaignName}' to your list{" "}
+            {list.name} which contains {list._count.contacts} recipient
+            {list._count.contacts === 1 ? "" : "s"}.
+          </p>
+        ) : (
+          <p>Please select a list before sending</p>
+        )}
+      </div>
     </Modal>
   );
 }

@@ -123,7 +123,7 @@ function CampaignDetails() {
             setOpen={setIsSendEmailModalOpen}
             sendFromName={getCampaignInfo.data?.sendFromName ?? ""}
             subject={getCampaignInfo.data?.subject ?? ""}
-            list={getCampaignInfo.data?.list ?? ""}
+            list={getCampaignInfo.data?.list ?? null}
             htmlContentFunc={() => renderToHtml(blocks, globalStyles)}
             campaignName={getCampaignInfo.data?.name ?? ""}
             campaignId={getCampaignInfo.data?.id ?? ""}
@@ -222,6 +222,10 @@ function CampaignDetails() {
                     <Button
                       appearance="secondary"
                       size="md"
+                      disabled={
+                        getCampaignInfo.isLoading ||
+                        getCampaignInfo.data?.hasSent
+                      }
                       onClick={() => {
                         router.push(`/admin/campaign/edit/${campaignId}`);
                       }}
@@ -237,10 +241,7 @@ function CampaignDetails() {
                       onClick={() => {
                         router.push(`/admin/campaign/preview/${campaignId}`);
                       }}
-                      disabled={
-                        !getCampaignInfo?.data?.blocks ||
-                        getCampaignInfo.isLoading
-                      }
+                      disabled={!getCampaignInfo?.data?.blocks}
                     >
                       <div className="flex items-center justify-center gap-2">
                         <p className="col-span-1">Preview</p>
@@ -248,17 +249,23 @@ function CampaignDetails() {
                       </div>
                     </Button>
                   </div>
-                  <Button
-                    appearance="primary"
-                    size="md"
-                    disabled={
-                      !getCampaignInfo?.data?.blocks ||
-                      getCampaignInfo.isLoading
-                    }
-                    onClick={() => setIsSendEmailModalOpen(true)}
-                  >
-                    <p className="col-span-1">Send Campaign</p>
-                  </Button>
+                  {getCampaignInfo.data?.hasSent ? (
+                    <Button appearance="secondary" size="md">
+                      Campaign sent
+                    </Button>
+                  ) : (
+                    <Button
+                      appearance="primary"
+                      size="md"
+                      disabled={
+                        !getCampaignInfo?.data?.blocks ||
+                        getCampaignInfo.data?.hasSent
+                      }
+                      onClick={() => setIsSendEmailModalOpen(true)}
+                    >
+                      <p className="col-span-1">Send Campaign</p>
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

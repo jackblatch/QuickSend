@@ -46,6 +46,63 @@ export const emailRouter = createTRPCRouter({
       // get members from list based on id, then use as recipients
       // mark here whether a campaign is sent or not (boolean val in DB)
       try {
+        const listUser = await ctx.prisma.list.findUnique({
+          where: {
+            id: input.listId,
+          },
+          select: {
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        });
+
+        if (listUser?.user.id !== ctx.session.user.id) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "You are not authorized to send emails to this list",
+          });
+        }
+
+        const recipients = await ctx.prisma.list.findMany({
+          where: {
+            id: input.listId,
+          },
+          select: {
+            contacts: {
+              select: {
+                email: true,
+              },
+            },
+          },
+        });
+
+        if (recipients) {
+          const emailArrOfObjs = recipients[0]?.contacts;
+
+          console.log("ACTU", JSON.stringify(recipients));
+          const receivers = emailArrOfObjs?.map(
+            (item) => item.email
+          ) as string[];
+
+          await sendEmail({
+            htmlContent: input.htmlContent,
+            sendFromName: input.sendFromName,
+            subject: input.subject,
+            recipients: receivers,
+          });
+
+          await ctx.prisma.campaign.update({
+            where: {
+              id: input.campaignId,
+            },
+            data: {
+              hasSent: true,
+            },
+          });
+        }
       } catch (err) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

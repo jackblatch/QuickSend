@@ -77,6 +77,7 @@ export const campaignsRouter = createTRPCRouter({
             updatedAt: true,
             blocks: true,
             globalStyles: true,
+            hasSent: true,
             list: {
               select: {
                 id: true,

@@ -96,6 +96,7 @@ model Campaign {
     sendFromName String
     blocks    String?
     globalStyles String?
+    hasSent   Boolean? @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     userId    String
