@@ -73,7 +73,7 @@ export default function AdminLayout({
   return (
     <>
       <Head>
-        <title>{pageHeading ?? "Dashboard"} - QuickSend</title>
+        <title>{`Edit ${pageHeading ?? "Dashboard"} - QuickSend`}</title>
         <meta name="description" content="Visual email builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

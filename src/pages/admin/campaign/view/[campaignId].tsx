@@ -3,10 +3,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { parseAndGenerateBlocks } from "~/campaignEditor/utils/campaignEditorUtils";
+import renderToHtml from "~/campaignEditor/utils/renderToHtml";
 import Button from "~/components/Button";
 import CampaignInputFields from "~/components/CampaignInputFields";
 import DescriptionRow from "~/components/DescriptionRow";
 import LineTabs from "~/components/LineTabs";
+import SendEmailModal from "~/components/SendEmailModal";
 import VerticalSteps from "~/components/VerticalSteps";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
@@ -30,6 +33,7 @@ function CampaignDetails() {
   const listData = lists?.data ?? [];
 
   const [selectedList, setSelectedList] = useState({ id: "", value: "" });
+  const [isSendEmailModalOpen, setIsSendEmailModalOpen] = useState(false);
 
   useEffect(() => {
     if (getCampaignInfo.data) {
@@ -84,142 +88,182 @@ function CampaignDetails() {
     { name: "Edit Details", current: false },
   ]);
 
+  const [blocks, setBlocks] = useState([]);
+  const [globalStyles, setGlobalStyles] = useState({});
+
+  useEffect(() => {
+    if (getCampaignInfo.data?.blocks && blocks.length === 0) {
+      const newBlocks = parseAndGenerateBlocks(
+        getCampaignInfo.data.blocks as string
+      );
+      if (newBlocks) {
+        setBlocks(newBlocks);
+      }
+      if (getCampaignInfo.data.globalStyles) {
+        const globalStyles = JSON.parse(
+          getCampaignInfo.data.globalStyles as string
+        );
+
+        if (globalStyles) {
+          setGlobalStyles(globalStyles);
+        }
+      }
+    }
+  }, [getCampaignInfo.data]);
+
   return (
     <>
       <Toaster />
       {getCampaignInfo.isLoading || lists.isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="mt-6">
-          <div className="flex flex-col gap-8 md:flex-row">
-            <div className="flex flex-1 flex-col gap-4 rounded-md bg-white p-6 shadow">
-              <div className="mb-3">
-                <LineTabs tabs={tabs} setTabs={setTabs} />
-              </div>
-              {tabs[0]?.current ? (
-                <div className="flex flex-col gap-3">
-                  <DescriptionRow
-                    title="Campaign Name"
-                    value={getCampaignInfo.data?.name ?? ""}
-                  />
-                  <DescriptionRow
-                    title="Email Subject"
-                    value={getCampaignInfo.data?.subject ?? ""}
-                  />
-                  <DescriptionRow
-                    title="Sender Name"
-                    value={getCampaignInfo.data?.sendFromName ?? ""}
-                  />
-                  <DescriptionRow
-                    title="Selected list"
-                    value={getCampaignInfo.data?.list?.name ?? ""}
-                  />
+        <>
+          <SendEmailModal
+            open={isSendEmailModalOpen}
+            setOpen={setIsSendEmailModalOpen}
+            sendFromName={getCampaignInfo.data?.sendFromName ?? ""}
+            subject={getCampaignInfo.data?.subject ?? ""}
+            list={getCampaignInfo.data?.list ?? ""}
+            htmlContentFunc={() => renderToHtml(blocks, globalStyles)}
+            campaignName={getCampaignInfo.data?.name ?? ""}
+            campaignId={getCampaignInfo.data?.id ?? ""}
+          />
+          <div className="mt-6">
+            <div className="flex flex-col gap-8 md:flex-row">
+              <div className="flex flex-1 flex-col gap-4 rounded-md bg-white p-6 shadow">
+                <div className="mb-3">
+                  <LineTabs tabs={tabs} setTabs={setTabs} />
                 </div>
-              ) : (
-                <>
-                  <CampaignInputFields
-                    inputValues={inputValues}
-                    setInputValues={setInputValues}
-                    listData={listData}
-                    selectedList={selectedList}
-                    setSelectedList={setSelectedList}
-                  />
-                  <div className="mt-4 flex flex-row-reverse justify-start gap-2">
+                {tabs[0]?.current ? (
+                  <div className="flex flex-col gap-3">
+                    <DescriptionRow
+                      title="Campaign Name"
+                      value={getCampaignInfo.data?.name ?? ""}
+                    />
+                    <DescriptionRow
+                      title="Email Subject"
+                      value={getCampaignInfo.data?.subject ?? ""}
+                    />
+                    <DescriptionRow
+                      title="Sender Name"
+                      value={getCampaignInfo.data?.sendFromName ?? ""}
+                    />
+                    <DescriptionRow
+                      title="Selected list"
+                      value={getCampaignInfo.data?.list?.name ?? ""}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <CampaignInputFields
+                      inputValues={inputValues}
+                      setInputValues={setInputValues}
+                      listData={listData}
+                      selectedList={selectedList}
+                      setSelectedList={setSelectedList}
+                    />
+                    <div className="mt-4 flex flex-row-reverse justify-start gap-2">
+                      <Button
+                        appearance="primary"
+                        size="md"
+                        onClick={handleSaveCampaign}
+                        disabled={updateCampaign.isLoading}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        appearance="secondary"
+                        size="md"
+                        onClick={() => {
+                          setTabs(
+                            tabs.map((tab) => ({
+                              ...tab,
+                              current: !tab.current,
+                            }))
+                          );
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="flex-1 rounded-md bg-white p-6 shadow">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Manage Campaign
+                </h2>
+                <div className="mt-6 flex flex-col gap-4">
+                  <div className="flex w-full items-center justify-start rounded-md bg-gray-100 p-8">
+                    <VerticalSteps
+                      steps={[
+                        {
+                          name: "Step 1",
+                          description:
+                            "Create a new campaign and enter your campaign details",
+                          status: "complete",
+                        },
+                        {
+                          name: "Step 2",
+                          description:
+                            "Design your campaign with our drag and drop editor",
+                          status: "current",
+                        },
+                        {
+                          name: "Step 3",
+                          description:
+                            "Send your campaign and have it received by your recipients",
+                          status: "upcoming",
+                        },
+                      ]}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
                     <Button
-                      appearance="primary"
+                      appearance="secondary"
                       size="md"
-                      onClick={handleSaveCampaign}
-                      disabled={updateCampaign.isLoading}
+                      onClick={() => {
+                        router.push(`/admin/campaign/edit/${campaignId}`);
+                      }}
                     >
-                      Save
+                      <div className="flex items-center justify-center gap-2">
+                        <p className="col-span-1">Edit</p>
+                        <PencilSquareIcon className="mb-[1px] h-4 w-4" />
+                      </div>
                     </Button>
                     <Button
                       appearance="secondary"
                       size="md"
                       onClick={() => {
-                        setTabs(
-                          tabs.map((tab) => ({ ...tab, current: !tab.current }))
-                        );
+                        router.push(`/admin/campaign/preview/${campaignId}`);
                       }}
+                      disabled={
+                        !getCampaignInfo?.data?.blocks ||
+                        getCampaignInfo.isLoading
+                      }
                     >
-                      Cancel
+                      <div className="flex items-center justify-center gap-2">
+                        <p className="col-span-1">Preview</p>
+                        <WindowIcon className="mb-[1px] h-4 w-4" />
+                      </div>
                     </Button>
                   </div>
-                </>
-              )}
-            </div>
-            <div className="flex-1 rounded-md bg-white p-6 shadow">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Manage Campaign
-              </h2>
-              <div className="mt-6 flex flex-col gap-4">
-                <div className="flex w-full items-center justify-start rounded-md bg-gray-100 p-8">
-                  <VerticalSteps
-                    steps={[
-                      {
-                        name: "Step 1",
-                        description:
-                          "Create a new campaign and enter your campaign details",
-                        status: "complete",
-                      },
-                      {
-                        name: "Step 2",
-                        description:
-                          "Design your campaign with our drag and drop editor",
-                        status: "current",
-                      },
-                      {
-                        name: "Step 3",
-                        description:
-                          "Send your campaign and have it received by your recipients",
-                        status: "upcoming",
-                      },
-                    ]}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
                   <Button
-                    appearance="secondary"
+                    appearance="primary"
                     size="md"
-                    onClick={() => {
-                      router.push(`/admin/campaign/edit/${campaignId}`);
-                    }}
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      <p className="col-span-1">Edit</p>
-                      <PencilSquareIcon className="mb-[1px] h-4 w-4" />
-                    </div>
-                  </Button>
-                  <Button
-                    appearance="secondary"
-                    size="md"
-                    onClick={() => {
-                      router.push(`/admin/campaign/preview/${campaignId}`);
-                    }}
                     disabled={
                       !getCampaignInfo?.data?.blocks ||
                       getCampaignInfo.isLoading
                     }
+                    onClick={() => setIsSendEmailModalOpen(true)}
                   >
-                    <div className="flex items-center justify-center gap-2">
-                      <p className="col-span-1">Preview</p>
-                      <WindowIcon className="mb-[1px] h-4 w-4" />
-                    </div>
+                    <p className="col-span-1">Send Campaign</p>
                   </Button>
                 </div>
-                <Button
-                  appearance="primary"
-                  size="md"
-                  disabled={
-                    !getCampaignInfo?.data?.blocks || getCampaignInfo.isLoading
-                  }
-                >
-                  <p className="col-span-1">Send Campaign</p>
-                </Button>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

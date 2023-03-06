@@ -86,7 +86,7 @@ export default function CampaignEditorSidebar({
           <>
             {isEditing.current ? (
               <div className="flex w-[400px] flex-col justify-between gap-8 p-6 pt-0">
-                <div className="flex max-h-[590px] flex-col justify-start gap-6 overflow-auto p-2">
+                <div className="flex max-h-[560px] flex-col justify-start gap-6 overflow-auto p-2">
                   {Object.entries(
                     blocks[getIndexOfId(isEditing.blockId, blocks)].attributes
                   ).map(([indentifier], i) => {

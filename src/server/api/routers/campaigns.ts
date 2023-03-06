@@ -76,10 +76,16 @@ export const campaignsRouter = createTRPCRouter({
             createdAt: true,
             updatedAt: true,
             blocks: true,
+            globalStyles: true,
             list: {
               select: {
                 id: true,
                 name: true,
+                _count: {
+                  select: {
+                    contacts: true,
+                  },
+                },
               },
             },
           },
@@ -195,6 +201,8 @@ export const campaignsRouter = createTRPCRouter({
             name: true,
             blocks: true,
             globalStyles: true,
+            subject: true,
+            sendFromName: true,
           },
         });
       } catch (err) {
