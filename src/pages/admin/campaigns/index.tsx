@@ -93,6 +93,7 @@ function Campaigns() {
           { id: "name", name: "Name" },
           { id: "subject", name: "Subject" },
           { id: "hasSent", name: "Status" },
+          { id: "scheduledSend", name: "Scheduled for" },
           { id: "updatedAt", name: "Last updated" },
         ]}
         screenReaderRowButtonText="View"

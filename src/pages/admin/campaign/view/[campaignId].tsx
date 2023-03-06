@@ -13,6 +13,7 @@ import SendEmailModal from "~/components/SendEmailModal";
 import VerticalSteps from "~/components/VerticalSteps";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
+import formatDateTime from "~/utils/formatDateTime";
 
 const initialInputValues = {
   campaignName: "",
@@ -22,12 +23,17 @@ const initialInputValues = {
 
 function CampaignDetails() {
   const router = useRouter();
+  const utils = api.useContext();
   const { campaignId } = router.query;
   const getCampaignInfo = api.campaigns.getCampaignInfo.useQuery({
     campaignId: campaignId as string,
   });
 
   const [inputValues, setInputValues] = useState(initialInputValues);
+
+  const scheduleCampaign = api.campaigns.scheduleCampaign.useMutation({
+    onSuccess: () => utils.campaigns.invalidate(),
+  });
 
   const lists = api.lists.getLists.useQuery();
   const listData = lists?.data ?? [];
@@ -54,8 +60,6 @@ function CampaignDetails() {
     }
   }, [getCampaignInfo.data]);
 
-  const utils = api.useContext();
-
   const updateCampaign = api.campaigns.updateCampaign.useMutation({
     onSuccess: () => utils.campaigns.invalidate(),
   });
@@ -70,10 +74,10 @@ function CampaignDetails() {
         listId: selectedList.id,
       }),
       {
-        loading: "Updating campaign...",
+        loading: "Saving changes...",
         success: () => {
           setTabs(tabs.map((tab) => ({ ...tab, current: !tab.current })));
-          return "Campaign updated!";
+          return "Changes saved!";
         },
         error: "Error updating campaign",
       },
@@ -245,7 +249,8 @@ function CampaignDetails() {
                         size="md"
                         disabled={
                           getCampaignInfo.isLoading ||
-                          getCampaignInfo.data?.hasSent
+                          getCampaignInfo.data?.hasSent ||
+                          getCampaignInfo.data?.scheduledSend
                         }
                         onClick={() => {
                           router.push(`/admin/campaign/edit/${campaignId}`);
@@ -275,6 +280,30 @@ function CampaignDetails() {
                     <Button appearance="success" size="md">
                       Campaign sent
                     </Button>
+                  ) : getCampaignInfo.data?.scheduledSend ? (
+                    <Button
+                      appearance="success"
+                      size="md"
+                      onClick={() => {
+                        toast.promise(
+                          scheduleCampaign.mutateAsync({
+                            scheduledSend: null,
+                            campaignId: campaignId as string,
+                            unschedule: true,
+                          }),
+                          {
+                            loading: "Unscheduling...",
+                            success: "Campaign unscheduled",
+                            error: "Error unscheduling campaign",
+                          },
+                          {
+                            position: "bottom-center",
+                          }
+                        );
+                      }}
+                    >
+                      Unschedule
+                    </Button>
                   ) : (
                     <Button
                       appearance="primary"
@@ -285,7 +314,7 @@ function CampaignDetails() {
                       }
                       onClick={() => setIsSendEmailModalOpen(true)}
                     >
-                      <p className="col-span-1">Send Campaign</p>
+                      <p className="col-span-1">Send or Schedule Campaign</p>
                     </Button>
                   )}
                 </div>

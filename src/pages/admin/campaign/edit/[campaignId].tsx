@@ -249,10 +249,7 @@ export default function CampaignBuilder() {
                 <Button
                   appearance="secondary"
                   size="sm"
-                  onClick={() => {
-                    setIsPreviewEmailModalOpen(true);
-                    // console.log(renderToHtml(blocks, globalStyles));
-                  }}
+                  onClick={() => setIsPreviewEmailModalOpen(true)}
                 >
                   Send Preview
                 </Button>

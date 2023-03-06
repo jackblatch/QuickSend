@@ -156,7 +156,7 @@ export default function EditorCommandPalette({
                             <div
                               className={formatClasses(
                                 "flex h-10 w-10 flex-none items-center justify-center rounded-lg",
-                                "bg-blue-200"
+                                "bg-blue-100"
                               )}
                             >
                               <CampaignComponentIcons

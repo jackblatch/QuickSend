@@ -183,13 +183,20 @@ export default function MultiSelectTable({
                                     key={i}
                                     className="whitespace-nowrap py-4 pr-3 text-sm text-gray-500"
                                   >
-                                    {column.id === "hasSent" ? (
+                                    {column.id === "scheduledSend" &&
+                                    !item[column.id] ? (
+                                      "-"
+                                    ) : column.id === "hasSent" ? (
                                       item[column.id] ? (
                                         <p className="w-14 rounded-full bg-green-100 p-1 text-center text-xs font-semibold text-green-800">
                                           Sent
                                         </p>
+                                      ) : item["scheduledSend"] ? (
+                                        <p className="w-20 rounded-full bg-orange-100 p-1 text-center text-xs font-semibold text-orange-800">
+                                          Scheduled
+                                        </p>
                                       ) : (
-                                        <p className="w-14 rounded-full bg-orange-100 p-1 text-center text-xs font-semibold text-orange-800">
+                                        <p className="w-14 rounded-full bg-gray-100 p-1 text-center text-xs font-semibold text-gray-700">
                                           Draft
                                         </p>
                                       )

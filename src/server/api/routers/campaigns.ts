@@ -24,6 +24,7 @@ export const campaignsRouter = createTRPCRouter({
           name: true,
           subject: true,
           hasSent: true,
+          scheduledSend: true,
           updatedAt: true,
           list: {
             select: {
@@ -58,6 +59,11 @@ export const campaignsRouter = createTRPCRouter({
                 id: ctx.session.user.id,
               },
             },
+            list: {
+              connect: {
+                id: input.listId,
+              },
+            },
           },
         });
       } catch (err) {
@@ -83,6 +89,7 @@ export const campaignsRouter = createTRPCRouter({
             blocks: true,
             globalStyles: true,
             hasSent: true,
+            scheduledSend: true,
             list: {
               select: {
                 id: true,
@@ -240,9 +247,50 @@ export const campaignsRouter = createTRPCRouter({
               in: input.campaignIds,
             },
             hasSent: false,
+            scheduledSend: null,
           },
         });
       } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
+  scheduleCampaign: protectedProcedure
+    .input(
+      z.object({
+        scheduledSend: z.date().nullish(),
+        campaignId: z.string(),
+        unschedule: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        if (
+          !input.unschedule &&
+          (!input.scheduledSend || !(input.scheduledSend instanceof Date))
+        )
+          throw new TRPCError({ code: "BAD_REQUEST" });
+        const campaignNotSend = await ctx.prisma.campaign.findUnique({
+          where: {
+            id: input.campaignId,
+          },
+          select: {
+            hasSent: true,
+          },
+        });
+
+        if (campaignNotSend?.hasSent)
+          throw new TRPCError({ code: "BAD_REQUEST" });
+
+        return await ctx.prisma.campaign.update({
+          where: {
+            id: input.campaignId,
+          },
+          data: {
+            scheduledSend: input.unschedule ? null : input.scheduledSend,
+          },
+        });
+      } catch (err) {
+        console.log(err);
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
