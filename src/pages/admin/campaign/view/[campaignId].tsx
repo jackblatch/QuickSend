@@ -2,7 +2,7 @@ import { PencilSquareIcon, WindowIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { parseAndGenerateBlocks } from "~/campaignEditor/utils/campaignEditorUtils";
 import renderToHtml from "~/campaignEditor/utils/renderToHtml";
 import Button from "~/components/Button";
@@ -117,7 +117,6 @@ function CampaignDetails() {
 
   return (
     <>
-      <Toaster />
       {getCampaignInfo.isLoading || lists.isLoading ? (
         <p>Loading...</p>
       ) : (

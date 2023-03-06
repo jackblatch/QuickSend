@@ -64,7 +64,7 @@ export default function NewCampaignSlideOver({
       open={open}
       setOpen={setOpen}
       heading="New Campaign"
-      subheading="Complete the following fields to create a new campaign."
+      subheading="Complete the following fields to create a new campaign. These details can be edited later."
       actionText="Create"
       handleSubmit={handleSubmit}
     >

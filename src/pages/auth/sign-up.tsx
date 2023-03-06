@@ -4,7 +4,7 @@ import Logo from "~/components/Logo";
 import ErrorBlock from "~/components/AlertBlock";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 export default function SignUp() {
   const createAccount = api.auth.createAccount.useMutation();
@@ -20,7 +20,6 @@ export default function SignUp() {
 
   return (
     <>
-      <Toaster />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="text-center">

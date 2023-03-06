@@ -19,7 +19,7 @@ import {
   getDefaultAttributeValues,
   parseAndGenerateBlocks,
 } from "~/campaignEditor/utils/campaignEditorUtils";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import { Block } from "~/campaignEditor/utils/blockattributes";
 import renderToHtml from "~/campaignEditor/utils/renderToHtml";
@@ -217,7 +217,6 @@ export default function CampaignBuilder() {
         onDragEnd={handleSortableDragEnd}
         id="1"
       >
-        <Toaster />
         <div className="flex min-h-[100vh] flex-col">
           <CampaignEditNavBar
             router={router}

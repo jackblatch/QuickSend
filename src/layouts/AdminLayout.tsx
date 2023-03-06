@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Breadcrumbs from "~/components/Breadcrumbs";
 import { useSession } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 
 const initialNavigation = [
   {
@@ -78,6 +79,7 @@ export default function AdminLayout({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
+        <Toaster />
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"

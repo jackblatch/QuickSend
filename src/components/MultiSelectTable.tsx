@@ -1,5 +1,4 @@
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import EmptyListState from "~/components/EmptyListState";
 import formatClasses from "~/utils/formatClasses";
 import formatDateTime from "~/utils/formatDateTime";
@@ -68,7 +67,6 @@ export default function MultiSelectTable({
 
   return (
     <>
-      <Toaster />
       {isLoading ? (
         <p>Loading...</p>
       ) : tableData.length === 0 ? (

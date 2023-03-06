@@ -5,7 +5,7 @@ import Button from "~/components/Button";
 import { api } from "~/utils/api";
 import formatDateTime from "~/utils/formatDateTime";
 import NewListModal from "~/components/NewListModal";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import Link from "next/link";
 import StackedList from "~/components/StackedList";
 
@@ -47,7 +47,6 @@ function List() {
 
   return (
     <div>
-      <Toaster />
       {showNewListModal && (
         <NewListModal open={showNewListModal} setOpen={setShowNewListModal} />
       )}

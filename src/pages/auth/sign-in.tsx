@@ -9,7 +9,7 @@ import type {
 import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
 import AlertBlock from "~/components/AlertBlock";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
@@ -43,7 +43,6 @@ export default function SignIn({
 
   return (
     <>
-      <Toaster />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="text-center">
@@ -116,32 +115,6 @@ export default function SignIn({
                 autoComplete="current-password"
                 required
               />
-              {/* <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-blue-600 hover:text-blue-500"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-              </div> */}
-
               <div>
                 <button
                   type="submit"

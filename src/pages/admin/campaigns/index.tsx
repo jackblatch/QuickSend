@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import Button from "~/components/Button";
 import MultiSelectTable from "~/components/MultiSelectTable";
 import NewCampaignSlideOver from "~/components/NewCampaignSlideOver";
@@ -30,7 +30,6 @@ function Campaigns() {
 
   return (
     <>
-      <Toaster />
       <NewCampaignSlideOver
         open={openNewCampaignSlideOut}
         setOpen={setOpenNewCampaignSlideOut}

@@ -1,5 +1,5 @@
 import Logo from "~/components/Logo";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
@@ -8,7 +8,6 @@ export default function SignOut() {
 
   return (
     <>
-      <Toaster />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="text-center">

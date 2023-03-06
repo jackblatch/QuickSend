@@ -1,7 +1,7 @@
 import { DocumentPlusIcon } from "@heroicons/react/24/outline";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Papa from "papaparse";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import AlertBlock from "./AlertBlock";
 
