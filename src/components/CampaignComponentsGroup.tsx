@@ -1,15 +1,12 @@
 import { useDroppable } from "@dnd-kit/core";
 import DraggableComponent from "./DraggableComponent";
 
-interface KanbanLaneProps {
+interface Props {
   title: string;
   items: { id: string; name: string }[];
 }
 
-export default function CampaignComponentsGroup({
-  title,
-  items,
-}: KanbanLaneProps) {
+export default function CampaignComponentsGroup({ title, items }: Props) {
   const { isOver, setNodeRef } = useDroppable({
     id: title,
     data: {

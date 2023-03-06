@@ -7,7 +7,6 @@ import { parseAndGenerateBlocks } from "~/campaignEditor/utils/campaignEditorUti
 import Button from "~/components/Button";
 import Logo from "~/components/Logo";
 import { api } from "~/utils/api";
-import formatDateTime from "~/utils/formatDateTime";
 
 export default function CampaignPreview() {
   const router = useRouter();
@@ -17,6 +16,7 @@ export default function CampaignPreview() {
   });
 
   const [blocks, setBlocks] = useState<Block[]>([]);
+  const [globalStyles, setGlobalStyles] = useState({});
 
   useEffect(() => {
     if (getCampaignEditorInfo.data && blocks.length === 0) {
@@ -25,6 +25,12 @@ export default function CampaignPreview() {
       );
       if (newBlocks) {
         setBlocks(newBlocks);
+      }
+      const globalStyles = JSON.parse(
+        getCampaignEditorInfo.data.globalStyles as string
+      );
+      if (globalStyles) {
+        setGlobalStyles(globalStyles);
       }
     }
   }, [getCampaignEditorInfo.data]);
@@ -56,9 +62,11 @@ export default function CampaignPreview() {
               </span>
               {getCampaignEditorInfo?.data?.name}
             </p>
-            {blocks.map((block) => (
-              <div key={block.id}>{block.element}</div>
-            ))}
+            <div style={globalStyles}>
+              {blocks.map((block) => (
+                <div key={block.id}>{block.element}</div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

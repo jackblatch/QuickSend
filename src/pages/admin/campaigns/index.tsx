@@ -15,6 +15,10 @@ function Campaigns() {
   const router = useRouter();
   const { listId } = router.query;
 
+  const utils = api.useContext();
+  const deleteCampaigns = api.campaigns.deleteCampaigns.useMutation({
+    onSuccess: () => utils.campaigns.invalidate(),
+  });
   const getCampaigns = api.campaigns.getCampaigns.useQuery();
   const campaigns = getCampaigns.data ?? [];
 
@@ -64,7 +68,22 @@ function Campaigns() {
             <button
               type="button"
               className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
-              onClick={() => {}}
+              onClick={() => {
+                toast.promise(
+                  deleteCampaigns.mutateAsync({ campaignIds: selectedlists }),
+                  {
+                    loading: "Deleting...",
+                    success: () => {
+                      setSelectedlists([]);
+                      return "Deleted lists";
+                    },
+                    error: "Error",
+                  },
+                  {
+                    position: "bottom-center",
+                  }
+                );
+              }}
             >
               Delete selected
             </button>
@@ -73,8 +92,8 @@ function Campaigns() {
         tableColumnNames={[
           { id: "name", name: "Name" },
           { id: "subject", name: "Subject" },
+          { id: "hasSent", name: "Status" },
           { id: "updatedAt", name: "Last updated" },
-          { id: "createdAt", name: "Created at" },
         ]}
         screenReaderRowButtonText="View"
         rowButtonActions={(item: any) => {

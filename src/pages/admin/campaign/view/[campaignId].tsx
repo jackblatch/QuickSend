@@ -213,13 +213,21 @@ function CampaignDetails() {
                           name: "Step 2",
                           description:
                             "Design your campaign with our drag and drop editor",
-                          status: "current",
+                          status: `${
+                            getCampaignInfo.data?.hasSent
+                              ? "complete"
+                              : "current"
+                          }`,
                         },
                         {
                           name: "Step 3",
                           description:
-                            "Send your campaign and have it received by your recipients",
-                          status: "upcoming",
+                            "Send your campaign and have it delivered to your recipients",
+                          status: `${
+                            getCampaignInfo.data?.hasSent
+                              ? "complete"
+                              : "upcoming"
+                          }`,
                         },
                       ]}
                     />

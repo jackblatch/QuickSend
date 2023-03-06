@@ -183,9 +183,21 @@ export default function MultiSelectTable({
                                     key={i}
                                     className="whitespace-nowrap py-4 pr-3 text-sm text-gray-500"
                                   >
-                                    {item[column.id] instanceof Date
-                                      ? formatDateTime(item[column.id])
-                                      : item[column.id]}
+                                    {column.id === "hasSent" ? (
+                                      item[column.id] ? (
+                                        <p className="w-14 rounded-full bg-green-100 p-1 text-center text-xs font-semibold text-green-800">
+                                          Sent
+                                        </p>
+                                      ) : (
+                                        <p className="w-14 rounded-full bg-orange-100 p-1 text-center text-xs font-semibold text-orange-800">
+                                          Draft
+                                        </p>
+                                      )
+                                    ) : item[column.id] instanceof Date ? (
+                                      formatDateTime(item[column.id])
+                                    ) : (
+                                      item[column.id]
+                                    )}
                                   </td>
                                 );
                               }

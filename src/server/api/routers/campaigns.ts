@@ -11,6 +11,11 @@ export const campaignsRouter = createTRPCRouter({
   getCampaigns: protectedProcedure.query(async ({ ctx }) => {
     try {
       return await ctx.prisma.campaign.findMany({
+        orderBy: [
+          {
+            updatedAt: "desc",
+          },
+        ],
         where: {
           userId: ctx.session.user.id,
         },
@@ -18,7 +23,7 @@ export const campaignsRouter = createTRPCRouter({
           id: true,
           name: true,
           subject: true,
-          createdAt: true,
+          hasSent: true,
           updatedAt: true,
           list: {
             select: {
@@ -204,6 +209,37 @@ export const campaignsRouter = createTRPCRouter({
             globalStyles: true,
             subject: true,
             sendFromName: true,
+          },
+        });
+      } catch (err) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+    }),
+  deleteCampaigns: protectedProcedure
+    .input(z.object({ campaignIds: z.array(z.string()) }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const isUserAuthorisedToDeleteCampaigns = async () => {
+          const campaigns = await ctx.prisma.campaign.findMany({
+            where: {
+              id: {
+                in: input.campaignIds,
+              },
+            },
+          });
+          if (campaigns.some((c) => c.userId !== ctx.session.user.id)) {
+            throw new TRPCError({ code: "UNAUTHORIZED" });
+          } else {
+            return true;
+          }
+        };
+        await isUserAuthorisedToDeleteCampaigns();
+        return await ctx.prisma.campaign.deleteMany({
+          where: {
+            id: {
+              in: input.campaignIds,
+            },
+            hasSent: false,
           },
         });
       } catch (err) {
