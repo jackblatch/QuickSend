@@ -182,7 +182,8 @@ export default function MultiSelectTable({
                                     className="whitespace-nowrap py-4 pr-3 text-sm text-gray-500"
                                   >
                                     {column.id === "scheduledSend" &&
-                                    !item[column.id] ? (
+                                    (!item[column.id] ||
+                                      (item[column.id] && item["hasSent"])) ? (
                                       "-"
                                     ) : column.id === "hasSent" ? (
                                       item[column.id] ? (
