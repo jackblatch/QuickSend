@@ -8,6 +8,7 @@ export async function sendEmail(input: {
 }) {
   //   const testAccount = await nodemailer.createTestAccount();
 
+  // this is where the credentials would be inputted and then used to send on behalf of someone else
   //   const transporter = nodemailer.createTransport({
   //     host: "smtp.ethereal.email",
   //     port: 587,
