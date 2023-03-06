@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Logo from "~/components/Logo";
+import Button from "~/components/Button";
 
 const Home: NextPage = () => {
   const { data: sessionData } = useSession();
@@ -36,17 +37,13 @@ const Home: NextPage = () => {
             Send emails fast, with confidence.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link
-              href="/auth/sign-up"
-              className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Sign up
-            </Link>
-            <Link
-              href="/auth/sign-in"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Login <span aria-hidden="true">→</span>
+            <Button appearance="primary" size="md">
+              <Link href="/auth/sign-up">Sign up</Link>
+            </Button>
+            <Link href="/auth/sign-in">
+              <Button appearance="secondary" size="md">
+                Login <span aria-hidden="true">→</span>
+              </Button>
             </Link>
           </div>
         </div>
