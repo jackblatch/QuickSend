@@ -18,7 +18,11 @@ export default function EmailImage({
       <tbody>
         <tr>
           <td style={styles.container}>
-            <img src={src} alt={alt} width="100%" />
+            <img
+              src={src === "" ? process.env.NEXT_PUBLIC_NO_IMAGE_URL : src}
+              alt={alt}
+              width="100%"
+            />
           </td>
         </tr>
       </tbody>
