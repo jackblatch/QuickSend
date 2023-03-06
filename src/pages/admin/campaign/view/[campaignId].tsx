@@ -131,9 +131,13 @@ function CampaignDetails() {
           <div className="mt-6">
             <div className="flex flex-col gap-8 md:flex-row">
               <div className="flex flex-1 flex-col gap-4 rounded-md bg-white p-6 shadow">
-                <div className="mb-3">
-                  <LineTabs tabs={tabs} setTabs={setTabs} />
-                </div>
+                {getCampaignInfo.data?.hasSent ? (
+                  <h2 className="ml-6 text-xl font-semibold">Details</h2>
+                ) : (
+                  <div className="mb-3">
+                    <LineTabs tabs={tabs} setTabs={setTabs} />
+                  </div>
+                )}
                 {tabs[0]?.current ? (
                   <div className="flex flex-col gap-3">
                     <DescriptionRow
@@ -153,7 +157,7 @@ function CampaignDetails() {
                       value={getCampaignInfo.data?.list?.name ?? ""}
                     />
                   </div>
-                ) : (
+                ) : tabs[1]?.current && !getCampaignInfo.data?.hasSent ? (
                   <>
                     <CampaignInputFields
                       inputValues={inputValues}
@@ -187,6 +191,8 @@ function CampaignDetails() {
                       </Button>
                     </div>
                   </>
+                ) : (
+                  ""
                 )}
               </div>
               <div className="flex-1 rounded-md bg-white p-6 shadow">
@@ -218,23 +224,31 @@ function CampaignDetails() {
                       ]}
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <Button
-                      appearance="secondary"
-                      size="md"
-                      disabled={
-                        getCampaignInfo.isLoading ||
-                        getCampaignInfo.data?.hasSent
-                      }
-                      onClick={() => {
-                        router.push(`/admin/campaign/edit/${campaignId}`);
-                      }}
-                    >
-                      <div className="flex items-center justify-center gap-2">
-                        <p className="col-span-1">Edit</p>
-                        <PencilSquareIcon className="mb-[1px] h-4 w-4" />
-                      </div>
-                    </Button>
+                  <div
+                    className={`${
+                      getCampaignInfo.data?.hasSent
+                        ? "grid-cols-1"
+                        : "grid-cols-2"
+                    } grid gap-4`}
+                  >
+                    {!getCampaignInfo.data?.hasSent && (
+                      <Button
+                        appearance="secondary"
+                        size="md"
+                        disabled={
+                          getCampaignInfo.isLoading ||
+                          getCampaignInfo.data?.hasSent
+                        }
+                        onClick={() => {
+                          router.push(`/admin/campaign/edit/${campaignId}`);
+                        }}
+                      >
+                        <div className="flex items-center justify-center gap-2">
+                          <p className="col-span-1">Edit</p>
+                          <PencilSquareIcon className="mb-[1px] h-4 w-4" />
+                        </div>
+                      </Button>
+                    )}
                     <Button
                       appearance="secondary"
                       size="md"
@@ -250,7 +264,7 @@ function CampaignDetails() {
                     </Button>
                   </div>
                   {getCampaignInfo.data?.hasSent ? (
-                    <Button appearance="secondary" size="md">
+                    <Button appearance="success" size="md">
                       Campaign sent
                     </Button>
                   ) : (

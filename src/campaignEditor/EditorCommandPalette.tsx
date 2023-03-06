@@ -20,12 +20,11 @@ const items = [
   {
     id: 1,
     name: "Text",
-    description: "Add freeform text with basic formatting options.",
+    description: "Add text.",
     url: "#",
     color: "bg-blue-500",
     icon: PencilSquareIcon,
   },
-  // More items...
 ];
 
 // change items to work with adding new component of specified search to bottom of page

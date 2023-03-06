@@ -9,7 +9,7 @@ export default function Button({
   ...delegated
 }: PropsWithChildren<{
   size: "sm" | "md" | "lg" | "xl" | "2xl";
-  appearance: "primary" | "secondary";
+  appearance: "primary" | "secondary" | "success";
   type?: "button" | "submit" | "reset";
   onClick?: MouseEventHandler<HTMLButtonElement>;
   [x: string]: any;
@@ -41,6 +41,8 @@ export default function Button({
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : appearance === "secondary"
             ? "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50"
+            : appearance === "success"
+            ? "bg-green-600 text-white ring-green-600"
             : null
         }  rounded-md py-2 px-3 text-sm font-semibold  shadow-sm ring-1 ring-inset  disabled:cursor-not-allowed disabled:opacity-75`}
         {...delegated}
