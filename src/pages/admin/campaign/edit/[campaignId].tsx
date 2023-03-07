@@ -223,7 +223,7 @@ export default function CampaignBuilder() {
             globalStyles={globalStyles}
           />
           <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:gap-0">
-            <div className="min-w-[400px] max-w-[400px] border-r border-gray-200 bg-white py-2">
+            <div className="border-r border-gray-200 bg-white py-2 lg:min-w-[400px] lg:max-w-[400px]">
               <CampaignEditorSidebar
                 tabs={tabs}
                 setTabs={setTabs}
