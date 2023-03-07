@@ -294,4 +294,16 @@ export const campaignsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  getSentCampaignCount: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      return await ctx.prisma.campaign.count({
+        where: {
+          userId: ctx.session.user.id,
+          hasSent: true,
+        },
+      });
+    } catch (err) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+    }
+  }),
 });

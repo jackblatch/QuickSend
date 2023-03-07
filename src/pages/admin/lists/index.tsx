@@ -79,6 +79,7 @@ function List() {
               id: 1,
               title: "All Contacts",
               label: "Default List",
+              href: "/admin/lists/contacts",
               value: `${getAllUserContacts.data?.length ?? ""}`,
             },
           ]}

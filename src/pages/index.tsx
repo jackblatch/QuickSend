@@ -12,7 +12,7 @@ export default function Home() {
             Visual drag and drop email builder{" "}
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Design, develop and send emails fast, with confidence.
+            Design, develop, and send emails fast, with confidence.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <Button appearance="primary" size="md">

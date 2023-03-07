@@ -121,4 +121,15 @@ export const listsRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  getListsCount: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      return await ctx.prisma.list.count({
+        where: {
+          userId: ctx.session.user.id,
+        },
+      });
+    } catch (err) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+    }
+  }),
 });

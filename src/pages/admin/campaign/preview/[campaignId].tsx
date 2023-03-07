@@ -7,6 +7,9 @@ import { parseAndGenerateBlocks } from "~/campaignEditor/utils/campaignEditorUti
 import Button from "~/components/Button";
 import Logo from "~/components/Logo";
 import { api } from "~/utils/api";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 export default function CampaignPreview() {
   const router = useRouter();

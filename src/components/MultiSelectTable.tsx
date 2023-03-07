@@ -3,6 +3,7 @@ import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import EmptyListState from "~/components/EmptyListState";
 import formatClasses from "~/utils/formatClasses";
 import formatDateTime from "~/utils/formatDateTime";
+import Loading from "./Loading";
 
 type Props = {
   topRowButtons: React.ReactNode;
@@ -13,7 +14,7 @@ type Props = {
   rowButtonText: string;
   introText: string;
   isLoading: boolean;
-  listId: string;
+  listId?: string;
   selectedlists: any[];
   rowButtonActions: any;
   primaryScreenReaderInfo: string;
@@ -45,7 +46,6 @@ export default function MultiSelectTable({
   const [indeterminate, setIndeterminate] = useState(false);
 
   useEffect(() => {
-    // if (getListInfo.data) { // MAY NEED TO ADD BACK IN?
     const isIndeterminate =
       selectedlists.length > 0 && selectedlists.length < tableData.length;
     setChecked(
@@ -57,7 +57,6 @@ export default function MultiSelectTable({
     if (checkbox.current !== null) {
       checkbox.current.indeterminate = isIndeterminate;
     }
-    // }
   }, [selectedlists]);
 
   function toggleAll() {
@@ -71,9 +70,9 @@ export default function MultiSelectTable({
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : tableData.length === 0 ? (
-        <EmptyListState listId={listId} />
+        <>{listId && <EmptyListState listId={listId} />}</>
       ) : (
         <>
           <div>

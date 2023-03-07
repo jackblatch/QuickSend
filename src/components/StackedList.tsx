@@ -1,16 +1,23 @@
 import { CalendarIcon, MapPinIcon, UsersIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
 
 export default function StackedList({
   items,
 }: {
-  items: { id: number; title: string; label: string; value: string }[];
+  items: {
+    id: number;
+    title: string;
+    href: string;
+    label: string;
+    value: string;
+  }[];
 }) {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-md">
       <ul role="list" className="divide-y divide-gray-200">
         {items.map((item) => (
           <li key={item.id}>
-            <a href="#" className="block hover:bg-gray-50">
+            <Link href={item.href} className="block hover:bg-gray-50">
               <div className="px-4 py-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <p className="truncate text-sm font-medium text-blue-600">
@@ -34,7 +41,7 @@ export default function StackedList({
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
