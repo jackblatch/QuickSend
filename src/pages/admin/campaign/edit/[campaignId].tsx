@@ -13,7 +13,7 @@ import {
   getDefaultAttributeValues,
   parseAndGenerateBlocks,
 } from "~/campaignEditor/utils/campaignEditorUtils";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { api } from "~/utils/api";
 import { Block } from "~/campaignEditor/utils/blockattributes";
 import renderToHtml from "~/campaignEditor/utils/renderToHtml";
@@ -189,6 +189,7 @@ export default function CampaignBuilder() {
         <meta name="description" content="Visual email builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Toaster />
       <EmailPreviewModal
         open={isPreviewEmailModalOpen}
         setOpen={setIsPreviewEmailModalOpen}

@@ -145,6 +145,18 @@ export const blockAttributes: { [index: string]: BlockAttributes } = {
     fontWeight: "normal",
     padding: "10px",
   },
+  Social: {
+    column1Text: "Instagram",
+    column1Link: "",
+    column2Text: "Facebook",
+    column2Link: "",
+    column3Text: "Youtube",
+    column3Link: "",
+    backgroundColor: "#ffffff",
+    textColor: "#000000",
+    fontWeight: "normal",
+    padding: "10px",
+  },
 };
 
 type BlockInfo = {

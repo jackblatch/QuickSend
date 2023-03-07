@@ -35,21 +35,30 @@ export default function NavBar({
           <tr>
             <td style={styles.container}>
               <p style={styles.text}>
-                <a href={column1Link === "" ? "#" : column1Link}>
+                <a
+                  href={column1Link === "" ? "#" : column1Link}
+                  target="_blank"
+                >
                   {column1Text}
                 </a>
               </p>
             </td>
             <td style={styles.container}>
               <p style={styles.text}>
-                <a href={column2Link === "" ? "#" : column2Link}>
+                <a
+                  href={column2Link === "" ? "#" : column2Link}
+                  target="_blank"
+                >
                   {column2Text}
                 </a>
               </p>
             </td>
             <td style={styles.container}>
               <p style={styles.text}>
-                <a href={column3Link === "" ? "#" : column3Link}>
+                <a
+                  href={column3Link === "" ? "#" : column3Link}
+                  target="_blank"
+                >
                   {column3Text}
                 </a>
               </p>

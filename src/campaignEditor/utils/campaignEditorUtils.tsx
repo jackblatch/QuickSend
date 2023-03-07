@@ -25,7 +25,7 @@ export const generateElement = (componentName: string, attributes: any) => {
     element = <Spacer {...attributes} />;
   } else if (componentName === "List") {
     element = <List {...attributes} />;
-  } else if (componentName === "NavBar") {
+  } else if (componentName === "NavBar" || componentName === "Social") {
     element = <NavBar {...attributes} />;
   }
   return element;
