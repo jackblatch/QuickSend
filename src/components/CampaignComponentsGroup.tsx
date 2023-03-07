@@ -26,6 +26,20 @@ export default function CampaignComponentsGroup({ title, items }: Props) {
             index={key}
             parent={title}
           />
+          // <div>
+          // <div className="relative">
+          // <div className="absolute top-0">
+          //   <DraggableComponent
+          //     title={item.name}
+          //     itemId={item.id}
+          //     key={key}
+          //     index={key}
+          //     parent={title}
+          //   />
+          // </div>
+          //   <div className="bg-red-500 ">ddd</div>
+          //   </div>
+          //   </div>
         ))}
       </div>
     </div>

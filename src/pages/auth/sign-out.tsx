@@ -1,4 +1,3 @@
-import Logo from "~/components/Logo";
 import { toast } from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
