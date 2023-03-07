@@ -1,5 +1,4 @@
 import { PencilSquareIcon, WindowIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -13,7 +12,9 @@ import SendEmailModal from "~/components/SendEmailModal";
 import VerticalSteps from "~/components/VerticalSteps";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
-import formatDateTime from "~/utils/formatDateTime";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 const initialInputValues = {
   campaignName: "",

@@ -4,7 +4,7 @@ import Logo from "~/components/Logo";
 
 export default function Home() {
   return (
-    <div className="relative isolate overflow-hidden bg-gray-50">
+    <div className="relative isolate flex min-h-[100vh] flex-col items-center justify-center overflow-hidden bg-gray-50">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-6 pt-10 pb-24 sm:pb-32 md:flex-row lg:flex lg:py-20 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
           <Logo justifyContent="justify-start" type="iconAndText" />

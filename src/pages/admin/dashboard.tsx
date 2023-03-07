@@ -1,23 +1,8 @@
 import { getSession } from "next-auth/react";
-import Button from "~/components/Button";
 import AdminLayout from "~/layouts/AdminLayout";
+import getServerSideProps from "~/utils/handleSessionRedirect";
 
-export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-}
+export { getServerSideProps };
 
 function Dashboard() {
   return <></>;

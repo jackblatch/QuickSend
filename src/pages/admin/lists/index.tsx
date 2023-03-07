@@ -8,6 +8,9 @@ import NewListModal from "~/components/NewListModal";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import StackedList from "~/components/StackedList";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 function List() {
   const checkbox = useRef<HTMLInputElement>(null);

@@ -1,3 +1,7 @@
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
+
 const people = [
   {
     name: "John",

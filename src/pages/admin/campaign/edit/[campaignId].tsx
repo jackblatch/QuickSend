@@ -27,6 +27,9 @@ import Head from "next/head";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import EditorCommandPalette from "~/campaignEditor/EditorCommandPalette";
 import EmailPreviewModal from "~/campaignEditor/EmailPreviewModal";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 export default function CampaignBuilder() {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);

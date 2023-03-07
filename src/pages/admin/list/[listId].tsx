@@ -8,6 +8,9 @@ import MultiSelectTable from "~/components/MultiSelectTable";
 import RemoveContactModal from "~/components/RemoveContactModal";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 function ListDetails() {
   const [showRemoveContactModal, setShowRemoveContactModal] = useState(false);

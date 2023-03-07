@@ -6,6 +6,9 @@ import MultiSelectTable from "~/components/MultiSelectTable";
 import NewCampaignSlideOver from "~/components/NewCampaignSlideOver";
 import AdminLayout from "~/layouts/AdminLayout";
 import { api } from "~/utils/api";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 function Campaigns() {
   const [openNewCampaignSlideOut, setOpenNewCampaignSlideOut] = useState(false);
