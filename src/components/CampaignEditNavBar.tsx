@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import renderToHtml from "~/campaignEditor/utils/renderToHtml";
 import { api } from "~/utils/api";
 import Button from "./Button";
 import CircleSteps from "./CircleSteps";
 import Logo from "./Logo";
 
 export default function CampaignEditNavBar({
+  isExampleBuilder,
   router,
   blocks,
   campaignName,
   globalStyles,
 }: {
+  isExampleBuilder: boolean;
   router: any;
   blocks: any[];
   campaignName: string;
@@ -43,7 +46,7 @@ export default function CampaignEditNavBar({
   ]);
 
   useEffect(() => {
-    if (router.isReady) {
+    if (router.isReady && !isExampleBuilder) {
       setSteps([
         {
           name: "Create",
@@ -103,7 +106,11 @@ export default function CampaignEditNavBar({
           appearance="secondary"
           size="md"
           onClick={() => {
-            router.push(`/admin/campaign/view/${campaignId}`);
+            if (isExampleBuilder) {
+              router.push("/");
+            } else {
+              router.push(`/admin/campaign/view/${campaignId}`);
+            }
           }}
         >
           Discard
@@ -111,10 +118,17 @@ export default function CampaignEditNavBar({
         <Button
           appearance="primary"
           size="md"
-          onClick={handleSaveAndExit}
+          onClick={() => {
+            if (!isExampleBuilder) {
+              handleSaveAndExit();
+            } else {
+              navigator.clipboard.writeText(renderToHtml(blocks, globalStyles));
+              toast.success("Copied to clipboard");
+            }
+          }}
           disabled={updateCampaignBlocks.isLoading}
         >
-          Save and Exit
+          {isExampleBuilder ? "Render to HTML" : "Save and Exit"}
         </Button>
       </div>
     </div>

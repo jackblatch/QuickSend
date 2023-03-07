@@ -22,6 +22,8 @@ import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import EditorCommandPalette from "~/campaignEditor/EditorCommandPalette";
 import EmailPreviewModal from "~/campaignEditor/EmailPreviewModal";
 import getServerSideProps from "~/utils/handleSessionRedirect";
+import { useSession } from "next-auth/react";
+import Loading from "~/components/Loading";
 
 export { getServerSideProps };
 
@@ -30,6 +32,19 @@ export default function CampaignBuilder() {
   const [isPreviewEmailModalOpen, setIsPreviewEmailModalOpen] = useState(false);
 
   const router = useRouter();
+  const { data: session } = useSession();
+
+  if (!router.isReady && !session) {
+    return <Loading />;
+  }
+
+  const [isExampleBuilder, setIsExampleBuilder] = useState(false);
+
+  useEffect(() => {
+    if (router.isReady && router.query.campaignId === "example-builder") {
+      setIsExampleBuilder(true);
+    }
+  }, [router]);
 
   const [tabs, setTabs] = useState([
     {
@@ -47,9 +62,15 @@ export default function CampaignBuilder() {
   });
   const [editorValues, setEditorValues] = useState();
 
-  const getCampaignEditorInfo = api.campaigns.getCampaignEditorInfo.useQuery({
-    campaignId: router.query.campaignId as string,
-  });
+  const getCampaignEditorInfo = api.campaigns.getCampaignEditorInfo.useQuery(
+    {
+      campaignId: router.query.campaignId as string,
+      isExampleBuilder,
+    },
+    {
+      enabled: !isExampleBuilder,
+    }
+  );
 
   const [blocks, setBlocks] = useState<Block[]>([
     {
@@ -190,13 +211,15 @@ export default function CampaignBuilder() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Toaster />
-      <EmailPreviewModal
-        open={isPreviewEmailModalOpen}
-        setOpen={setIsPreviewEmailModalOpen}
-        subject={getCampaignEditorInfo.data?.subject ?? ""}
-        sendFromName={getCampaignEditorInfo.data?.sendFromName ?? ""}
-        htmlContentFunc={() => renderToHtml(blocks, globalStyles)}
-      />
+      {!isExampleBuilder && (
+        <EmailPreviewModal
+          open={isPreviewEmailModalOpen}
+          setOpen={setIsPreviewEmailModalOpen}
+          subject={getCampaignEditorInfo.data?.subject ?? ""}
+          sendFromName={getCampaignEditorInfo.data?.sendFromName ?? ""}
+          htmlContentFunc={() => renderToHtml(blocks, globalStyles)}
+        />
+      )}
       <EditorCommandPalette
         open={isCommandPaletteOpen}
         setOpen={setIsCommandPaletteOpen}
@@ -217,6 +240,7 @@ export default function CampaignBuilder() {
       >
         <div className="flex min-h-[100vh] flex-col">
           <CampaignEditNavBar
+            isExampleBuilder={isExampleBuilder}
             router={router}
             blocks={blocks}
             campaignName={getCampaignEditorInfo?.data?.name ?? ""}
@@ -243,17 +267,19 @@ export default function CampaignBuilder() {
                 <p className="rounded-md bg-gray-100 p-2 text-xs">
                   Tip: Access the command palette with ⌘K
                 </p>
-                <Button
-                  appearance="secondary"
-                  size="sm"
-                  onClick={() => setIsPreviewEmailModalOpen(true)}
-                >
-                  Send Preview
-                </Button>
+                {!isExampleBuilder && (
+                  <Button
+                    appearance="secondary"
+                    size="sm"
+                    onClick={() => setIsPreviewEmailModalOpen(true)}
+                  >
+                    Send Preview
+                  </Button>
+                )}
               </div>
               <div className="flex justify-center py-12">
                 <div className="min-w-[600px] max-w-[600px] bg-gray-200">
-                  {getCampaignEditorInfo.isLoading ? (
+                  {!isExampleBuilder && getCampaignEditorInfo.isLoading ? (
                     <p>Loading...</p>
                   ) : (
                     <div style={globalStyles}>

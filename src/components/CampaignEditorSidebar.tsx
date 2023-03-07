@@ -10,6 +10,7 @@ import EditorInputField from "~/campaignEditor/EditorInputField";
 import EditorTextArea from "~/campaignEditor/EditorTextArea";
 import EditorSelectMenu from "~/campaignEditor/EditorSelectMenu";
 import EditorImageUpload from "~/campaignEditor/EditorImageUpload";
+import { useSession } from "next-auth/react";
 
 type Tabs = {
   name: string;
@@ -53,6 +54,8 @@ export default function CampaignEditorSidebar({
   globalStyles: any;
   setGlobalStyles: React.Dispatch<React.SetStateAction<any>>;
 }) {
+  const { data: session } = useSession();
+
   const handleUpdateComponent = (newEditorValues: any) => {
     const newBlocks = [...blocks];
     const indexOfId = getIndexOfId(isEditing.blockId, blocks);
@@ -104,11 +107,18 @@ export default function CampaignEditorSidebar({
                     };
                     return (
                       <div key={i}>
-                        {blockInfo[indentifier]?.inputType === "text" ||
+                        {(blockInfo[indentifier]?.inputType === "file" &&
+                          !session) ||
+                        blockInfo[indentifier]?.inputType === "text" ||
                         blockInfo[indentifier]?.inputType === "color" ? (
                           <>
                             <EditorInputField
-                              type={String(blockInfo[indentifier]?.inputType)}
+                              type={String(
+                                blockInfo[indentifier]?.inputType === "file" &&
+                                  !session
+                                  ? "text"
+                                  : blockInfo[indentifier]?.inputType
+                              )}
                               label={String(blockInfo[indentifier]?.label)}
                               id={indentifier}
                               value={editorValues[indentifier]}
