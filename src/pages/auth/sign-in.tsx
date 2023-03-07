@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import InputWithLabel from "~/components/InputWithLabel";
 import type {
@@ -13,6 +13,16 @@ import AuthLayout from "~/layouts/AuthLayout";
 import Button from "~/components/Button";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/admin",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
       csrfToken: await getCsrfToken(context),

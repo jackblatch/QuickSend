@@ -4,6 +4,9 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Button from "~/components/Button";
 import AuthLayout from "~/layouts/AuthLayout";
+import getServerSideProps from "~/utils/handleSessionRedirect";
+
+export { getServerSideProps };
 
 export default function SignOut() {
   const router = useRouter();
