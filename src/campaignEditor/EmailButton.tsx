@@ -49,7 +49,7 @@ export default function EmailButton({
                 <tr>
                   <td style={styles.buttonWrapper}>
                     <a
-                      href={URLAddress}
+                      href={URLAddress === "" ? "#" : URLAddress}
                       target="_blank"
                       style={styles.linkWrapper}
                     >

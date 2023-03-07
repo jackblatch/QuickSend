@@ -1,14 +1,18 @@
 import { CSSProperties } from "react";
-import { ParagraphTextProps } from "./utils/blockattributes";
+import { NavBarProps } from "./utils/blockattributes";
 
-export default function ParagraphText({
-  paragraphText,
+export default function NavBar({
+  column1Text,
+  column1Link,
+  column2Text,
+  column2Link,
+  column3Text,
+  column3Link,
   backgroundColor,
   textColor,
-  justifyContent,
   fontWeight,
   padding,
-}: ParagraphTextProps) {
+}: NavBarProps) {
   const styles = {
     container: {
       backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
@@ -17,7 +21,7 @@ export default function ParagraphText({
     text: {
       whiteSpace: "pre-line",
       fontSize: "16px",
-      textAlign: justifyContent !== "" ? justifyContent : "left",
+      textAlign: "center",
       fontWeight: fontWeight === "bold" ? "bold" : "normal",
       color: textColor !== "" ? textColor : "#000000",
       padding: padding !== "" ? padding : "10px",
@@ -30,9 +34,25 @@ export default function ParagraphText({
         <tbody>
           <tr>
             <td style={styles.container}>
-              {/* <p style={styles.text}>{column1Text}</p>
-              <p style={styles.text}>{column2Text}</p>
-              <p style={styles.text}>{column3Text}</p> */}
+              <p style={styles.text}>
+                <a href={column1Link === "" ? "#" : column1Link}>
+                  {column1Text}
+                </a>
+              </p>
+            </td>
+            <td style={styles.container}>
+              <p style={styles.text}>
+                <a href={column2Link === "" ? "#" : column2Link}>
+                  {column2Text}
+                </a>
+              </p>
+            </td>
+            <td style={styles.container}>
+              <p style={styles.text}>
+                <a href={column3Link === "" ? "#" : column3Link}>
+                  {column3Text}
+                </a>
+              </p>
             </td>
           </tr>
         </tbody>

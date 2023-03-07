@@ -5,6 +5,7 @@ import HeadingText from "../HeadingText";
 import ParagraphText from "../ParagraphText";
 import { blockAttributes } from "./blockattributes";
 import List from "../List";
+import NavBar from "../NavBar";
 
 export const getDefaultAttributeValues = (componentName: string) => {
   return blockAttributes[componentName];
@@ -24,6 +25,8 @@ export const generateElement = (componentName: string, attributes: any) => {
     element = <Spacer {...attributes} />;
   } else if (componentName === "List") {
     element = <List {...attributes} />;
+  } else if (componentName === "NavBar") {
+    element = <NavBar {...attributes} />;
   }
   return element;
 };
