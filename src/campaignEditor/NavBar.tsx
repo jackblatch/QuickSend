@@ -30,7 +30,9 @@ export default function ParagraphText({
         <tbody>
           <tr>
             <td style={styles.container}>
-              <p style={styles.text}>{paragraphText}</p>
+              {/* <p style={styles.text}>{column1Text}</p>
+              <p style={styles.text}>{column2Text}</p>
+              <p style={styles.text}>{column3Text}</p> */}
             </td>
           </tr>
         </tbody>

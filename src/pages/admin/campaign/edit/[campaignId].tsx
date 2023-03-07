@@ -1,17 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-  closestCenter,
-  DndContext,
-  DragOverlay,
-  UniqueIdentifier,
-} from "@dnd-kit/core";
+import { closestCenter, DndContext, UniqueIdentifier } from "@dnd-kit/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "~/components/Button";
 import CampaignEditNavBar from "~/components/CampaignEditNavBar";
 import CampaignEditorSidebar from "~/components/CampaignEditorSidebar";
 import { arrayMove } from "@dnd-kit/sortable";
-import SortableItem from "~/components/SortableItem";
 import CampaignEditorEmailBody from "~/components/CampaignEditorEmailBody";
 import HeadingText from "~/campaignEditor/HeadingText";
 import {

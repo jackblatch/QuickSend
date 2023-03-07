@@ -4,6 +4,7 @@ import EmailImage from "../EmailImage";
 import HeadingText from "../HeadingText";
 import ParagraphText from "../ParagraphText";
 import { blockAttributes } from "./blockattributes";
+import List from "../List";
 
 export const getDefaultAttributeValues = (componentName: string) => {
   return blockAttributes[componentName];
@@ -21,6 +22,8 @@ export const generateElement = (componentName: string, attributes: any) => {
     element = <EmailImage {...attributes} />;
   } else if (componentName === "Spacer") {
     element = <Spacer {...attributes} />;
+  } else if (componentName === "List") {
+    element = <List {...attributes} />;
   }
   return element;
 };

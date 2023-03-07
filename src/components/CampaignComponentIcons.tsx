@@ -25,7 +25,7 @@ export default function CampaignComponentIcons({
       {iconOnly ? (
         <div>{Icons(id)}</div>
       ) : (
-        <div className="flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-md bg-gray-50 shadow">
+        <div className="pointer-events-none flex h-24 w-24 flex-col items-center justify-center rounded-md bg-gray-50 shadow">
           <div className="flex flex-1 flex-col items-center justify-center gap-2">
             <div className="rounded-md border-2 border-gray-800 p-1">
               {Icons(id)}

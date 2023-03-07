@@ -1,28 +1,36 @@
 import { CSSProperties } from "react";
-import { ParagraphTextProps } from "./utils/blockattributes";
+import { ListProps } from "./utils/blockattributes";
 
-export default function ParagraphText({
+export default function List({
   paragraphText,
   backgroundColor,
   textColor,
   justifyContent,
   fontWeight,
   padding,
-}: ParagraphTextProps) {
+  listType,
+}: ListProps) {
   const styles = {
     container: {
       backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
-      padding: "10px",
+      padding: "15px",
+      textAlign: justifyContent !== "" ? justifyContent : "left",
+    } as CSSProperties,
+    listWrapper: {
+      listStyleType: listType === "unordered" ? "disc" : "decimal",
+      lineHeight: "0.5",
     } as CSSProperties,
     text: {
+      marginLeft: "20px",
       whiteSpace: "pre-line",
       fontSize: "16px",
-      textAlign: justifyContent !== "" ? justifyContent : "left",
       fontWeight: fontWeight === "bold" ? "bold" : "normal",
       color: textColor !== "" ? textColor : "#000000",
       padding: padding !== "" ? padding : "10px",
     } as CSSProperties,
   } as const;
+
+  const Tag = listType === "unordered" ? "ul" : "ol";
 
   return (
     <>
@@ -30,7 +38,13 @@ export default function ParagraphText({
         <tbody>
           <tr>
             <td style={styles.container}>
-              <p style={styles.text}>{paragraphText}</p>
+              <Tag style={styles.listWrapper}>
+                {paragraphText?.split("\n").map((item, i) => (
+                  <li style={styles.text} key={i}>
+                    {item}
+                  </li>
+                ))}
+              </Tag>
             </td>
           </tr>
         </tbody>
