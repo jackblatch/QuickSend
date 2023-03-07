@@ -168,7 +168,10 @@ export default function AdminLayout({
                     </nav>
                   </div>
                   <div className="flex flex-shrink-0 bg-gray-700 p-4">
-                    <a href="#" className="group block flex-shrink-0">
+                    <Link
+                      href="/auth/sign-out"
+                      className="group block flex-shrink-0"
+                    >
                       <div className="flex items-center">
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 p-1 text-sm font-medium text-gray-700">
                           {`${session?.user?.firstName[0]}${session?.user?.lastName[0]}`}
@@ -178,11 +181,11 @@ export default function AdminLayout({
                             {`${session?.user?.firstName} ${session?.user?.lastName}`}
                           </p>
                           <p className="text-sm font-medium text-gray-400 group-hover:text-gray-300">
-                            View profile
+                            Sign out
                           </p>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -232,7 +235,10 @@ export default function AdminLayout({
               </nav>
             </div>
             <div className="flex flex-shrink-0 bg-gray-700 p-4">
-              <a href="#" className="group block w-full flex-shrink-0">
+              <Link
+                href="/auth/sign-out"
+                className="group block w-full flex-shrink-0"
+              >
                 <div className="flex items-center">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 p-1 text-sm font-medium text-gray-700">
                     {`${session?.user?.firstName[0]}${session?.user?.lastName[0]}`}
@@ -242,11 +248,11 @@ export default function AdminLayout({
                       {`${session?.user?.firstName} ${session?.user?.lastName}`}
                     </p>
                     <p className="text-sm text-gray-400 group-hover:text-gray-300">
-                      View profile
+                      Sign out
                     </p>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

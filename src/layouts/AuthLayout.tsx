@@ -37,14 +37,16 @@ export default function ({
           </h2>
           {authType && (
             <p className="mt-2 text-center text-sm text-gray-600">
-              Or{" "}
+              {authType !== "sign-out" && "Or"}
               <a
                 href={`/auth/${authType === "sign-in" ? "sign-up" : "sign-in"}`}
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
                 {authType === "sign-in"
-                  ? "create an account"
-                  : "Sign in with your account"}
+                  ? " create an account"
+                  : authType === "sign-up"
+                  ? " Sign in with your account"
+                  : ""}
               </a>
             </p>
           )}
