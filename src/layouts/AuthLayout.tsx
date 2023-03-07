@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 import Logo from "~/components/Logo";
@@ -6,9 +7,25 @@ export default function ({
   children,
   heading,
   authType,
-}: PropsWithChildren<{ heading: string; authType?: "login" | "sign-up" }>) {
+}: PropsWithChildren<{
+  heading: string;
+  authType: "sign-in" | "sign-up" | "sign-out";
+}>) {
   return (
     <>
+      <Head>
+        <title>{`${
+          authType === "sign-in"
+            ? "Sign in"
+            : authType === "sign-up"
+            ? "Create an account"
+            : authType === "sign-out"
+            ? "Sign Out"
+            : "Authentication"
+        } - QuickSend`}</title>
+        <meta name="description" content="Visual email builder" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Toaster />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -22,10 +39,10 @@ export default function ({
             <p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
               <a
-                href={`/auth/${authType === "login" ? "sign-up" : "log-in"}`}
+                href={`/auth/${authType === "sign-in" ? "sign-up" : "sign-in"}`}
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
-                {authType === "login"
+                {authType === "sign-in"
                   ? "create an account"
                   : "Sign in with your account"}
               </a>

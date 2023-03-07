@@ -1,7 +1,6 @@
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import InputWithLabel from "~/components/InputWithLabel";
-import Logo from "~/components/Logo";
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
@@ -44,66 +43,68 @@ export default function SignIn({
   }, [Router.isReady]);
 
   return (
-    <AuthLayout heading="Sign in to your account" authType="login">
-      {error && (
-        <AlertBlock type="error" heading="Oops! An error occured.">
-          Please check your details and try again.
-        </AlertBlock>
-      )}
-      {registerRedirect && (
-        <AlertBlock type="success" heading="Account created!">
-          Please sign in below.
-        </AlertBlock>
-      )}
-      <form
-        className="space-y-6"
-        onSubmit={(e) => {
-          e.preventDefault();
-          toast.promise(
-            signIn("credentials", {
-              ...formValues,
-              callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
-            }),
-            {
-              loading: "Logging in...",
-              success: "Logged in!",
-              error: "Error logging in.",
-            },
-            {
-              position: "bottom-center",
-            }
-          );
-        }}
-      >
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <InputWithLabel
-          id="email"
-          label="Email address"
-          type="email"
-          state={formValues}
-          setState={setFormValues}
-          placeholder=""
-          required
-          autoComplete="email"
-        />
-        <InputWithLabel
-          id="password"
-          label="Password"
-          type="password"
-          state={formValues}
-          setState={setFormValues}
-          placeholder=""
-          autoComplete="current-password"
-          required
-        />
-        <div>
-          <div className="grid grid-cols-1">
-            <Button appearance="primary" size="md" type="submit">
-              Sign in
-            </Button>
+    <>
+      <AuthLayout heading="Sign in to your account" authType="sign-in">
+        {error && (
+          <AlertBlock type="error" heading="Oops! An error occured.">
+            Please check your details and try again.
+          </AlertBlock>
+        )}
+        {registerRedirect && (
+          <AlertBlock type="success" heading="Account created!">
+            Please sign in below.
+          </AlertBlock>
+        )}
+        <form
+          className="space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            toast.promise(
+              signIn("credentials", {
+                ...formValues,
+                callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
+              }),
+              {
+                loading: "Logging in...",
+                success: "Logged in!",
+                error: "Error logging in.",
+              },
+              {
+                position: "bottom-center",
+              }
+            );
+          }}
+        >
+          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+          <InputWithLabel
+            id="email"
+            label="Email address"
+            type="email"
+            state={formValues}
+            setState={setFormValues}
+            placeholder=""
+            required
+            autoComplete="email"
+          />
+          <InputWithLabel
+            id="password"
+            label="Password"
+            type="password"
+            state={formValues}
+            setState={setFormValues}
+            placeholder=""
+            autoComplete="current-password"
+            required
+          />
+          <div>
+            <div className="grid grid-cols-1">
+              <Button appearance="primary" size="md" type="submit">
+                Sign in
+              </Button>
+            </div>
           </div>
-        </div>
-      </form>
-    </AuthLayout>
+        </form>
+      </AuthLayout>
+    </>
   );
 }

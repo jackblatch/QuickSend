@@ -9,7 +9,7 @@ export default function SignOut() {
   const router = useRouter();
 
   return (
-    <AuthLayout heading="Sign out">
+    <AuthLayout heading="Sign out" authType="sign-out">
       <h3 className="mb-8 text-center text-xl text-gray-800">
         Are you sure you want to sign out?
       </h3>
