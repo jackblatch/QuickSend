@@ -23,7 +23,8 @@ export default function Home() {
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Button appearance="primary" size="md">
-                <Link href="/auth/sign-up">Sign up</Link>
+                {/* Use a tag for registration unavailable redirection */}
+                <a href="/auth/sign-up">Sign up</a>
               </Button>
               <Link href="/auth/sign-in">
                 <Button appearance="secondary" size="md">
