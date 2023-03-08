@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import AnnouncementBar from "~/components/announcementBar";
 import Button from "~/components/Button";
 import Logo from "~/components/Logo";
 
@@ -11,6 +12,10 @@ export default function Home() {
         <meta name="description" content="Visual email builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <AnnouncementBar
+        text="This is a personal project. See more here"
+        link="https://www.github.com/jackb14/quicksend"
+      />
       <div className="relative isolate flex min-h-[100vh] flex-col items-center justify-center overflow-hidden bg-gray-50">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-6 pt-10 pb-24 sm:pb-32 md:flex-row lg:flex lg:py-20 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
