@@ -2,7 +2,7 @@
 
 # QuickSend
 
-QuickSend is a visual drag and drop email builder that allows user's to design, develop and send emails fast.
+QuickSend is a visual drag and drop email builder that allows users to design, develop and send emails fast.
 
 **Key features:**
 
