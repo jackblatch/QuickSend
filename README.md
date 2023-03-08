@@ -11,14 +11,18 @@ QuickSend is a visual drag and drop email builder that allows user's to design, 
 - Edit emails using the command palette for keyboard shortcuts
 - Send campaigns instantly, as well as schedule for a certain day and time
 
+[![Watch demo video](https://github.com/jackb14/QuickSend/blob/main/public/demo-video-screenshot.png?raw=0)](https://youtu.be/CpvBhDoYAxg)
+
 ## Tech Stack
+
+This project's tech stack has been built around the T3 Stack, as well as other libraries and tools for implementing app specific features.
 
 - Next.js
 - Typescript
-- Tailwind
+- Tailwind CSS
 - PostgreSQL
 - Prisma
-- Authjs
+- Auth.js
 - tRPC (fully typesafe api requests)
 - Cloudinary
 - Headless UI (headless accessible components)
@@ -26,6 +30,12 @@ QuickSend is a visual drag and drop email builder that allows user's to design, 
 - dnd-kit
 - Nodemailer
 - React Hot Toast
+
+## Running locally
+
+Next.js App: `npm run dev`
+
+Prisma Studio: `npx prisma studio`
 
 ## Documentation
 
