@@ -21,7 +21,7 @@ QuickSend is a visual drag and drop email builder that allows users to design, d
 
 This project's tech stack has been built around the T3 Stack, as well as other libraries and tools for implementing app specific features.
 
-- Next.js
+- Next.js (React)
 - Typescript
 - Tailwind CSS
 - PostgreSQL
