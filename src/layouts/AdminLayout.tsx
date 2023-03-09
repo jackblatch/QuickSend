@@ -17,7 +17,6 @@ import { useRouter } from "next/router";
 import Breadcrumbs from "~/components/Breadcrumbs";
 import { useSession } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
-import { format } from "path";
 
 const initialNavigation = [
   {
@@ -189,16 +188,12 @@ export default function AdminLayout({
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
-              <div className="w-14 flex-shrink-0">
-                {/* Force sidebar to shrink to fit close icon */}
-              </div>
+              <div className="w-14 flex-shrink-0"></div>
             </div>
           </Dialog>
         </Transition.Root>
 
-        {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex min-h-0 flex-1 flex-col bg-gray-800">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">

@@ -65,7 +65,7 @@ Note: Ensure componentNames and ids are consistent across all files.
 
 ### Using QuickSend without an account
 
-The example builder blocks editor is facilitated through the 'example-builder' campaignId dynamic route with state and serverside rendering. Provided the campaignId is 'example-builder' (e.g. ```/admin/campaign/edit/example-builder), all users (regardless of their authentication state) will be able to access the editor. For all other routes, users will need to be authenticated in order to view their campaigns and experience the full editor.
+The example builder blocks editor is facilitated through the 'example-builder' campaignId dynamic route with state and serverside rendering. Provided the campaignId is 'example-builder' (e.g. `/admin/campaign/edit/example-builder`), all users (regardless of their authentication state) will be able to access the editor. For all other routes, users will need to be authenticated in order to view their campaigns and experience the full editor.
 
 Certain features are restricted without an account, such as the ability to save and send campaigns, upload an image. Instead, users are able to render their email to HTML which can then be used to send email elsewhere.
 
