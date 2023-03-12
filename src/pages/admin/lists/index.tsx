@@ -42,7 +42,7 @@ function List() {
         checkbox.current.indeterminate = isIndeterminate;
       }
     }
-  }, [selectedlists]);
+  }, [selectedlists, allLists.data, lists.length]);
 
   function toggleAll() {
     setSelectedlists(checked || indeterminate ? [] : lists);

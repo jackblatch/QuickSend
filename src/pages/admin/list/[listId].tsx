@@ -163,7 +163,7 @@ export default function () {
       { name: "Lists", href: "/admin/lists", current: false },
       { name: listName ?? "List", href: "#", current: true },
     ];
-  }, [getListInfo.data]);
+  }, [getListInfo.data, listName]);
 
   return (
     <AdminLayout pageHeading={listName} pages={pages}>

@@ -45,7 +45,7 @@ function Dashboard() {
       />
       <div>
         <h3 className="text-xl font-semibold ">Your contacts</h3>
-        <AllContactsTable contacts={getAllUserContacts?.data ?? []} />
+        <AllContactsTable />
       </div>
     </div>
   );

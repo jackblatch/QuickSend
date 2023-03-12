@@ -57,7 +57,7 @@ export default function MultiSelectTable({
     if (checkbox.current !== null) {
       checkbox.current.indeterminate = isIndeterminate;
     }
-  }, [selectedlists]);
+  }, [selectedlists, tableData.length]);
 
   function toggleAll() {
     setSelectedlists(

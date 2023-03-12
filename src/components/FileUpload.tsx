@@ -12,8 +12,8 @@ export default function FileUpload({
   setFormValues,
 }: {
   listId: string;
-  formValues: Record<string, any>;
-  setFormValues: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+  formValues: any;
+  setFormValues: React.Dispatch<React.SetStateAction<any>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const utils = api.useContext();

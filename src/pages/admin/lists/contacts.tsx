@@ -7,9 +7,7 @@ import getServerSideProps from "~/utils/handleSessionRedirect";
 export { getServerSideProps };
 
 export function Contacts() {
-  const getAllUserContacts = api.contacts.getAllUserContacts.useQuery();
-
-  return <AllContactsTable contacts={getAllUserContacts?.data ?? []} />;
+  return <AllContactsTable />;
 }
 
 export default function () {

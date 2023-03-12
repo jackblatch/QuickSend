@@ -46,7 +46,7 @@ export default function AllContactsTable() {
       screenReaderRowButtonText="Delete"
       rowButtonActions=""
       rowButtonText="Delete"
-      titleLink={() => "#"}
+      titleLink={(item: any) => "#"}
     ></MultiSelectTable>
   );
 }

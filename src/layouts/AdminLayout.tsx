@@ -69,7 +69,7 @@ export default function AdminLayout({
       return { ...item, current: false };
     });
     setNavigation(res);
-  }, [router, navigation]);
+  }, [router]);
 
   return (
     <>

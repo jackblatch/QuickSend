@@ -50,7 +50,7 @@ export default function SignIn({
         ? setRegisterRedirect(true)
         : null;
     }
-  }, [Router.isReady]);
+  }, [Router.isReady, Router.query.error, Router.query.registered]);
 
   return (
     <>

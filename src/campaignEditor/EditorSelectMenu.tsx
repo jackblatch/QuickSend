@@ -11,8 +11,8 @@ export default function EditorSelectMenu({
 }: {
   label: string;
   options: any[];
-  value: Record<string, any>;
-  setValue: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+  value: any;
+  setValue: React.Dispatch<React.SetStateAction<any>>;
 }) {
   return (
     <Listbox value={value} onChange={setValue}>
