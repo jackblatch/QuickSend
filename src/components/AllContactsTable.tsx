@@ -3,11 +3,7 @@ import { api } from "~/utils/api";
 import Button from "./Button";
 import MultiSelectTable from "./MultiSelectTable";
 
-export default function AllContactsTable({
-  contacts,
-}: {
-  contacts: { id: string; email: string }[];
-}) {
+export default function AllContactsTable() {
   const getAllUserContacts = api.contacts.getAllUserContacts.useQuery();
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
 
@@ -22,7 +18,7 @@ export default function AllContactsTable({
       rowActionHighlight={false}
       topRowButtons={
         <>
-          <Button appearance="primary" size="md" onClick={() => {}}>
+          <Button appearance="primary" size="md">
             Create New
           </Button>
         </>
@@ -38,7 +34,6 @@ export default function AllContactsTable({
           <button
             type="button"
             className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
-            onClick={() => {}}
           >
             Delete selected
           </button>
@@ -51,7 +46,7 @@ export default function AllContactsTable({
       screenReaderRowButtonText="Delete"
       rowButtonActions=""
       rowButtonText="Delete"
-      titleLink={(item: any) => "#"}
+      titleLink={() => "#"}
     ></MultiSelectTable>
   );
 }

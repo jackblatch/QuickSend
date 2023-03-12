@@ -1,5 +1,5 @@
 import { DocumentPlusIcon } from "@heroicons/react/24/outline";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import Papa from "papaparse";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
@@ -12,9 +12,9 @@ export default function FileUpload({
   setFormValues,
 }: {
   listId: string;
-  formValues: any;
+  formValues: Record<string, any>;
+  setFormValues: React.Dispatch<React.SetStateAction<Record<string, any>>>;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setFormValues: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const utils = api.useContext();
   const addMultipleContactsToList =

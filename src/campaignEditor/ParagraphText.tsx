@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
-import { ParagraphTextProps } from "./utils/blockattributes";
+import { type CSSProperties } from "react";
+import { type ParagraphTextProps } from "./utils/blockattributes";
 
 export default function ParagraphText({
   paragraphText,

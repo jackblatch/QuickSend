@@ -1,7 +1,7 @@
 import { XCircleIcon } from "@heroicons/react/20/solid";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export default function AlertBlock({
   type,

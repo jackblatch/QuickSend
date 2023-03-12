@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  Fragment,
-  MouseEventHandler,
-  PropsWithChildren,
-  useRef,
-} from "react";
+import { type Dispatch, Fragment, type PropsWithChildren, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 export default function Modal({

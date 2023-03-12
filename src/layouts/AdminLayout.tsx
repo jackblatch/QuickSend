@@ -1,4 +1,4 @@
-import { Fragment, PropsWithChildren, use, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -50,7 +50,7 @@ export default function AdminLayout({
   children,
   pageHeading,
   pages,
-}: PropsWithChildren<{
+}: React.PropsWithChildren<{
   pageHeading: string;
   pages?: { name: string; href: string; current?: boolean | undefined }[];
 }>) {
@@ -69,7 +69,7 @@ export default function AdminLayout({
       return { ...item, current: false };
     });
     setNavigation(res);
-  }, [router]);
+  }, [router, navigation]);
 
   return (
     <>

@@ -1,14 +1,17 @@
 import * as ReactDOMServer from "react-dom/server";
 import { Block } from "./blockattributes";
 
-export default function renderToHtml(blocks: Block[], globalStyles: any) {
+export default function renderToHtml(
+  blocks: Block[],
+  globalStyles: Record<string, any>
+) {
   const arrOfEls = blocks.map((item: any) =>
     ReactDOMServer.renderToStaticMarkup(item.element)
   );
 
-  const getHtmlStyles = (stylesObj: any) => {
+  const getHtmlStyles = (stylesObj: Record<string, any>) => {
     const styles = ReactDOMServer.renderToStaticMarkup(
-      <body style={globalStyles}></body>
+      <body style={stylesObj}></body>
     );
     return styles.substring(13, styles.length - 9);
   };

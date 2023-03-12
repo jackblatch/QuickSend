@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { Block } from "~/campaignEditor/utils/blockattributes";
 import renderToHtml from "~/campaignEditor/utils/renderToHtml";
 import { api } from "~/utils/api";
 import Button from "./Button";
@@ -15,7 +16,7 @@ export default function CampaignEditNavBar({
 }: {
   isExampleBuilder: boolean;
   router: any;
-  blocks: any[];
+  blocks: Block[];
   campaignName: string;
   globalStyles: { fontFamily: string };
 }) {

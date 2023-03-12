@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 import InputWithLabel from "~/components/InputWithLabel";
 import Modal from "~/components/Modal";
 import { api } from "~/utils/api";
-import renderToHtml from "./utils/renderToHtml";
 
 export default function EmailPreviewModal({
   open,

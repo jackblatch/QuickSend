@@ -1,4 +1,4 @@
-import { SpacerProps } from "./utils/blockattributes";
+import { type SpacerProps } from "./utils/blockattributes";
 
 export default function Spacer({ backgroundColor, spacing }: SpacerProps) {
   const styles = {

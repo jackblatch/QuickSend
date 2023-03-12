@@ -1,4 +1,4 @@
-import { MouseEventHandler, PropsWithChildren } from "react";
+import { type MouseEventHandler, type PropsWithChildren } from "react";
 
 export default function Button({
   size,
@@ -24,7 +24,7 @@ export default function Button({
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : appearance === "secondary"
             ? "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50"
-            : null
+            : ""
         }  rounded-md py-1.5 px-2.5 text-xs font-medium  shadow-sm ring-1 ring-inset  disabled:cursor-not-allowed disabled:opacity-75`}
         {...delegated}
       >

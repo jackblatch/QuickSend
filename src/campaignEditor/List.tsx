@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
-import { ListProps } from "./utils/blockattributes";
+import { type CSSProperties } from "react";
+import { type ListProps } from "./utils/blockattributes";
 
 export default function List({
   paragraphText,

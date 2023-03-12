@@ -1,4 +1,4 @@
-import { ButtonProps } from "./utils/blockattributes";
+import { type ButtonProps } from "./utils/blockattributes";
 
 export default function EmailButton({
   text,

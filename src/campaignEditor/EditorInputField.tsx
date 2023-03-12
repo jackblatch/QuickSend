@@ -23,8 +23,9 @@ export default function EditorInputField({
           name={id}
           id={id}
           className={`${
-            type !== "color" &&
-            "w-full rounded-md py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400"
+            type !== "color"
+              ? "w-full rounded-md py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400"
+              : ""
           } "block border-0 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6`}
           {...delegated}
         />

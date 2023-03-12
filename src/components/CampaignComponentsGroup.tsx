@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function CampaignComponentsGroup({ title, items }: Props) {
-  const { isOver, setNodeRef } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: title,
     data: {
       title,

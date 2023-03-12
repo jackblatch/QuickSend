@@ -67,7 +67,7 @@ export default function ComboBox({
                   <>
                     <span
                       className={`${
-                        selected && "font-semibold"
+                        selected ? "font-semibold" : ""
                       } block truncate`}
                     >
                       {item.value}

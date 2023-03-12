@@ -1,5 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { closestCenter, DndContext, UniqueIdentifier } from "@dnd-kit/core";
+import {
+  closestCenter,
+  DndContext,
+  type UniqueIdentifier,
+} from "@dnd-kit/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "~/components/Button";
@@ -75,7 +79,9 @@ export default function CampaignBuilder() {
   const [blocks, setBlocks] = useState<Block[]>([
     {
       id: "1",
-      element: <HeadingText {...getDefaultAttributeValues("HeadingText")} />,
+      element: generateElement("HeadingText", {
+        ...getDefaultAttributeValues("HeadingText"),
+      }),
       componentName: "HeadingText",
       attributes: getDefaultAttributeValues("HeadingText"),
     },

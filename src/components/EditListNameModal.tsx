@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import InputWithLabel from "./InputWithLabel";

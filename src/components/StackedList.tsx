@@ -1,4 +1,4 @@
-import { CalendarIcon, MapPinIcon, UsersIcon } from "@heroicons/react/20/solid";
+import { UsersIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
 export default function StackedList({

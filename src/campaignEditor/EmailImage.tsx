@@ -1,4 +1,4 @@
-import { ImageProps } from "./utils/blockattributes";
+import { type ImageProps } from "./utils/blockattributes";
 
 export default function EmailImage({
   src,

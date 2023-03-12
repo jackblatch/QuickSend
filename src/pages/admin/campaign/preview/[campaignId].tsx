@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Block } from "~/campaignEditor/utils/blockattributes";
+import { type Block } from "~/campaignEditor/utils/blockattributes";
 import { parseAndGenerateBlocks } from "~/campaignEditor/utils/campaignEditorUtils";
 import Button from "~/components/Button";
 import Logo from "~/components/Logo";
@@ -36,7 +36,7 @@ export default function CampaignPreview() {
         setGlobalStyles(globalStyles);
       }
     }
-  }, [getCampaignEditorInfo.data]);
+  }, [getCampaignEditorInfo.data, blocks.length]);
 
   return (
     <>

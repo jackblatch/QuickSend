@@ -25,7 +25,7 @@ export default function AddContactToListModal({
     { name: "Single Contact", current: true },
     { name: "CSV Import", current: false },
   ]);
-  const [formValues, setFormValues] = useState<any>("");
+  const [formValues, setFormValues] = useState<Record<string, any>>({});
 
   return (
     <Modal

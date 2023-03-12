@@ -1,5 +1,4 @@
-import { AppProps, type AppType } from "next/app";
-import { type Session } from "next-auth";
+import { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Analytics } from "@vercel/analytics/react";
 

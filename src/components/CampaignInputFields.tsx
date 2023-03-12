@@ -17,8 +17,10 @@ export default function CampaignInputFields({
   inputValues: inputValues;
   setInputValues: React.Dispatch<React.SetStateAction<inputValues>>;
   listData: any;
-  selectedList: any;
-  setSelectedList: any;
+  selectedList: { id: string; value: string };
+  setSelectedList: React.Dispatch<
+    React.SetStateAction<{ id: string; value: string }>
+  >;
 }) {
   return (
     <>

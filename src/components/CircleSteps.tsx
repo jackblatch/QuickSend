@@ -89,11 +89,7 @@ export default function CircleSteps({
           <p
             key={i}
             className={`${
-              i === 0
-                ? "ml-[-8px]"
-                : i === steps.length - 1
-                ? "mr-[-5px]"
-                : null
+              i === 0 ? "ml-[-8px]" : i === steps.length - 1 ? "mr-[-5px]" : ""
             } leading-loose text-gray-100`}
           >
             {step.name}

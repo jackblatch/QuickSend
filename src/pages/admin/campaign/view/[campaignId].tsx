@@ -115,7 +115,7 @@ function CampaignDetails() {
         }
       }
     }
-  }, [getCampaignInfo.data]);
+  }, [getCampaignInfo.data, blocks.length]);
 
   return (
     <>

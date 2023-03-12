@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
-import { NavBarProps } from "./utils/blockattributes";
+import { type CSSProperties } from "react";
+import { type NavBarProps } from "./utils/blockattributes";
 
 export default function NavBar({
   column1Text,

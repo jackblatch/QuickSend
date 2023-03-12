@@ -3,32 +3,33 @@ import Spacer from "../Spacer";
 import EmailImage from "../EmailImage";
 import HeadingText from "../HeadingText";
 import ParagraphText from "../ParagraphText";
-import { blockAttributes } from "./blockattributes";
+import { BlockAttributes, blockAttributes } from "./blockattributes";
 import List from "../List";
 import NavBar from "../NavBar";
 
-export const getDefaultAttributeValues = (componentName: string) => {
+export const getDefaultAttributeValues = (
+  componentName: keyof BlockAttributes
+) => {
+  // spreading into obj fixed [campaignId] edit page is undefined error
   return blockAttributes[componentName];
 };
 
 export const generateElement = (componentName: string, attributes: any) => {
-  let element;
   if (componentName === "HeadingText") {
-    element = <HeadingText {...attributes} />;
+    return <HeadingText {...attributes} />;
   } else if (componentName === "ParagraphText") {
-    element = <ParagraphText {...attributes} />;
+    return <ParagraphText {...attributes} />;
   } else if (componentName === "Button") {
-    element = <EmailButton {...attributes} />;
+    return <EmailButton {...attributes} />;
   } else if (componentName === "Image") {
-    element = <EmailImage {...attributes} />;
+    return <EmailImage {...attributes} />;
   } else if (componentName === "Spacer") {
-    element = <Spacer {...attributes} />;
+    return <Spacer {...attributes} />;
   } else if (componentName === "List") {
-    element = <List {...attributes} />;
+    return <List {...attributes} />;
   } else if (componentName === "NavBar" || componentName === "Social") {
-    element = <NavBar {...attributes} />;
+    return <NavBar {...attributes} />;
   }
-  return element;
 };
 
 export const getIndexOfId = (id: string, blocks: any[]) =>

@@ -1,4 +1,4 @@
-import { HeadingTextProps } from "./utils/blockattributes";
+import { type HeadingTextProps } from "./utils/blockattributes";
 
 export default function HeadingText({
   text,
@@ -25,7 +25,7 @@ export default function HeadingText({
           : headingSize === "h4"
           ? "16px"
           : "16px",
-      textAlign: justifyContent !== "" ? justifyContent : "left",
+      textAlign: justifyContent || "left",
       fontWeight: fontWeight === "bold" ? "bold" : "normal",
       color: textColor !== "" ? textColor : "#000000",
     },

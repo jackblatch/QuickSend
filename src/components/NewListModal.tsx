@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import AlertBlock from "./AlertBlock";
@@ -10,7 +10,7 @@ export default function NewListModal({
   setOpen,
 }: {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<any>>;
+  setOpen: React.Dispatch<React.SetStateAction<any>>;
 }) {
   const utils = api.useContext();
   const [listName, setListName] = useState({ name: "" });

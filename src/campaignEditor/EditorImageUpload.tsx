@@ -1,6 +1,5 @@
 import { CldUploadButton } from "next-cloudinary";
 import { toast } from "react-hot-toast";
-import Button from "~/components/Button";
 
 export default function EditorImageUpload({
   editorValues,
