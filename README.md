@@ -43,11 +43,11 @@ Prisma Studio: `npx prisma studio`
 
 ## Documentation
 
-### Converting React components to email freindly HTML and CSS
+### Converting React components to email friendly HTML and CSS
 
-The `renderToHtml.ts` utils function is responsible for converting React components to email freindly HTML and CSS. It does this by using using `ReactDOMServer.renderToStaticMarkup()` to render the React component to a string. This also handles converting CSS-in-JS to regular CSS.
+The `renderToHtml.ts` utils function is responsible for converting React components to email friendly HTML and CSS. It does this by using using `ReactDOMServer.renderToStaticMarkup()` to render the React component to a string. This also handles converting CSS-in-JS to regular CSS.
 
-### Storing and retreiving React components from the database
+### Storing and retrieving React components from the database
 
 The rendered html is never stored in the database and is ran adhoc when the user chooses to render their email to HTML or send a campaign. Instead, an array of objects containing the blocks of the email body as well as any global styles are stored as a stringified JSON object in the database. They are stored as objects containg a unique id, the name of the component and the props the component receives. The React component itself is never stored in the database.
 
