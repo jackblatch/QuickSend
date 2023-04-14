@@ -1,4 +1,4 @@
-![QuickSend Logo](https://github.com/jackb14/QuickSend/blob/main/public/logo.png?raw=0)
+![QuickSend Logo](/public/logo.png?raw=0)
 
 # QuickSend
 
