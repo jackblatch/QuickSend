@@ -15,7 +15,7 @@ QuickSend is a visual drag and drop email builder that allows users to design, d
 
 ## Demo Video
 
-[![Watch demo video](https://github.com/jackb14/QuickSend/blob/main/public/demo-video-screenshot.png?raw=0)](https://youtu.be/CpvBhDoYAxg)
+[![Watch demo video](/public/demo-video-screenshot.png?raw=0)](https://youtu.be/CpvBhDoYAxg)
 
 ## Tech Stack
 
