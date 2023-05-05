@@ -1,3 +1,4 @@
+import GitHubProvider from "next-auth/providers/github";
 import { type GetServerSidePropsContext } from "next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {
@@ -71,6 +72,10 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify-request", // (used for check email message)
   },
   providers: [
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
     CredentialsProvider({
       name: "password",
       credentials: {

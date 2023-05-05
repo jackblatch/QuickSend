@@ -23,6 +23,8 @@ const server = z.object({
   // DISCORD_CLIENT_SECRET: z.string(),
   EMAIL_USER: z.string().min(1),
   EMAIL_PASS: z.string().min(1),
+  GITHUB_ID: z.string().min(1),
+  GITHUB_SECRET: z.string().min(1),
 });
 
 /**
@@ -48,6 +50,8 @@ const processEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   EMAIL_USER: process.env.EMAIL_USER,
   EMAIL_PASS: process.env.EMAIL_PASS,
+  GITHUB_SECRET: process.env.GITHUB_SECRET,
+  GITHUB_ID: process.env.GITHUB_ID,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
