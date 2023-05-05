@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export async function sendEmail(input: {
+export function sendEmail(input: {
   htmlContent: string;
   sendFromName: string;
   subject: string;

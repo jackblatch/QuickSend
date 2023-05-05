@@ -43,7 +43,7 @@ export default function Button({
             ? "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50"
             : appearance === "success"
             ? "bg-green-600 text-white ring-green-600"
-            : null
+            : ""
         }  rounded-md py-2 px-3 text-sm font-semibold  shadow-sm ring-1 ring-inset  disabled:cursor-not-allowed disabled:opacity-75`}
         {...delegated}
       >
@@ -77,7 +77,7 @@ export default function Button({
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : appearance === "secondary"
             ? "border-gray-400 bg-gray-50 text-gray-700 hover:bg-gray-100"
-            : null
+            : ""
         } shadow-s inline-flex items-center rounded-md border border-transparent px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2  disabled:cursor-not-allowed disabled:opacity-75`}
         {...delegated}
       >
@@ -94,7 +94,7 @@ export default function Button({
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : appearance === "secondary"
             ? "border-gray-400 bg-gray-50 text-gray-700 hover:bg-gray-100"
-            : null
+            : ""
         } inline-flex items-center rounded-md border border-transparent px-6 py-3 text-base font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2  disabled:cursor-not-allowed disabled:opacity-75`}
         {...delegated}
       >

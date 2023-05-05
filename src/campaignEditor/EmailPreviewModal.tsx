@@ -31,12 +31,12 @@ export default function EmailPreviewModal({
       setOpen={setOpen}
       actionOnClick={() => {
         toast.promise(
-          sendPreviewEmail.mutateAsync({
+          void sendPreviewEmail.mutateAsync({
             emailAddress: formValues.email,
             subject,
             sendFromName,
             htmlContent: htmlContentFunc(),
-          }),
+          }) as any,
           {
             loading: "Sending...",
             success: "Email sent!",

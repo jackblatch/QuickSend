@@ -37,26 +37,7 @@ export default function CampaignBuilder() {
 
   const router = useRouter();
   const { data: session } = useSession();
-
-  if (!router.isReady && !session) {
-    return <Loading />;
-  }
-
   const [isExampleBuilder, setIsExampleBuilder] = useState(false);
-
-  useEffect(() => {
-    if (router.isReady && router.query.campaignId === "example-builder") {
-      setIsExampleBuilder(true);
-    }
-  }, [router]);
-
-  const [tabs, setTabs] = useState([
-    {
-      name: "Content",
-      current: true,
-    },
-    { name: "Global Styles", current: false },
-  ]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
   const [isDragInProgress, setIsDragInProgress] = useState(false);
   const [isEditing, setIsEditing] = useState({
@@ -65,6 +46,14 @@ export default function CampaignBuilder() {
     initialValues: {},
   });
   const [editorValues, setEditorValues] = useState();
+
+  const [tabs, setTabs] = useState([
+    {
+      name: "Content",
+      current: true,
+    },
+    { name: "Global Styles", current: false },
+  ]);
 
   const getCampaignEditorInfo = api.campaigns.getCampaignEditorInfo.useQuery(
     {
@@ -88,6 +77,27 @@ export default function CampaignBuilder() {
   ]);
 
   useEffect(() => {
+    if (router.isReady && router.query.campaignId === "example-builder") {
+      setIsExampleBuilder(true);
+    }
+  }, [router]);
+
+  const [components, setComponents] = useState<any>([
+    { id: "HeadingText", name: "Heading" },
+    { id: "ParagraphText", name: "Body Text" },
+    { id: "List", name: "List" },
+    { id: "NavBar", name: "NavBar" },
+    { id: "Button", name: "Button" },
+    { id: "Image", name: "Image" },
+    { id: "Spacer", name: "Spacer" },
+    { id: "Social", name: "Social Links" },
+  ]);
+
+  const [globalStyles, setGlobalStyles] = useState({
+    fontFamily: "Arial, Helvetica, sans-serif",
+  });
+
+  useEffect(() => {
     if (getCampaignEditorInfo.data && blocks?.length === 1) {
       const newBlocks = parseAndGenerateBlocks(
         getCampaignEditorInfo.data.blocks as string
@@ -104,20 +114,9 @@ export default function CampaignBuilder() {
     }
   }, [getCampaignEditorInfo.data]);
 
-  const [components, setComponents] = useState<any>([
-    { id: "HeadingText", name: "Heading" },
-    { id: "ParagraphText", name: "Body Text" },
-    { id: "List", name: "List" },
-    { id: "NavBar", name: "NavBar" },
-    { id: "Button", name: "Button" },
-    { id: "Image", name: "Image" },
-    { id: "Spacer", name: "Spacer" },
-    { id: "Social", name: "Social Links" },
-  ]);
-
-  const [globalStyles, setGlobalStyles] = useState({
-    fontFamily: "Arial, Helvetica, sans-serif",
-  });
+  if (!router.isReady && !session) {
+    return <Loading />;
+  }
 
   function handleSortableDragEnd(event: any) {
     setIsDragInProgress(false);

@@ -20,7 +20,7 @@ export default function FileUpload({
   const addMultipleContactsToList =
     api.contacts.addMultipleContactsToList.useMutation({
       onSuccess: () => {
-        utils.lists.invalidate(), utils.contacts.invalidate();
+        void utils.lists.invalidate(), utils.contacts.invalidate();
       },
     });
   const [isLoading, setIsLoading] = useState(false);

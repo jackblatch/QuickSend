@@ -29,7 +29,7 @@ export default function EditListNameModal({
       buttonCancelText="Cancel"
       buttonActionText="Save"
       actionOnClick={() => {
-        toast.promise(
+        void toast.promise(
           editListName.mutateAsync({ name: inputValues.name, listId }),
           {
             loading: "Editing list...",

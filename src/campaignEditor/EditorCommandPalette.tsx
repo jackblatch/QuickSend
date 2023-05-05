@@ -47,12 +47,12 @@ export default function EditorCommandPalette({
       componentName: selectedComponent.id,
       attributes: attributes,
     };
-    setBlocks((prev: any) => [...prev, obj]);
+    setBlocks((prev: any[]) => [...prev, obj]);
 
     setIsEditing({
       blockId: uniqueId,
       current: true,
-      initialValues: attributes!,
+      initialValues: attributes,
     });
 
     setEditorValues(attributes as any);
