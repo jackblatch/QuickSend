@@ -27,11 +27,6 @@ const config = {
         destination: "/admin/dashboard",
         permanent: true,
       },
-      {
-        source: "/auth/sign-up",
-        destination: "/registration-unavailable",
-        permanent: false,
-      },
     ];
   },
   eslint: {
