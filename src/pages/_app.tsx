@@ -1,4 +1,4 @@
-import { AppProps } from "next/app";
+import { type AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -21,7 +21,7 @@ const MyApp: any = ({
           defer
           data-domain="quicksend.jackblatch.com"
           src="https://plausible.io/js/script.js"
-        ></script>
+        />
       </Head>
       <Component {...pageProps} />
       <Analytics />

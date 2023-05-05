@@ -56,6 +56,7 @@ export default function SendEmailModal({
           position: "bottom-center",
         });
         return;
+        // this is what would be used if emails were to be sent
         // if (list) {
         //   if (tabs[0]?.current) {
         //     toast.promise(

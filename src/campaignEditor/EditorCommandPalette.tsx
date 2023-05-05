@@ -9,7 +9,7 @@ import {
   getDefaultAttributeValues,
 } from "./utils/campaignEditorUtils";
 import CampaignComponentIcons from "~/components/CampaignComponentIcons";
-import { BlockAttributes } from "./utils/blockattributes";
+import { type BlockAttributes } from "./utils/blockattributes";
 
 export default function EditorCommandPalette({
   open,

@@ -11,7 +11,7 @@ export default function EmailButton({
   buttonPadding,
   borderRadius,
 }: ButtonProps) {
-  const styles: any = {
+  const styles = {
     container: {
       backgroundColor: backgroundColor !== "" ? backgroundColor : "#ffffff",
     },
@@ -51,7 +51,6 @@ export default function EmailButton({
                     <a
                       href={URLAddress === "" ? "#" : URLAddress}
                       target="_blank"
-                      style={styles.linkWrapper}
                     >
                       <span style={styles.button}>{text}</span>
                     </a>

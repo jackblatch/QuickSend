@@ -11,7 +11,6 @@ import CampaignEditNavBar from "~/components/CampaignEditNavBar";
 import CampaignEditorSidebar from "~/components/CampaignEditorSidebar";
 import { arrayMove } from "@dnd-kit/sortable";
 import CampaignEditorEmailBody from "~/components/CampaignEditorEmailBody";
-import HeadingText from "~/campaignEditor/HeadingText";
 import {
   generateElement,
   getDefaultAttributeValues,
