@@ -23,8 +23,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Button appearance="primary" size="md">
-                {/* Use a tag for registration unavailable redirection */}
-                <a href="/auth/sign-up">Sign up</a>
+                <Link href="/auth/sign-up">Sign up</Link>
               </Button>
               <Link href="/auth/sign-in">
                 <Button appearance="secondary" size="md">
@@ -32,12 +31,12 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <a href="/admin/campaign/edit/example-builder">
+            <Link href="/admin/campaign/edit/example-builder">
               <p className="mt-6 w-fit rounded-full bg-green-200 px-5 py-1 text-sm font-medium text-green-900 hover:text-green-700">
                 Or try the builder without an account{" "}
                 <span aria-hidden="true">→</span>
               </p>
-            </a>
+            </Link>
           </div>
           <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mt-0 lg:mr-0 lg:max-w-none lg:flex-none xl:ml-32">
             <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">

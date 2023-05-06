@@ -37,7 +37,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       campaignsToSend.forEach(async (campaign) => {
         const list = await prisma.list.findUnique({
           where: {
-            id: campaign.listId!,
+            id: campaign.listId ?? "",
           },
           select: {
             contacts: {
@@ -48,14 +48,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           },
         });
 
-        await sendEmail({
+        sendEmail({
           htmlContent: renderToHtml(
             parseAndGenerateBlocks(String(campaign.blocks)),
             JSON.parse(String(campaign.globalStyles))
           ),
           sendFromName: campaign.sendFromName,
           subject: campaign.subject,
-          recipients: list?.contacts.map((contact) => contact.email)!,
+          recipients: list?.contacts.map((contact) => contact.email) ?? [],
         });
 
         await prisma.campaign.update({
@@ -71,7 +71,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   };
 
   try {
-    checkForEmailsToBeSent();
+    void checkForEmailsToBeSent();
     res.json({ success: true, message: "complete" });
   } catch (err) {
     res.json({ success: true, message: err });

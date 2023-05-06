@@ -48,7 +48,9 @@ export default function CampaignPreview() {
       <div className="flex min-h-[100vh] flex-col items-center justify-center gap-8 bg-gray-100">
         <div className="flex w-full items-center justify-between bg-gray-800 p-6">
           <Logo justifyContent="center" type="iconAndText" colorTheme="light" />
-          <Link href={`/admin/campaign/view/${router.query.campaignId}`}>
+          <Link
+            href={`/admin/campaign/view/${String(router.query.campaignId)}`}
+          >
             <Button appearance="secondary" size="md">
               Manage Campaign
             </Button>

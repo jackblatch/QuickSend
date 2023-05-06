@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import AllContactsTable from "~/components/AllContactsTable";
 import AdminLayout from "~/layouts/AdminLayout";
-import { api } from "~/utils/api";
 import getServerSideProps from "~/utils/handleSessionRedirect";
 
 export { getServerSideProps };
@@ -10,7 +9,7 @@ export function Contacts() {
   return <AllContactsTable />;
 }
 
-export default function () {
+export default function ContactsPage() {
   const pages = useMemo(() => {
     return [
       { name: "Lists", href: "/admin/lists", current: false },

@@ -1,4 +1,4 @@
-import { AppProps } from "next/app";
+import { type AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Head from "next/head";
 
-const MyApp: any = ({
+const MyApp = ({
   // AppType<{ session: Session | null }>
   Component,
   pageProps: { session, ...pageProps },
@@ -29,4 +29,4 @@ const MyApp: any = ({
   );
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(MyApp as any);

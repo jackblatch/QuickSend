@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { toast } from "react-hot-toast";
 import { api } from "~/utils/api";
 import CampaignInputFields from "./CampaignInputFields";
-import ComboBox from "./ComboBox";
 import SlideOver from "./SlideOver";
 
 const initialInputValues = {
@@ -17,7 +16,7 @@ export default function NewCampaignSlideOver({
   setOpen,
 }: {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<any>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const router = useRouter();
 
@@ -35,7 +34,7 @@ export default function NewCampaignSlideOver({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    toast.promise(
+    void toast.promise(
       createCampaign.mutateAsync({
         campaignName: inputValues.campaignName,
         emailSubject: inputValues.emailSubject,
@@ -45,7 +44,7 @@ export default function NewCampaignSlideOver({
       {
         loading: "Creating campaign...",
         success: (res) => {
-          router.push(`/admin/campaign/view/${res.id}`);
+          void router.push(`/admin/campaign/view/${res.id}`);
           return "Campaign created!";
         },
         error: "Error creating campaign",

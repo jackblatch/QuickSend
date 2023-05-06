@@ -173,11 +173,15 @@ export default function AdminLayout({
                     >
                       <div className="flex items-center">
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 p-1 text-sm font-medium text-gray-700">
-                          {`${session?.user?.firstName[0]}${session?.user?.lastName[0]}`}
+                          {`${session?.user?.firstName[0] ?? ""}${
+                            session?.user?.lastName[0] ?? ""
+                          }`}
                         </div>
                         <div className="ml-3">
                           <p className="text-base font-medium text-white">
-                            {`${session?.user?.firstName} ${session?.user?.lastName}`}
+                            {`${session?.user?.firstName ?? ""} ${
+                              session?.user?.lastName ?? ""
+                            }`}
                           </p>
                           <p className="text-sm font-medium text-gray-400 group-hover:text-gray-300">
                             Sign out
@@ -236,11 +240,15 @@ export default function AdminLayout({
               >
                 <div className="flex items-center">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 p-1 text-sm font-medium text-gray-700">
-                    {`${session?.user?.firstName[0]}${session?.user?.lastName[0]}`}
+                    {`${session?.user?.firstName[0] ?? ""}${
+                      session?.user?.lastName[0] ?? ""
+                    }`}
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-white">
-                      {`${session?.user?.firstName} ${session?.user?.lastName}`}
+                      {`${session?.user?.firstName ?? ""} ${
+                        session?.user?.lastName ?? ""
+                      }`}
                     </p>
                     <p className="text-sm text-gray-400 group-hover:text-gray-300">
                       Sign out

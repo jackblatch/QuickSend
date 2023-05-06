@@ -34,23 +34,23 @@ export default function EmailPreviewModal({
           position: "bottom-center",
         });
         return;
-        // toast.promise(
-        //   void sendPreviewEmail.mutateAsync({
-        //     emailAddress: formValues.email,
-        //     subject,
-        //     sendFromName,
-        //     htmlContent: htmlContentFunc(),
-        //   }) as any,
-        //   {
-        //     loading: "Sending...",
-        //     success: "Email sent!",
-        //     error: "Error sending email",
-        //   },
-        //   {
-        //     position: "bottom-center",
-        //   }
-        // );
-        // setOpen(false);
+        void toast.promise(
+          void sendPreviewEmail.mutateAsync({
+            emailAddress: formValues.email,
+            subject,
+            sendFromName,
+            htmlContent: htmlContentFunc(),
+          }) as any,
+          {
+            loading: "Sending...",
+            success: "Email sent!",
+            error: "Error sending email",
+          },
+          {
+            position: "bottom-center",
+          }
+        );
+        setOpen(false);
       }}
     >
       <div className="pr-5">

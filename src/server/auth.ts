@@ -18,9 +18,9 @@ import bcrypt from "bcrypt";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: any;
-      firstName: any;
-      lastName: any;
+      id: string;
+      firstName: string;
+      lastName: string;
       email?: string | null;
       // ...other properties
       // role: UserRole;
@@ -51,11 +51,11 @@ export const authOptions: NextAuthOptions = {
       }
       return Promise.resolve(token);
     },
-    async session({ session, token }) {
-      session.user.firstName = token.firstName;
-      session.user.lastName = token.lastName;
+    session({ session, token }) {
+      session.user.firstName = token.firstName as string;
+      session.user.lastName = token.lastName as string;
       session.user.email = token.email;
-      session.user.id = token.id;
+      session.user.id = token.id as string;
       return session;
     },
   },
@@ -77,10 +77,10 @@ export const authOptions: NextAuthOptions = {
         email: {},
         password: {},
       },
-      authorize: async (credentials, req) => {
+      authorize: async (credentials) => {
         if (!credentials?.email || !credentials.password) return null;
 
-        const user: any = await prisma.user.findFirst({
+        const user = await prisma.user.findFirst({
           where: {
             email: {
               equals: credentials?.email,

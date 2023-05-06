@@ -19,7 +19,7 @@ export function sendEmail(input: {
   //     },
   //   });
 
-  let config = {
+  const config = {
     service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
@@ -29,9 +29,9 @@ export function sendEmail(input: {
 
   const transporter = nodemailer.createTransport(config);
 
-  input.recipients.forEach((email) => {
+  input.recipients.forEach(async (email) => {
     async function send() {
-      const info = await transporter.sendMail({
+      await transporter.sendMail({
         from: `${input.sendFromName} <j.doe@example.com>`,
         to: email,
         subject: input.subject,
@@ -39,7 +39,7 @@ export function sendEmail(input: {
         html: input.htmlContent, //`<h1>Hello!</h1>`
       });
     }
-    send();
+    await send();
   });
 
   console.log(`Email sent!`);

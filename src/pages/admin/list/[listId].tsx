@@ -35,7 +35,7 @@ function ListDetails() {
   const removeMultipleContactsFromList =
     api.contacts.removeMultipleContactsFromList.useMutation({
       onSuccess: () => {
-        utils.lists.invalidate();
+        void utils.lists.invalidate();
       },
     });
 
@@ -89,7 +89,7 @@ function ListDetails() {
             type="button"
             className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30"
             onClick={() => {
-              toast.promise(
+              void toast.promise(
                 removeMultipleContactsFromList.mutateAsync({
                   listId: listId as string,
                   contactIds: selectedlists,
@@ -152,7 +152,7 @@ function ListDetails() {
   );
 }
 
-export default function () {
+export default function ListIdPage() {
   const router = useRouter();
   const { listId } = router.query;
   const getListInfo = api.lists.getListInfo.useQuery(listId as string);
@@ -163,7 +163,7 @@ export default function () {
       { name: "Lists", href: "/admin/lists", current: false },
       { name: listName ?? "List", href: "#", current: true },
     ];
-  }, [getListInfo.data, listName]);
+  }, [listName]);
 
   return (
     <AdminLayout pageHeading={listName} pages={pages}>

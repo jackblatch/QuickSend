@@ -3,7 +3,7 @@ import Spacer from "../Spacer";
 import EmailImage from "../EmailImage";
 import HeadingText from "../HeadingText";
 import ParagraphText from "../ParagraphText";
-import { BlockAttributes, blockAttributes } from "./blockattributes";
+import { type BlockAttributes, blockAttributes } from "./blockattributes";
 import List from "../List";
 import NavBar from "../NavBar";
 

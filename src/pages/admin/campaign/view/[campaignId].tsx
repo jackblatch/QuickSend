@@ -67,7 +67,7 @@ function CampaignDetails() {
   });
 
   const handleSaveCampaign = () => {
-    toast.promise(
+    void toast.promise(
       updateCampaign.mutateAsync({
         campaignId: campaignId as string,
         campaignName: inputValues.campaignName,
@@ -99,16 +99,12 @@ function CampaignDetails() {
 
   useEffect(() => {
     if (getCampaignInfo.data?.blocks && blocks.length === 0) {
-      const newBlocks = parseAndGenerateBlocks(
-        getCampaignInfo.data.blocks as string
-      );
+      const newBlocks = parseAndGenerateBlocks(getCampaignInfo.data.blocks);
       if (newBlocks) {
         setBlocks(newBlocks);
       }
       if (getCampaignInfo.data.globalStyles) {
-        const globalStyles = JSON.parse(
-          getCampaignInfo.data.globalStyles as string
-        );
+        const globalStyles = JSON.parse(getCampaignInfo.data.globalStyles);
 
         if (globalStyles) {
           setGlobalStyles(globalStyles);
@@ -253,9 +249,11 @@ function CampaignDetails() {
                           getCampaignInfo.data?.hasSent ||
                           getCampaignInfo.data?.scheduledSend
                         }
-                        onClick={() => {
-                          router.push(`/admin/campaign/edit/${campaignId}`);
-                        }}
+                        onClick={() =>
+                          void router.push(
+                            `/admin/campaign/edit/${String(campaignId)}`
+                          )
+                        }
                       >
                         <div className="flex items-center justify-center gap-2">
                           <p className="col-span-1">Edit</p>
@@ -267,7 +265,9 @@ function CampaignDetails() {
                       appearance="secondary"
                       size="md"
                       onClick={() => {
-                        router.push(`/admin/campaign/preview/${campaignId}`);
+                        void router.push(
+                          `/admin/campaign/preview/${String(campaignId)}`
+                        );
                       }}
                       disabled={!getCampaignInfo?.data?.blocks}
                     >
@@ -286,10 +286,10 @@ function CampaignDetails() {
                       appearance="success"
                       size="md"
                       onClick={() => {
-                        toast.promise(
+                        void toast.promise(
                           scheduleCampaign.mutateAsync({
                             scheduledSend: null,
-                            campaignId: campaignId as string,
+                            campaignId: String(campaignId),
                             unschedule: true,
                           }),
                           {
@@ -328,7 +328,7 @@ function CampaignDetails() {
   );
 }
 
-export default function () {
+export default function CampaignIdPage() {
   const router = useRouter();
   const { campaignId } = router.query;
   const getCampaignInfo = api.campaigns.getCampaignInfo.useQuery({
@@ -345,7 +345,7 @@ export default function () {
         current: true,
       },
     ];
-  }, [getCampaignInfo.data]);
+  }, [campaignName, getCampaignInfo.data]);
 
   return (
     <AdminLayout pageHeading={`${campaignName}`} pages={pages}>

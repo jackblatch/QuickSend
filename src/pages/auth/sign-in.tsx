@@ -69,10 +69,12 @@ export default function SignIn({
           className="space-y-6"
           onSubmit={(e) => {
             e.preventDefault();
-            toast.promise(
+            void toast.promise(
               signIn("credentials", {
                 ...formValues,
-                callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/admin/dashboard`,
+                callbackUrl: `${
+                  process.env.NEXT_PUBLIC_APP_URL ?? ""
+                }/admin/dashboard`,
               }),
               {
                 loading: "Logging in...",

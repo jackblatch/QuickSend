@@ -3,7 +3,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Block } from "~/campaignEditor/utils/blockattributes";
+import { type Block } from "~/campaignEditor/utils/blockattributes";
 import SortableItem from "./SortableItem";
 
 export default function CampaignEditorEmailBody({
@@ -38,9 +38,9 @@ export default function CampaignEditorEmailBody({
           <div
             key={item.id}
             className={`${isDragInProgress ? "" : "group"} ${
-              isEditing &&
-              isEditing.blockId === item.id &&
-              "border-2 border-dashed border-blue-600"
+              isEditing && isEditing.blockId === item.id
+                ? "border-2 border-dashed border-blue-600"
+                : ""
             }`}
           >
             <div className="mt-4 mb-2 hidden items-center justify-center gap-4 group-hover:flex">

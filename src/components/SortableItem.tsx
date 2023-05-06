@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export default function SortableItem({
   children,

@@ -1,12 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import formatClasses from "~/utils/formatClasses";
+
+type Tab = { name: string; current: boolean };
 
 export default function LineTabs({
   tabs,
   setTabs,
 }: {
-  tabs: { name: string; current: boolean }[];
-  setTabs: Dispatch<SetStateAction<any>>;
+  tabs: Tab[];
+  setTabs: Dispatch<SetStateAction<Tab[]>>;
 }) {
   return (
     <div>

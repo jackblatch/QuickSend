@@ -56,52 +56,52 @@ export default function SendEmailModal({
           position: "bottom-center",
         });
         return;
-        // if (list) {
-        //   if (tabs[0]?.current) {
-        //     toast.promise(
-        //       sendEmailsToList.mutateAsync({
-        //         listId: list.id,
-        //         campaignId,
-        //         subject,
-        //         sendFromName,
-        //         htmlContent: htmlContentFunc(),
-        //       }),
-        //       {
-        //         loading: "Sending...",
-        //         success: () => {
-        //           setOpen(false);
-        //           return "Campaign sent!";
-        //         },
-        //         error: "Error sending email",
-        //       },
-        //       {
-        //         position: "bottom-center",
-        //       }
-        //     );
-        //   } else {
-        //     toast.promise(
-        //       scheduleCampaign.mutateAsync({
-        //         campaignId,
-        //         scheduledSend: new Date(formValues.scheduledDateTime),
-        //       }),
-        //       {
-        //         loading: "Scheduling...",
-        //         success: () => {
-        //           setOpen(false);
-        //           return "Campaign scheduled!";
-        //         },
-        //         error: "Error scheduling campaign",
-        //       },
-        //       {
-        //         position: "bottom-center",
-        //       }
-        //     );
-        //   }
-        // } else {
-        //   toast.error("Please select a list before sending", {
-        //     position: "bottom-center",
-        //   });
-        // }
+        if (list) {
+          if (tabs[0]?.current) {
+            void toast.promise(
+              sendEmailsToList.mutateAsync({
+                listId: list?.id ?? "",
+                campaignId,
+                subject,
+                sendFromName,
+                htmlContent: htmlContentFunc(),
+              }),
+              {
+                loading: "Sending...",
+                success: () => {
+                  setOpen(false);
+                  return "Campaign sent!";
+                },
+                error: "Error sending email",
+              },
+              {
+                position: "bottom-center",
+              }
+            );
+          } else {
+            void toast.promise(
+              scheduleCampaign.mutateAsync({
+                campaignId,
+                scheduledSend: new Date(formValues.scheduledDateTime),
+              }),
+              {
+                loading: "Scheduling...",
+                success: () => {
+                  setOpen(false);
+                  return "Campaign scheduled!";
+                },
+                error: "Error scheduling campaign",
+              },
+              {
+                position: "bottom-center",
+              }
+            );
+          }
+        } else {
+          toast.error("Please select a list before sending", {
+            position: "bottom-center",
+          });
+        }
       }}
     >
       <LineTabs tabs={tabs} setTabs={setTabs} />

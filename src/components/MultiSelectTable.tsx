@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { type PropsWithChildren, useEffect, useRef, useState } from "react";
 import EmptyListState from "~/components/EmptyListState";
 import formatClasses from "~/utils/formatClasses";
 import formatDateTime from "~/utils/formatDateTime";
@@ -137,7 +137,7 @@ export default function MultiSelectTable({
                             className={
                               selectedlists.includes(item.id)
                                 ? "bg-gray-50"
-                                : undefined
+                                : ""
                             }
                           >
                             <td className="relative px-7 sm:w-12 sm:px-6">

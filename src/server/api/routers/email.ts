@@ -1,11 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { sendEmail } from "~/server/mail";
 
 export const emailRouter = createTRPCRouter({
@@ -18,7 +14,7 @@ export const emailRouter = createTRPCRouter({
         sendFromName: z.string(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(({ input }) => {
       try {
         sendEmail({
           ...input,
@@ -87,7 +83,7 @@ export const emailRouter = createTRPCRouter({
             (item) => item.email
           ) as string[];
 
-          await sendEmail({
+          sendEmail({
             htmlContent: input.htmlContent,
             sendFromName: input.sendFromName,
             subject: input.subject,

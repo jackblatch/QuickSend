@@ -1,6 +1,5 @@
 import { useState } from "react";
 import InputWithLabel from "~/components/InputWithLabel";
-import Logo from "~/components/Logo";
 import ErrorBlock from "~/components/AlertBlock";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
@@ -31,12 +30,12 @@ export default function SignUp() {
         className="space-y-6"
         onSubmit={(e) => {
           e.preventDefault();
-          toast.promise(
+          void toast.promise(
             createAccount.mutateAsync(formValues),
             {
               loading: "Creating account...",
               success: () => {
-                Router.push("/auth/sign-in?registered=true");
+                void Router.push("/auth/sign-in?registered=true");
                 return "Account created!";
               },
               error: () => {

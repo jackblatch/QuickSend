@@ -33,7 +33,7 @@ export default function AddContactToListModal({
       buttonActionText={tabs[0]?.current ? "Add" : null}
       actionOnClick={() => {
         if (tabs[0]?.current) {
-          toast.promise(
+          void toast.promise(
             addContactToList.mutateAsync({ email: inputValues.email, listId }),
             {
               loading: "Adding contact...",

@@ -3,8 +3,8 @@ type Props = {
   id: string;
   type: string;
   placeholder?: string;
-  state: any; // change to record
-  setState: React.Dispatch<React.SetStateAction<any>>; // change to record
+  state: Record<string, string>;
+  setState: React.Dispatch<React.SetStateAction<any>>;
   [x: string]: any;
 };
 

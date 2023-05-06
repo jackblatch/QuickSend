@@ -10,7 +10,7 @@ export default function NewListModal({
   setOpen,
 }: {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<any>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const utils = api.useContext();
   const [listName, setListName] = useState({ name: "" });
@@ -24,7 +24,7 @@ export default function NewListModal({
       buttonCancelText="Cancel"
       buttonActionText="Create"
       actionOnClick={() => {
-        toast.promise(
+        void toast.promise(
           createList.mutateAsync(listName),
           {
             loading: "Creating list...",

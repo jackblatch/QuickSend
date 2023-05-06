@@ -1,9 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-  closestCenter,
-  DndContext,
-  type UniqueIdentifier,
-} from "@dnd-kit/core";
+import { closestCenter, DndContext } from "@dnd-kit/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "~/components/Button";
@@ -11,7 +7,6 @@ import CampaignEditNavBar from "~/components/CampaignEditNavBar";
 import CampaignEditorSidebar from "~/components/CampaignEditorSidebar";
 import { arrayMove } from "@dnd-kit/sortable";
 import CampaignEditorEmailBody from "~/components/CampaignEditorEmailBody";
-import HeadingText from "~/campaignEditor/HeadingText";
 import {
   generateElement,
   getDefaultAttributeValues,
@@ -38,7 +33,6 @@ export default function CampaignBuilder() {
   const router = useRouter();
   const { data: session } = useSession();
   const [isExampleBuilder, setIsExampleBuilder] = useState(false);
-  const [activeId, setActiveId] = useState<UniqueIdentifier | undefined>();
   const [isDragInProgress, setIsDragInProgress] = useState(false);
   const [isEditing, setIsEditing] = useState({
     blockId: "",
@@ -114,6 +108,17 @@ export default function CampaignBuilder() {
     }
   }, [getCampaignEditorInfo.data]);
 
+  useEffect(() => {
+    const onKeyDown = (e: any) => {
+      if (e.metaKey && e.code === "KeyK") {
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   if (!router.isReady && !session) {
     return <Loading />;
   }
@@ -127,8 +132,6 @@ export default function CampaignBuilder() {
     );
 
     if (active.id !== over.id) {
-      setActiveId(undefined);
-
       setBlocks((items) => {
         const activeIndex = items
           .map((mapItem) => mapItem.id)
@@ -151,7 +154,7 @@ export default function CampaignBuilder() {
             setIsEditing({
               blockId: uniqueId,
               current: true,
-              initialValues: attributes!,
+              initialValues: attributes,
             });
 
             setEditorValues(attributes as any);
@@ -195,17 +198,6 @@ export default function CampaignBuilder() {
     }
   };
 
-  useEffect(() => {
-    const onKeyDown = (e: any) => {
-      if (e.metaKey && e.code === "KeyK") {
-        setIsCommandPaletteOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
   return (
     <>
       <Head>
@@ -236,8 +228,7 @@ export default function CampaignBuilder() {
       <DndContext
         modifiers={[restrictToWindowEdges]}
         collisionDetection={closestCenter}
-        onDragStart={(e) => {
-          setActiveId(e.active.id);
+        onDragStart={() => {
           setIsDragInProgress(true);
         }}
         onDragEnd={handleSortableDragEnd}

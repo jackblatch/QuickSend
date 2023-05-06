@@ -1,11 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const campaignsRouter = createTRPCRouter({
   getCampaigns: protectedProcedure.query(async ({ ctx }) => {
@@ -77,7 +73,7 @@ export const campaignsRouter = createTRPCRouter({
       try {
         return await ctx.prisma.campaign.findUnique({
           where: {
-            id: input.campaignId as string,
+            id: input.campaignId,
           },
           select: {
             id: true,

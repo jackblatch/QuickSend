@@ -30,7 +30,7 @@ export default function SignOut() {
           appearance="primary"
           onClick={(e) => {
             e.preventDefault();
-            toast.promise(
+            void toast.promise(
               signOut({ callbackUrl: "/" }),
               {
                 loading: "Signing out...",
