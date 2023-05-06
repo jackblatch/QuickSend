@@ -29,17 +29,17 @@ function Dashboard() {
             name: "Total Contacts",
             stat: getAllUserContacts.data
               ? String(getAllUserContacts.data?.length)
-              : "",
+              : "0",
           },
           {
             name: "Email Lists",
-            stat: getListsCount?.data ? String(getListsCount?.data) : "",
+            stat: getListsCount?.data ? String(getListsCount?.data) : "0",
           },
           {
             name: "Campaigns Sent",
             stat: getSentCampaignCount?.data
               ? String(getSentCampaignCount?.data)
-              : "",
+              : "0",
           },
         ]}
       />

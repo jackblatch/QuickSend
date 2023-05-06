@@ -30,23 +30,27 @@ export default function EmailPreviewModal({
       open={open}
       setOpen={setOpen}
       actionOnClick={() => {
-        toast.promise(
-          void sendPreviewEmail.mutateAsync({
-            emailAddress: formValues.email,
-            subject,
-            sendFromName,
-            htmlContent: htmlContentFunc(),
-          }) as any,
-          {
-            loading: "Sending...",
-            success: "Email sent!",
-            error: "Error sending email",
-          },
-          {
-            position: "bottom-center",
-          }
-        );
-        setOpen(false);
+        toast.error("This feature is unavailable in the demo", {
+          position: "bottom-center",
+        });
+        return;
+        // toast.promise(
+        //   void sendPreviewEmail.mutateAsync({
+        //     emailAddress: formValues.email,
+        //     subject,
+        //     sendFromName,
+        //     htmlContent: htmlContentFunc(),
+        //   }) as any,
+        //   {
+        //     loading: "Sending...",
+        //     success: "Email sent!",
+        //     error: "Error sending email",
+        //   },
+        //   {
+        //     position: "bottom-center",
+        //   }
+        // );
+        // setOpen(false);
       }}
     >
       <div className="pr-5">
